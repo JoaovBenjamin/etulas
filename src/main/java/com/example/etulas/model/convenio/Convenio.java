@@ -41,7 +41,6 @@ public class Convenio {
     public boolean isAtivo(){
         return ativo == "Sim";
     }
-
     public void setAtivo(boolean ativo){
         this.ativo = ativo ? "Sim" : "Não";
     }
