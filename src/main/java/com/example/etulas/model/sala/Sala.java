@@ -1,6 +1,4 @@
-package com.example.etulas.model.hospital;
-
-import org.hibernate.validator.constraints.br.CNPJ;
+package com.example.etulas.model.sala;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,29 +13,27 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "T_ETU_HOSPITAL")
-public class Hospital {
+@Table(name = "T_ETU_SALAS")
+public class Sala {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_hospital")
     private Long id;
-    @Column(name = "nm_nome")
-    @NotBlank(message = "{hospital.nome.notblank}")
-    @Size(min = 10, max = 60, message = "{hospital.nome.size}")
-    private String nome;
-    @Column(name = "tx_telefone")
-    @Size(min = 11, max = 11, message = "{hospital.telefone.size}")
-    @NotBlank(message = "{hospital.telefone.notblank}")
-    private String telefone;
-    @Column(name = "tx_cnpj", unique = true)
-    @CNPJ(message = "{hospital.cnpj.CNPJ}")
-    @NotBlank(message = "{hospital.cnpj.notblank}")
-    private String cnpj;
+    //TODO: Alterar numeroDaSala para String no Banco de dados;
+    @Column(name = "nr_salas")
+    @NotBlank(message = "{sala.numerodasala.notblank}")
+    private String numeroDaSala;
+    @Column(name = "qtd_leitos_uti")
+    //TODO alterar no banco de dados uti para 
+    @NotBlank(message = "{sala.uti.notblank}")
+    private String uti;
+    @Column(name = "ds_salas")
+    @Size(min = 20, max = 200, message = "{sala.descricao.size}")
+    private String descricao;
     @Column(name = "st_ativo")
     @Pattern(
         regexp = "^(SIM|NÃO)$",
         message = "{especialidade.ativo.pattern}"
     )
-    @NotBlank(message = "{hospital.ativo.notblank}")
+    @NotBlank(message = "{sala.ativo.notblank}")
     private String ativo;
 
     public boolean isAtivo(){
@@ -47,5 +43,4 @@ public class Hospital {
     public void setAtivo(boolean ativo){
         this.ativo = ativo ? "Sim" : "Não";
     }
-
 }
