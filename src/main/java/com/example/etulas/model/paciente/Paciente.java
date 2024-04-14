@@ -21,6 +21,7 @@ public class Paciente {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nm_paciente", unique = true)
+    @NotBlank(message = "{paciente.nome.notblank}")
     @Size(min = 10, max = 60, message = "{paciente.nome.size}")
     private String nome;
     @Column(name = "nr_cpf", unique = true)
@@ -28,6 +29,7 @@ public class Paciente {
     @NotBlank(message = "{paciente.cpf.notblank}")
     private String cpf;
     @Column(name = "tx_telefone", unique = true)
+    @NotBlank(message = "{paciente.telefone.notblank}")
     @Size(min = 11,max = 11, message = "{paciente.telefone.size}")
     private String telefone;
     // TODO CRIAR UM VALIDATOR PARA A IDADE

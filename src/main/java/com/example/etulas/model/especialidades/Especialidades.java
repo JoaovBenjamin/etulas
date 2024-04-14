@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -24,9 +25,11 @@ public class Especialidades {
     @Enumerated(EnumType.STRING)
     private EspecialidadesEnum nomeEspecialidade;
     @Column(name = "ds_especialidade")
+    @NotBlank(message = "{especialidades.descricaoespecialidade.notblank}")
     @Size(min = 50, max = 200, message = "{especialidades.descricaoespecialidade.size}")
     private String descricaoEspecialidade;
     @Column(name = "ds_procedimento")
+    @NotBlank(message = "{especialidades.descricaoprocedimento.notblank}")
     @Size(min = 50, max = 200, message = "{especialidades.descricaoprocedimento.size}")
     private String descricaoProcedimento;
     @Column(name = "st_ativo")

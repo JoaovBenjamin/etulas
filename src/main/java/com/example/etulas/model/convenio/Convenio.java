@@ -21,6 +21,7 @@ public class Convenio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nm_nome")
+    @NotBlank(message = "{convenio.nome.notblank}")
     @Size(min = 10, max = 60, message = "{convenio.nome.size}")
     private String nome;
     @Column(name = "tx_cnpj")

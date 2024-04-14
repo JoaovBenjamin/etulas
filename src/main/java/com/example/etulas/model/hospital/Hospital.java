@@ -24,18 +24,18 @@ public class Hospital {
     @NotBlank(message = "{hospital.nome.notblank}")
     @Size(min = 10, max = 60, message = "{hospital.nome.size}")
     private String nome;
-    @Column(name = "tx_telefone")
+    @Column(name = "nr_telefone")
     @Size(min = 11, max = 11, message = "{hospital.telefone.size}")
     @NotBlank(message = "{hospital.telefone.notblank}")
     private String telefone;
-    @Column(name = "tx_cnpj", unique = true)
+    @Column(name = "nr_cnpj", unique = true)
     @CNPJ(message = "{hospital.cnpj.CNPJ}")
     @NotBlank(message = "{hospital.cnpj.notblank}")
     private String cnpj;
     @Column(name = "st_ativo")
     @Pattern(
         regexp = "^(SIM|NÃO)$",
-        message = "{especialidade.ativo.pattern}"
+        message = "{hospital.ativo.pattern}"
     )
     @NotBlank(message = "{hospital.ativo.notblank}")
     private String ativo;
