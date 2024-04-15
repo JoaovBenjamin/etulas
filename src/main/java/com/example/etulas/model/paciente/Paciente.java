@@ -2,6 +2,8 @@ package com.example.etulas.model.paciente;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.example.etulas.dto.paciente.PacienteDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +26,7 @@ public class Paciente {
     @NotBlank(message = "{paciente.nome.notblank}")
     @Size(min = 10, max = 60, message = "{paciente.nome.size}")
     private String nome;
-    @Column(name = "nr_cpf", unique = true)
+    @Column(name = "tx_cpf", unique = true)
     @CPF(message = "{paciente.cpf.CPF}")
     @NotBlank(message = "{paciente.cpf.notblank}")
     private String cpf;
@@ -42,4 +44,12 @@ public class Paciente {
         message = "{paciente.genero.pattern}"
     )
     private String genero;
+
+    public Paciente(PacienteDTO dados){
+        this.nome = dados.nome();
+        this.cpf = dados.cpf();
+        this.telefone = dados.telefone();
+        this.idade = dados.idade();
+        this.genero = dados.genero();   
+    }
 }

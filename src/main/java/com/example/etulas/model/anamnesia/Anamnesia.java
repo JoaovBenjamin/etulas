@@ -14,6 +14,7 @@ import lombok.Data;
 @Data
 @Table(name = "T_ETU_ANAMNESIA")
 public class Anamnesia {
+    @Column(name = "id_anamnesia")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "ds_lesoes")

@@ -2,6 +2,8 @@ package com.example.etulas.model.hospital;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 
+import com.example.etulas.dto.hospital.HospitalDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,11 +26,11 @@ public class Hospital {
     @NotBlank(message = "{hospital.nome.notblank}")
     @Size(min = 10, max = 60, message = "{hospital.nome.size}")
     private String nome;
-    @Column(name = "nr_telefone")
+    @Column(name = "tx_telefone")
     @Size(min = 11, max = 11, message = "{hospital.telefone.size}")
     @NotBlank(message = "{hospital.telefone.notblank}")
     private String telefone;
-    @Column(name = "nr_cnpj", unique = true)
+    @Column(name = "tx_cnpj", unique = true)
     @CNPJ(message = "{hospital.cnpj.CNPJ}")
     @NotBlank(message = "{hospital.cnpj.notblank}")
     private String cnpj;
@@ -46,6 +48,14 @@ public class Hospital {
 
     public void setAtivo(boolean ativo){
         this.ativo = ativo ? "Sim" : "Não";
+    }
+
+    
+    public Hospital(HospitalDTO dados) {
+        this.nome = dados.nome();
+        this.cnpj= dados.cnpj();
+        this.telefone=dados.telefone();
+        this.ativo=dados.ativo();
     }
 
 }
