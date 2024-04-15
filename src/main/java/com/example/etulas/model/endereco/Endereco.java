@@ -1,5 +1,7 @@
 package com.example.etulas.model.endereco;
 
+import com.example.etulas.dto.endereco.EnderecoDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,7 +22,6 @@ public class Endereco {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nr_edificio")
-    // TODO: MUDAR O NUMERO DO EDIFICO PARA DADOS VARCHAR E STRING
     @NotBlank(message = "{endereco.numeroEdificio.notblank}")
     private String numeroEdificio;
     @Column(name = "nm_logadouro")
@@ -39,4 +40,12 @@ public class Endereco {
     @Column(name = "nm_uf")
     @Enumerated(EnumType.STRING)
     private EnderecoEnum enderecoEnum;
+
+    public Endereco(EnderecoDTO dados){
+        this.numeroEdificio = dados.numeroEdificio();
+        this.bairro = dados.bairro();
+        this.cidade = dados.cidade();
+        this.enderecoEnum= dados.enderecoEnum();
+        this.logadouro = dados.logadouro();
+    }
 }
