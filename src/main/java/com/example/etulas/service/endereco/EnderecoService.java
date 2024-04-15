@@ -16,11 +16,16 @@ import com.example.etulas.repository.endereco.EnderecoRepository;
 
 @Service
 public class EnderecoService {
-    
+
     @Autowired
     EnderecoRepository repository;
 
-    public List<Endereco> buscarEndereco(){
+    public Endereco salvarEndereco(EnderecoDTO dados) {
+        Endereco novoEndereco = new Endereco(dados);
+        return repository.save(novoEndereco);
+    }
+
+    public List<Endereco> buscarEndereco() {
         return repository.findAll();
     }
 
@@ -32,26 +37,27 @@ public class EnderecoService {
 
     }
 
-    public Endereco criarEndereco(EnderecoDTO dados){
+    public Endereco criarEndereco(EnderecoDTO dados) {
         Endereco novoEndereco = new Endereco(dados);
         return repository.save(novoEndereco);
 
     }
 
-    public Endereco atualizarEndereco(Long id, EnderecoDTO dados){
+    public Endereco atualizarEndereco(Long id) {
         verificarSeExiste(id);
-        Endereco atualizadoEndereco = new Endereco(dados);
+        Endereco atualizadoEndereco = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
+        atualizadoEndereco.setId(id);
         return repository.save(atualizadoEndereco);
     }
 
-    public void deletarEndereco(Long id){
+    public void deletarEndereco(Long id) {
         verificarSeExiste(id);
         repository.deleteById(id);
     }
 
-    public void verificarSeExiste(Long id){
-        repository.
-                    findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Não existe id informado"));
+    public void verificarSeExiste(Long id) {
+        repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Não existe id informado"));
     }
 }

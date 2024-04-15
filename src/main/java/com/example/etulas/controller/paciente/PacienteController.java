@@ -30,46 +30,46 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("paciente")
 @Slf4j
 public class PacienteController {
-    
-    @Autowired 
+
+    @Autowired
     PacienteService service;
 
     @GetMapping
     @ResponseStatus(OK)
-    public List<Paciente> buscarPaciente(){
+    public List<Paciente> buscarPaciente() {
         log.info("Buscando pacientes");
         return service.buscarPaciente();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Paciente> buscarHospitalPorId(@PathVariable Long id){
-        log.info("Buscando paciente com o id {}",id);
+    public ResponseEntity<Paciente> buscarHospitalPorId(@PathVariable Long id) {
+        log.info("Buscando paciente com o id {}", id);
         return service.buscarPacientePorId(id);
     }
 
     @GetMapping("cpf/{cpf}")
-    public List<Paciente> buscarPacientePorCpf(@PathVariable String cpf){
-        log.info("Buscando paciente com cpf {}",cpf);
+    public List<Paciente> buscarPacientePorCpf(@PathVariable String cpf) {
+        log.info("Buscando paciente com cpf {}", cpf);
         return service.buscarPacientePorCpf(cpf);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Paciente criarPaciente(@RequestBody PacienteDTO dados){
+    public ResponseEntity<Paciente> criarPaciente(@RequestBody PacienteDTO dados) {
         log.info("Criando hospital");
-        return service.criarPaciente(dados);
+        Paciente novoPaciente = new Paciente(dados);
+        return new ResponseEntity<>(novoPaciente, CREATED);
     }
 
     @PutMapping("{id}")
-    public Paciente atualizarPaciente(@PathVariable Long id, @RequestBody PacienteDTO dados){
-        log.info("Atualizando paciente com o id {}",id);
-        return service.atualizarPaciente(id, dados);
+    public Paciente atualizarPaciente(@PathVariable Long id) {
+        log.info("Atualizando paciente com o id {}", id);
+        return service.atualizarPaciente(id);
     }
-    
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
-    public void deletarHospital(@PathVariable Long id){
+    public void deletarHospital(@PathVariable Long id) {
         log.info("Deletando paciente com o id", id);
         service.deletarPaciente(id);
     }

@@ -4,7 +4,6 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,34 +35,34 @@ public class HospitalController {
 
     @GetMapping
     @ResponseStatus(OK)
-    public List<Hospital> buscarHospital(){
+    public List<Hospital> buscarHospital() {
         log.info("Buscando hopitais");
         return service.buscarHospital();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Hospital> buscarHospitalPorId(@PathVariable Long id){
-        log.info("Buscando Hospitais com o id {}",id);
+    public ResponseEntity<Hospital> buscarHospitalPorId(@PathVariable Long id) {
+        log.info("Buscando Hospitais com o id {}", id);
         return service.buscarHospitalPorId(id);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Hospital criarHospital(@RequestBody HospitalDTO dados){
+    public ResponseEntity<Hospital> criarHospital(@RequestBody HospitalDTO dados) {
         log.info("Criando hospital");
-        return service.criarHospital(dados);
+        Hospital hospital = service.criarHospital(dados);
+        return new ResponseEntity<>(hospital, CREATED);
     }
 
     @PutMapping("{id}")
-    public Hospital atualizarHospital(@PathVariable Long id, @RequestBody HospitalDTO dados){
-        log.info("Atualizando hospital com o id {}",id);
-        return service.atualizarHospital(id, dados);
+    public Hospital atualizarHospital(@PathVariable Long id) {
+        log.info("Atualizando hospital com o id {}", id);
+        return service.atualizarHospital(id);
     }
-    
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
-    public void deletarHospital(@PathVariable Long id){
+    public void deletarHospital(@PathVariable Long id) {
         log.info("Deletando hospital com o id", id);
         service.deletarHospital(id);
     }

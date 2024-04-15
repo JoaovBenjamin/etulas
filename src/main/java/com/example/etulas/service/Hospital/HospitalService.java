@@ -1,6 +1,5 @@
 package com.example.etulas.service.Hospital;
 
-
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -17,9 +16,15 @@ import com.example.etulas.repository.hospital.HospitalRepository;
 @Service
 public class HospitalService {
 
-    @Autowired HospitalRepository repository;
+    @Autowired
+    HospitalRepository repository;
 
-    public List<Hospital> buscarHospital(){
+    public Hospital salvarHospital(HospitalDTO dados) {
+        Hospital novoHospital = new Hospital(dados);
+        return repository.save(novoHospital);
+    }
+
+    public List<Hospital> buscarHospital() {
         return repository.findAll();
     }
 
@@ -31,26 +36,28 @@ public class HospitalService {
 
     }
 
-    public Hospital criarHospital(HospitalDTO dados){
+    public Hospital criarHospital(HospitalDTO dados) {
         Hospital novoHospital = new Hospital(dados);
         return repository.save(novoHospital);
 
     }
 
-    public Hospital atualizarHospital(Long id, HospitalDTO dados){
+    public Hospital atualizarHospital(Long id) {
         verificarSeExiste(id);
-        Hospital atualizadoHospital = new Hospital(dados);
-        return repository.save(atualizadoHospital);
+        Hospital hospital = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+
+        hospital.setId(id);
+        return repository.save(hospital);
     }
 
-    public void deletarHospital(Long id){
+    public void deletarHospital(Long id) {
         verificarSeExiste(id);
         repository.deleteById(id);
     }
 
-    public void verificarSeExiste(Long id){
-        repository.
-                    findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Não existe id informado"));
+    public void verificarSeExiste(Long id) {
+        repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Não existe id informado"));
     }
 }

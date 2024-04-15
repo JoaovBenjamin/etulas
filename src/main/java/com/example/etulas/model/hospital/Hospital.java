@@ -11,15 +11,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "T_ETU_HOSPITAL")
 public class Hospital {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_hospital")
     private Long id;
     @Column(name = "nm_nome")
@@ -35,27 +37,13 @@ public class Hospital {
     @NotBlank(message = "{hospital.cnpj.notblank}")
     private String cnpj;
     @Column(name = "st_ativo")
-    @Pattern(
-        regexp = "^(SIM|NÃO)$",
-        message = "{hospital.ativo.pattern}"
-    )
-    @NotBlank(message = "{hospital.ativo.notblank}")
-    private String ativo;
+    private Boolean ativo;
 
-    public boolean isAtivo(){
-        return ativo == "Sim";
-    }
-
-    public void setAtivo(boolean ativo){
-        this.ativo = ativo ? "Sim" : "Não";
-    }
-
-    
     public Hospital(HospitalDTO dados) {
         this.nome = dados.nome();
-        this.cnpj= dados.cnpj();
-        this.telefone=dados.telefone();
-        this.ativo=dados.ativo();
+        this.cnpj = dados.cnpj();
+        this.telefone = dados.telefone();
+        this.ativo = dados.ativo();
     }
 
 }

@@ -11,16 +11,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 @Data
 @Table(name = "T_ETU_PACIENTE")
 public class Paciente {
     @Column(name = "id_paciente")
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nm_paciente", unique = true)
     @NotBlank(message = "{paciente.nome.notblank}")
@@ -32,24 +36,21 @@ public class Paciente {
     private String cpf;
     @Column(name = "tx_telefone", unique = true)
     @NotBlank(message = "{paciente.telefone.notblank}")
-    @Size(min = 11,max = 11, message = "{paciente.telefone.size}")
+    @Size(min = 11, max = 11, message = "{paciente.telefone.size}")
     private String telefone;
     // TODO CRIAR UM VALIDATOR PARA A IDADE
     @Column(name = "nr_idade")
-    @NotBlank(message = "{paciente.idade.notblank}")
+    @NotNull(message = "{paciente.idade.notnull}")
     private int idade;
     @Column(name = "ds_genero")
-    @Pattern(
-        regexp = "^(MASCULINO|FEMININO)$",
-        message = "{paciente.genero.pattern}"
-    )
+    @Pattern(regexp = "^(MASCULINO|FEMININO)$", message = "{paciente.genero.pattern}")
     private String genero;
 
-    public Paciente(PacienteDTO dados){
+    public Paciente(PacienteDTO dados) {
         this.nome = dados.nome();
         this.cpf = dados.cpf();
         this.telefone = dados.telefone();
         this.idade = dados.idade();
-        this.genero = dados.genero();   
+        this.genero = dados.genero();
     }
 }

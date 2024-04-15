@@ -16,11 +16,16 @@ import com.example.etulas.repository.paciente.PacienteRepository;
 
 @Service
 public class PacienteService {
-    
+
     @Autowired
     PacienteRepository repository;
 
-    public List<Paciente> buscarPaciente(){
+    public Paciente salvarPaciente(PacienteDTO dados) {
+        Paciente novoPaciente = new Paciente(dados);
+        return repository.save(novoPaciente);
+    }
+
+    public List<Paciente> buscarPaciente() {
         return repository.findAll();
     }
 
@@ -32,30 +37,31 @@ public class PacienteService {
 
     }
 
-    public List<Paciente> buscarPacientePorCpf(@PathVariable String cpf){
+    public List<Paciente> buscarPacientePorCpf(@PathVariable String cpf) {
         return repository.findByCpf(cpf);
     }
 
-    public Paciente criarPaciente(PacienteDTO dados){
+    public Paciente criarPaciente(PacienteDTO dados) {
         Paciente novoPaciente = new Paciente(dados);
         return repository.save(novoPaciente);
 
     }
 
-    public Paciente atualizarPaciente(Long id, PacienteDTO dados){
+    public Paciente atualizarPaciente(Long id) {
         verificarSeExiste(id);
-        Paciente atualizadoPaciente = new Paciente(dados);
-        return repository.save(atualizadoPaciente);
+        Paciente paciente = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
+        paciente.setId(id);
+        return repository.save(paciente);
     }
 
-    public void deletarPaciente(Long id){
+    public void deletarPaciente(Long id) {
         verificarSeExiste(id);
         repository.deleteById(id);
     }
 
-    public void verificarSeExiste(Long id){
-        repository.
-                    findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Não existe id informado"));
+    public void verificarSeExiste(Long id) {
+        repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Não existe id informado"));
     }
 }
