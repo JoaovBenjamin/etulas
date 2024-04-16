@@ -29,13 +29,13 @@ public class FichaDeAtendimento {
     @NotNull(message = "{fichadeatendimento.peso.notnull}")
     private Float peso;
     @Column(name = "nr_pressao")
-    @NotBlank(message = "{fichadeatendimento.pressao.notblank}")
+    @NotBlank(message = "{fichadeatendimento.pressao.notnull}")
     private String pressao;
     @Column(name = "nr_altura")
-    @NotNull(message = "{fichadeatendimento.altura.notblank}")
+    @NotNull(message = "{fichadeatendimento.altura.notnull}")
     private Float altura;
     @Column(name = "nr_temperatura")
-    @NotNull(message = "{fichadeatendimento.temperatura.notblank}")
+    @NotNull(message = "{fichadeatendimento.temperatura.notnull}")
     private Float temperatura;
     @Column(name = "ds_dores")
     @Size(min = 20, max = 200, message = "{fichadeatendimento.dores.size}")
