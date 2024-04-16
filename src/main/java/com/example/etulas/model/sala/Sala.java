@@ -1,5 +1,7 @@
 package com.example.etulas.model.sala;
 
+import com.example.etulas.dto.sala.SalaDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,12 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "T_ETU_SALAS")
 public class Sala {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,21 +29,18 @@ public class Sala {
     @NotBlank(message = "{sala.uti.notblank}")
     private String uti;
     @Column(name = "ds_salas")
+    @NotBlank(message = "{sala.descricao.notblank}")
     @Size(min = 20, max = 200, message = "{sala.descricao.size}")
     private String descricao;
     @Column(name = "st_ativo")
-    @Pattern(
-        regexp = "^(SIM|NÃO)$",
-        message = "{especialidade.ativo.pattern}"
-    )
-    @NotBlank(message = "{sala.ativo.notblank}")
-    private String ativo;
+    private Boolean ativo;
 
-    public boolean isAtivo(){
-        return ativo == "Sim";
-    }
-
-    public void setAtivo(boolean ativo){
-        this.ativo = ativo ? "Sim" : "Não";
+    public Sala(SalaDTO dados){
+        this.ativo=dados.ativo();
+        this.descricao = dados.descricao();
+        this.numeroDaSala = dados.numeroDaSala();
+        this.uti = dados.uti();
     }
 }
+
+
