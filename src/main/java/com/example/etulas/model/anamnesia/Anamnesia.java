@@ -1,5 +1,7 @@
 package com.example.etulas.model.anamnesia;
 
+import com.example.etulas.dto.anamnesia.AnamnesiaDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,8 +11,10 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 @Data
 @Table(name = "T_ETU_ANAMNESIA")
 public class Anamnesia {
@@ -33,4 +37,11 @@ public class Anamnesia {
     @Size(min = 10, max = 200, message = "{anamnesia.alergias.size}")
     @NotBlank(message = "{anamnesia.alergias.notblank}")
     private String alergias;
+
+    public Anamnesia(AnamnesiaDTO dados){
+        this.alergias = dados.alergias();
+        this.cronicas = dados.cronicas();
+        this.genetica = dados.genetica();
+        this.lesoes = dados.lesoes();
+    }
 }
