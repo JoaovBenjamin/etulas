@@ -1,5 +1,7 @@
 package com.example.etulas.model.equipamentosMedicos;
 
+import com.example.etulas.dto.equipamentos.EquipamentosDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,12 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "T_ETU_EQUIPAMENTOS_MEDICOS")
 public class Equipamentos {
     @Column(name = "id_equipamentos")
@@ -27,16 +31,15 @@ public class Equipamentos {
     @Size(message = "{equipamentos.procedimento.size}", min = 20, max = 200)
     private String procedimento;
     @Column(name = "nr_sala")
-    @NotBlank(message = "{equipamentos.sala.notblank}")
+    @NotNull(message = "{equipamentos.sala.notnull}")
     private int sala;
     @Column(name = "st_ativo")
-    @Pattern(
-        regexp = "^(SIM|NÃO)$",
-        message = "{especialidade.ativo.pattern}"
-    )
-    private String ativo;
+    private Boolean ativo;
 
-    public boolean isAtivo(){
-        return ativo == "Sim";
+    public Equipamentos(EquipamentosDTO dados){
+        this.nome = dados.nome();
+        this.procedimento = dados.procedimento();
+        this.sala = dados.sala();
+        this.ativo = dados.ativo();
     }
 }

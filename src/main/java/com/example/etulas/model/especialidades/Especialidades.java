@@ -1,5 +1,7 @@
 package com.example.etulas.model.especialidades;
 
+import com.example.etulas.dto.especialidades.EspecialidadesDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,12 +11,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "T_ETU_ESPECIALIDADES")
 public class Especialidades {
     @Column(name = "id_especialidade")
@@ -33,17 +36,13 @@ public class Especialidades {
     @Size(min = 50, max = 200, message = "{especialidades.descricaoprocedimento.size}")
     private String descricaoProcedimento;
     @Column(name = "st_ativo")
-    @Pattern(
-        regexp = "^(SIM|NÃO)$",
-        message = "{especialidade.ativo.pattern}"
-    )
-    private String ativo;
+    private Boolean ativo;
 
-    public boolean isAtivo(){
-        return ativo == "Sim";
-    }
 
-    public void setAtivo(boolean ativo){
-        this.ativo = ativo ? "Sim" : "Não";
+    public Especialidades(EspecialidadesDTO dados){
+        this.ativo = dados.ativo();
+        this.descricaoEspecialidade = dados.descricaoEspecialidade();
+        this.descricaoProcedimento = dados.descricaoProcedimento();
+        this.nomeEspecialidade = dados.nomeEspecialidade();
     }
 }
