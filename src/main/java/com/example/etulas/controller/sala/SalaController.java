@@ -23,6 +23,7 @@ import com.example.etulas.dto.sala.SalaDTO;
 import com.example.etulas.model.sala.Sala;
 import com.example.etulas.service.Sala.SalaService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -48,7 +49,7 @@ public class SalaController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<Sala> criarSala(@RequestBody SalaDTO dados) {
+    public ResponseEntity<Sala> criarSala(@Valid @RequestBody SalaDTO dados) {
         log.info("Criando sala");
         Sala novaSala = new Sala(dados);
         return new ResponseEntity<>(novaSala, CREATED);

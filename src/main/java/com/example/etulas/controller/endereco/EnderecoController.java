@@ -23,6 +23,7 @@ import com.example.etulas.dto.endereco.EnderecoDTO;
 import com.example.etulas.model.endereco.Endereco;
 import com.example.etulas.service.endereco.EnderecoService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -48,7 +49,7 @@ public class EnderecoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<Endereco> criarHospital(@RequestBody EnderecoDTO dados) {
+    public ResponseEntity<Endereco> criarHospital(@Valid @RequestBody EnderecoDTO dados) {
         log.info("Criando endereco");
         Endereco novEndereco = new Endereco(dados);
         return new ResponseEntity<>(novEndereco, CREATED);

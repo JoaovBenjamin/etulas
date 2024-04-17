@@ -23,6 +23,7 @@ import com.example.etulas.dto.fichaAtendimento.FichaAtendimentoDTO;
 import com.example.etulas.model.fichaAtendimento.FichaDeAtendimento;
 import com.example.etulas.service.fichaDeAtendimento.FichaDeAtendimentoService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -48,7 +49,7 @@ public class FichaDeAtendimentoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<FichaDeAtendimento> criarFichaDeAtendimento(@RequestBody FichaAtendimentoDTO dados) {
+    public ResponseEntity<FichaDeAtendimento> criarFichaDeAtendimento(@Valid @RequestBody FichaAtendimentoDTO dados) {
         log.info("Criando ficha de atendimento");
         FichaDeAtendimento novaFicha = new FichaDeAtendimento(dados);
         return new ResponseEntity<>(novaFicha, CREATED);

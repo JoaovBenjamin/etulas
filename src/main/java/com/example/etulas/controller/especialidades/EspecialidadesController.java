@@ -23,6 +23,7 @@ import com.example.etulas.dto.especialidades.EspecialidadesDTO;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.service.especialidades.EspecialidadesService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -41,7 +42,7 @@ public class EspecialidadesController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Especialidades> buscarEspecialidadePorId(@PathVariable Long id) {
+    public ResponseEntity<Especialidades> buscarEspecialidadePorId(@Valid @PathVariable Long id) {
         log.info("Buscando especialidade com o id {}", id);
         return service.buscarEspecialidadePorId(id);
     }

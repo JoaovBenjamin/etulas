@@ -23,6 +23,7 @@ import com.example.etulas.dto.anamnesia.AnamnesiaDTO;
 import com.example.etulas.model.anamnesia.Anamnesia;
 import com.example.etulas.service.anamnesia.AnamnesiaService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -48,7 +49,7 @@ public class AnamnesiaController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<Anamnesia> criarAnamnesia(@RequestBody AnamnesiaDTO dados) {
+    public ResponseEntity<Anamnesia> criarAnamnesia(@Valid @RequestBody AnamnesiaDTO dados) {
         log.info("Criando anamnesia");
         Anamnesia novaAnamnesia = new Anamnesia(dados);
         return new ResponseEntity<>(novaAnamnesia, CREATED);

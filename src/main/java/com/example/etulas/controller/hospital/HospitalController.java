@@ -23,6 +23,7 @@ import com.example.etulas.dto.hospital.HospitalDTO;
 import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.service.Hospital.HospitalService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -48,7 +49,7 @@ public class HospitalController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<Hospital> criarHospital(@RequestBody HospitalDTO dados) {
+    public ResponseEntity<Hospital> criarHospital(@Valid @RequestBody HospitalDTO dados) {
         log.info("Criando hospital");
         Hospital hospital = service.criarHospital(dados);
         return new ResponseEntity<>(hospital, CREATED);

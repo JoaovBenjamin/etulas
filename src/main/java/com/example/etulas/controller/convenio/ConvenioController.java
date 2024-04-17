@@ -23,6 +23,7 @@ import com.example.etulas.dto.convenio.ConvenioDTO;
 import com.example.etulas.model.convenio.Convenio;
 import com.example.etulas.service.convenio.ConvenioService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -48,7 +49,7 @@ public class ConvenioController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<Convenio> criarHospital(@RequestBody ConvenioDTO dados) {
+    public ResponseEntity<Convenio> criarHospital(@Valid @RequestBody ConvenioDTO dados) {
         log.info("Criando convenio");
         Convenio novoConvenio = new Convenio(dados);
         return new ResponseEntity<>(novoConvenio, CREATED);

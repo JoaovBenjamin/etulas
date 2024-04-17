@@ -23,6 +23,7 @@ import com.example.etulas.dto.equipamentos.EquipamentosDTO;
 import com.example.etulas.model.equipamentosMedicos.Equipamentos;
 import com.example.etulas.service.equipamentos.EquipamentosService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -48,7 +49,7 @@ public class EquipamentosController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<Equipamentos> criarEquipamento(@RequestBody EquipamentosDTO dados) {
+    public ResponseEntity<Equipamentos> criarEquipamento(@Valid @RequestBody EquipamentosDTO dados) {
         log.info("Criando equipamento");
         Equipamentos novoEquipamento = new Equipamentos(dados);
         return new ResponseEntity<>(novoEquipamento, CREATED);
