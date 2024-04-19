@@ -3,6 +3,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -41,11 +42,11 @@ public class FichaDeAtendimentoService {
         return repository.save(novaFicha);
     }
 
-    public FichaDeAtendimento atualizarFichaDeAtendimento(Long id) {
+    public FichaDeAtendimento atualizarFichaDeAtendimento(Long id, FichaAtendimentoDTO dados) {
         verificarSeExiste(id);
         FichaDeAtendimento atualizadaFicha = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ficha de atendimento não encontrada"));
-        atualizadaFicha.setId(id);
+        BeanUtils.copyProperties(dados, atualizadaFicha, "id");
         return repository.save(atualizadaFicha);
     }
 

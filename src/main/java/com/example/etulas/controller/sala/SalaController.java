@@ -51,14 +51,14 @@ public class SalaController {
     @ResponseStatus(CREATED)
     public ResponseEntity<Sala> criarSala(@Valid @RequestBody SalaDTO dados) {
         log.info("Criando sala");
-        Sala novaSala = new Sala(dados);
+        Sala novaSala = service.criarSala(dados);
         return new ResponseEntity<>(novaSala, CREATED);
     }
 
     @PutMapping("{id}")
-    public Sala atualizarSala(@PathVariable Long id) {
+    public Sala atualizarSala(@PathVariable Long id, @RequestBody SalaDTO dados) {
         log.info("Atualizando sala com o id {}", id);
-        return service.atualizarSala(id);
+        return service.atualizarSala(id, dados);
     }
 
     @DeleteMapping("{id}")

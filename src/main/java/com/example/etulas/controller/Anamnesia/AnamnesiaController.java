@@ -51,14 +51,14 @@ public class AnamnesiaController {
     @ResponseStatus(CREATED)
     public ResponseEntity<Anamnesia> criarAnamnesia(@Valid @RequestBody AnamnesiaDTO dados) {
         log.info("Criando anamnesia");
-        Anamnesia novaAnamnesia = new Anamnesia(dados);
+        Anamnesia novaAnamnesia = service.criarAnamnesia(dados);
         return new ResponseEntity<>(novaAnamnesia, CREATED);
     }
 
     @PutMapping("{id}")
-    public Anamnesia atualizarAnamnesia(@PathVariable Long id) {
+    public Anamnesia atualizarAnamnesia(@PathVariable Long id, @RequestBody AnamnesiaDTO dados) {
         log.info("Atualizando anamnesia com o id {}", id);
-        return service.atualizarAnamnesia(id);
+        return service.atualizarAnamnesia(id, dados);
     }
 
     @DeleteMapping("{id}")

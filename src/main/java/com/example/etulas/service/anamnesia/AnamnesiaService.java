@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -42,12 +43,13 @@ public class AnamnesiaService {
         return repository.save(novaAnamnesia);
     }
 
-    public Anamnesia atualizarAnamnesia(Long id) {
+    public Anamnesia atualizarAnamnesia(Long id, AnamnesiaDTO dados) {
         verificarSeExiste(id);
         Anamnesia atualizadaAnamnesia = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Anamnésia não encontrada"));
-        atualizadaAnamnesia.setId(id);
+        BeanUtils.copyProperties(dados, atualizadaAnamnesia, "id");
         return repository.save(atualizadaAnamnesia);
+
     }
 
     public void apagarAnamnesia(Long id) {

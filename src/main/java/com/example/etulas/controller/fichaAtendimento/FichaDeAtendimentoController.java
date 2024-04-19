@@ -51,14 +51,14 @@ public class FichaDeAtendimentoController {
     @ResponseStatus(CREATED)
     public ResponseEntity<FichaDeAtendimento> criarFichaDeAtendimento(@Valid @RequestBody FichaAtendimentoDTO dados) {
         log.info("Criando ficha de atendimento");
-        FichaDeAtendimento novaFicha = new FichaDeAtendimento(dados);
+        FichaDeAtendimento novaFicha = service.criarFichaDeAtendimento(dados);
         return new ResponseEntity<>(novaFicha, CREATED);
     }
 
     @PutMapping("{id}")
-    public FichaDeAtendimento atualizarFichaDeAtendimento(@PathVariable Long id) {
+    public FichaDeAtendimento atualizarFichaDeAtendimento(@PathVariable Long id, FichaAtendimentoDTO dados) {
         log.info("Atualizando ficha de atendimento com o id {}", id);
-        return service.atualizarFichaDeAtendimento(id);
+        return service.atualizarFichaDeAtendimento(id, dados);
     }
 
     @DeleteMapping("{id}")

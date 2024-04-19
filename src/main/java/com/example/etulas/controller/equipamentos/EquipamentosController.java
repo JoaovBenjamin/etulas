@@ -51,14 +51,14 @@ public class EquipamentosController {
     @ResponseStatus(CREATED)
     public ResponseEntity<Equipamentos> criarEquipamento(@Valid @RequestBody EquipamentosDTO dados) {
         log.info("Criando equipamento");
-        Equipamentos novoEquipamento = new Equipamentos(dados);
+        Equipamentos novoEquipamento = service.criarEquipamentos(dados);
         return new ResponseEntity<>(novoEquipamento, CREATED);
     }
 
     @PutMapping("{id}")
-    public Equipamentos atualizarEquipamento(@PathVariable Long id) {
+    public Equipamentos atualizarEquipamento(@PathVariable Long id, @RequestBody EquipamentosDTO dados) {
         log.info("Atualizando equipamento com o id {}", id);
-        return service.atualizarEquipamentos(id);
+        return service.atualizarEquipamentos(id, dados);
     }
 
     @DeleteMapping("{id}")

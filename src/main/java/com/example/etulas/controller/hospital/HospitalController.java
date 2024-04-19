@@ -56,9 +56,9 @@ public class HospitalController {
     }
 
     @PutMapping("{id}")
-    public Hospital atualizarHospital(@PathVariable Long id) {
+    public Hospital atualizarHospital(@PathVariable Long id, @RequestBody HospitalDTO dados) {
         log.info("Atualizando hospital com o id {}", id);
-        return service.atualizarHospital(id);
+        return service.atualizarHospital(id, dados);
     }
 
     @DeleteMapping("{id}")

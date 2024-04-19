@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -42,11 +43,11 @@ public class SalaService {
         return repository.save(novaSala);
     }
 
-    public Sala atualizarSala(Long id) {
+    public Sala atualizarSala(Long id, SalaDTO dados) {
         verificarSeExiste(id);
         Sala atualizadaSala = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
-        atualizadaSala.setId(id);
+        BeanUtils.copyProperties(dados, atualizadaSala, "id");
         return repository.save(atualizadaSala);
     }
 

@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -47,11 +48,11 @@ public class PacienteService {
 
     }
 
-    public Paciente atualizarPaciente(Long id) {
+    public Paciente atualizarPaciente(Long id, PacienteDTO dados) {
         verificarSeExiste(id);
         Paciente paciente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
-        paciente.setId(id);
+        BeanUtils.copyProperties(dados, paciente, "id");
         return repository.save(paciente);
     }
 

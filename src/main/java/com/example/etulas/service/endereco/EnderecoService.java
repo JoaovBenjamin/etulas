@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -43,11 +44,11 @@ public class EnderecoService {
 
     }
 
-    public Endereco atualizarEndereco(Long id) {
+    public Endereco atualizarEndereco(Long id, EnderecoDTO dados) {
         verificarSeExiste(id);
         Endereco atualizadoEndereco = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
-        atualizadoEndereco.setId(id);
+        BeanUtils.copyProperties(dados, atualizadoEndereco, "id");
         return repository.save(atualizadoEndereco);
     }
 

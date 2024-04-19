@@ -51,14 +51,14 @@ public class EspecialidadesController {
     @ResponseStatus(CREATED)
     public ResponseEntity<Especialidades> criarEspecialidade(@RequestBody EspecialidadesDTO dados) {
         log.info("Criando especialidade");
-        Especialidades novaEspecialidade = new Especialidades(dados);
+        Especialidades novaEspecialidade = service.criarEspecialidade(dados);
         return new ResponseEntity<>(novaEspecialidade, CREATED);
     }
 
     @PutMapping("{id}")
-    public Especialidades atualizarEspecialidade(@PathVariable Long id) {
+    public Especialidades atualizarEspecialidade(@PathVariable Long id, @RequestBody EspecialidadesDTO dados) {
         log.info("Atualizando especialidade com o id {}", id);
-        return service.atualizarEspecialidade(id);
+        return service.atualizarEspecialidade(id, dados);
     }
 
     @DeleteMapping("{id}")

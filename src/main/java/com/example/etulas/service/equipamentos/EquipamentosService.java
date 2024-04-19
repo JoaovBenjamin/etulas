@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -42,11 +43,11 @@ public class EquipamentosService {
         return repository.save(novoEquipamentos);
     }
 
-    public Equipamentos atualizarEquipamentos(Long id) {
+    public Equipamentos atualizarEquipamentos(Long id, EquipamentosDTO dados) {
         verificarSeExiste(id);
         Equipamentos atualizadoEquipamentos = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado"));
-        atualizadoEquipamentos.setId(id);
+        BeanUtils.copyProperties(dados, atualizadoEquipamentos, "id");
         return repository.save(atualizadoEquipamentos);
     }
 

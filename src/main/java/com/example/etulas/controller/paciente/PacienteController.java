@@ -63,9 +63,9 @@ public class PacienteController {
     }
 
     @PutMapping("{id}")
-    public Paciente atualizarPaciente(@PathVariable Long id) {
+    public Paciente atualizarPaciente(@PathVariable Long id, PacienteDTO dados) {
         log.info("Atualizando paciente com o id {}", id);
-        return service.atualizarPaciente(id);
+        return service.atualizarPaciente(id, dados);
     }
 
     @DeleteMapping("{id}")

@@ -56,9 +56,9 @@ public class EnderecoController {
     }
 
     @PutMapping("{id}")
-    public Endereco atualizarEndereco(@PathVariable Long id) {
+    public Endereco atualizarEndereco(@PathVariable Long id, @RequestBody EnderecoDTO dados) {
         log.info("Atualizando endereco com o id {}", id);
-        return service.atualizarEndereco(id);
+        return service.atualizarEndereco(id,dados);
     }
 
     @DeleteMapping("{id}")

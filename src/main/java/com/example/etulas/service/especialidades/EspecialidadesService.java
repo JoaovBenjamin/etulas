@@ -3,7 +3,7 @@ package com.example.etulas.service.especialidades;
 import java.util.List;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -40,11 +40,11 @@ public Especialidades criarEspecialidade(EspecialidadesDTO dados) {
     return repository.save(novaEspecialidade);
 }
 
-public Especialidades atualizarEspecialidade(Long id) {
+public Especialidades atualizarEspecialidade(Long id, EspecialidadesDTO dados) {
     verificarSeExiste(id);
     Especialidades especialidadeAtualizada = repository.findById(id)
             .orElseThrow(() -> new RuntimeException("Especialidade não encontrada"));
-    especialidadeAtualizada.setId(id);
+    BeanUtils.copyProperties(dados, especialidadeAtualizada, "id");
     return repository.save(especialidadeAtualizada);
 }
 
