@@ -4,10 +4,12 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.etulas.dto.convenio.ConvenioDTO;
@@ -42,12 +44,12 @@ public class ConvenioService {
         return repository.save(novoConvenio);
     }
 
-    public Convenio atualizarConvenio(Long id) {
-        verificarSeExiste(id);
-        Convenio atualizadoConvenio = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
-        atualizadoConvenio.setId(id);
-        return repository.save(atualizadoConvenio);
+    public Convenio atualizarConvenio(@PathVariable Long id, @RequestBody ConvenioDTO dados) {
+        Convenio convenio = repository.findById(id)
+                                             .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+        BeanUtils.copyProperties(dados, convenio, "id");
+
+        return repository.save(convenio);
     }
 
     public void apagarConvenio(Long id) {

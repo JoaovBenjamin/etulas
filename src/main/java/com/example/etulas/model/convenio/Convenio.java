@@ -13,20 +13,21 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "T_ETU_CONVENIO")
 public class Convenio {
     @Column(name = "id_convenio")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nm_nome")
     @NotBlank(message = "{convenio.nome.notblank}")
     @Size(min = 10, max = 60, message = "{convenio.nome.size}")
     private String nome;
-    @Column(name = "tx_cnpj")
+    @Column(name = "tx_cnpj", unique = true)
     @CNPJ(message = "{convenio.cnpj.CNPJ}")
     @NotBlank(message = "{convenio.cnpj.notblank}")
     private String cnpj;
@@ -38,9 +39,11 @@ public class Convenio {
     private Boolean ativo;
 
     public Convenio(ConvenioDTO dados) {
+        this.id = dados.Id();
         this.nome = dados.nome();
         this.telefone = dados.telefone();
         this.cnpj = dados.cnpj();
         this.ativo = dados.ativo();
     }
 }
+    

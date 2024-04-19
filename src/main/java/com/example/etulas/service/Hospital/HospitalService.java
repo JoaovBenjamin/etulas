@@ -3,6 +3,8 @@ package com.example.etulas.service.Hospital;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -42,14 +44,14 @@ public class HospitalService {
 
     }
 
-    public Hospital atualizarHospital(Long id) {
-        verificarSeExiste(id);
+    public Hospital atualizarHospital(Long id, HospitalDTO dados) {
         Hospital hospital = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
-
-        hospital.setId(id);
+        .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+        BeanUtils.copyProperties(dados, hospital, "id");
         return repository.save(hospital);
     }
+      
+
 
     public void deletarHospital(Long id) {
         verificarSeExiste(id);
@@ -60,4 +62,5 @@ public class HospitalService {
         repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Não existe id informado"));
     }
+
 }

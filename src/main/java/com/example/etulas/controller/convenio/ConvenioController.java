@@ -49,21 +49,21 @@ public class ConvenioController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<Convenio> criarHospital(@Valid @RequestBody ConvenioDTO dados) {
+    public ResponseEntity<Convenio> criarConvenio(@Valid @RequestBody ConvenioDTO dados) {
         log.info("Criando convenio");
-        Convenio novoConvenio = new Convenio(dados);
+        Convenio novoConvenio = service.criarConvenio(dados);
         return new ResponseEntity<>(novoConvenio, CREATED);
     }
 
     @PutMapping("{id}")
-    public Convenio atualizarEndereco(@PathVariable Long id) {
+    public Convenio atualizarEndereco(@PathVariable Long id, @RequestBody ConvenioDTO dados) {
         log.info("Atualizando endereco com o id {}", id);
-        return service.atualizarConvenio(id);
+        return service.atualizarConvenio(id,dados);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
-    public void deletarEndereco(Long id) {
+    public void deletarEndereco(@PathVariable Long id) {
         service.apagarConvenio(id);
     }
 }
