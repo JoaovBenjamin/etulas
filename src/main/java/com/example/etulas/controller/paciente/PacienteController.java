@@ -58,7 +58,7 @@ public class PacienteController {
     @ResponseStatus(CREATED)
     public ResponseEntity<Paciente> criarPaciente(@Valid @RequestBody PacienteDTO dados) {
         log.info("Criando hospital");
-        Paciente novoPaciente = new Paciente(dados);
+        Paciente novoPaciente = service.criarPaciente(dados);
         return new ResponseEntity<>(novoPaciente, CREATED);
     }
 

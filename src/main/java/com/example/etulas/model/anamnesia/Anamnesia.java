@@ -22,19 +22,19 @@ public class Anamnesia {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "ds_lesoes")
-    @Size(min = 10, max = 200, message = "{anamnesia.lesoes.size}")
+    @Size(min = 3, max = 200, message = "{anamnesia.lesoes.size}")
     @NotBlank(message = "{anamnesia.lesoes.notblank}")
     private String lesoes;
     @Column(name = "ds_doencas_geneticas")
-    @Size(min = 10, max = 200, message = "{anamnesia.genetica.size}")
+    @Size(min = 3, max = 200, message = "{anamnesia.genetica.size}")
     @NotBlank(message = "{anamnesia.genetica.notblank}")
     private String genetica;
     @Column(name = "ds_doencas_cronicas")
-    @Size(min = 10, max = 200, message = "{anamnesia.cronicas.size}")
+    @Size(min = 3, max = 200, message = "{anamnesia.cronicas.size}")
     @NotBlank(message = "{anamnesia.lesoes.notblank}")
     private String cronicas;
     @Column(name = "ds_alergias")
-    @Size(min = 10, max = 200, message = "{anamnesia.alergias.size}")
+    @Size(min = 3, max = 200, message = "{anamnesia.alergias.size}")
     @NotBlank(message = "{anamnesia.alergias.notblank}")
     private String alergias;
 

@@ -29,21 +29,21 @@ https://trello.com/b/kqlZiZMV/plusoft
 - [Apagar Hospital](#apagar-hospital)
 - [Detalhar Hospital](#detalhar-hospital)
 - [Atualizar Hospital ](#atualizar-hospital)
-- [Listar Produtos](#listar-produtos)
-- [Cadastrar Produto](#cadastrar-produto)
-- [Apagar  Produto](#apagar-produto)
-- [Detalhar Produto](#detalhar-produto)
-- [Atualizar Produto](#atualizar-produto)
-- [Listar Usuarios](#listar-usuarios)
-- [Cadastrar Usuario](#cadastrar-usuario)
-- [Apagar  Usuario](#apagar-usuario)
-- [Detalhar  Usuario](#detalhar-usuario)
-- [Atualizar  Usuario](#atualizar-usuario)
-- [Listar Estoque](#listar-estoque)
-- [Lançar Estoque](#lancar-estoque)
-- [Atualizar Estoque](#atualizar-estoque)
-- [Deletar Estoque](#deletar-estoque)
-- [Detalhar Estoque](#detalhar-estoque)
+- [Listar Paciente](#listar-paciente)
+- [Cadastrar Paciente](#cadastrar-produto)
+- [Apagar  Paciente](#apagar-paciente)
+- [Detalhar Paciente](#detalhar-paciente)
+- [Atualizar Paciente](#atualizar-paciente)
+- [Listar Anamnesia](#listar-anamnesia)
+- [Cadastrar Anamnesia](#cadastrar-anamnesia)
+- [Apagar  Anamnesia](#apagar-anamnesia)
+- [Detalhar  Anamnesia](#detalhar-anamnesia)
+- [Atualizar  Anamnesia](#atualizar-anamnesia)
+- [Listar Convenio](#listar-Convenio)
+- [Lançar Convenio](#lancar-Convenio)
+- [Atualizar Convenio](#atualizar-Convenio)
+- [Deletar Convenio](#deletar-Convenio)
+- [Detalhar Convenio](#detalhar-Convenio)
 
 ### Listar Hospital
 
@@ -69,7 +69,7 @@ Retorna um array com todos Hospitais cadastrados.
 
 | Código | descrição |
 |--------|-----------|
-|200| Categorias retornadas com sucesso
+|200| Hospital retornadas com sucesso
 ---
 
 ### Cadastrar Hospital
@@ -111,12 +111,12 @@ Cadastra um hospital com os dados enviados no corpo da requisição.
 
 | Código | descrição |
 |--------|-----------|
-|201| Categorias cadastrada com sucesso
-|400| Validação falhou. Verifique os dados enviados da requisição
+|201| Hospital cadastrado com sucesso|
+|400| Validação falhou. Verifique os dados enviados da requisição|
 
 ---
 
-### Apagar Categoria
+### Apagar Hospital
 
 `DELETE` /hospital/`{id}`
 
@@ -126,11 +126,11 @@ Apaga o hospital com o `id` informado no parametro do path
 
 | Código | descrição |
 |--------|-----------|
-|204| Categorias apagada com sucesso
-|404| A categoria não foi encontrada, Verifique o `id` informado	
+|204| Hospital apagado com sucesso|
+|404| O hospital não foi encontrada, Verifique o `id` informado|
 ---
 
-### Detalhar categoria
+### Detalhar Hospital
 
 `GET` /hospital/`{id}`
 
@@ -153,65 +153,74 @@ Retorna os dados do hospital com o `id` informado no parametro do path
 
 | Código | descrição |
 |--------|-----------|
-|204| Categorias retornada com sucesso
-|404| Não existe categoria com o `id` informado
+|204| Hospital retornado com sucesso
+|404| Não existe hospital com o `id` informado
 ---
 
-### Atualizar Categoria
+### Atualizar Hospital
 
-`PUT` /categoria/`{id}`
+`PUT` /hospital/`{id}`
 
-Atualiza os dados da categoria com o `id` informado no path
+Atualiza os dados do hospital com o `id` informado no path
 
 ### Corpo de Requisição
 
 |campo|tipo|obrigatório|descrição|
 |-----|----|:-----------:|---------|
-|nome|string|✅| um nome curto para indentificar a categoria|
-|icone|string|✅ |O nome do icone conforme biblioteca Material Icons
+|nome|string|✅|Nome do hospital
+|telefone|string|✅| Numero do telefone do hospital
+|cnpj|string|✅|Numero do cnpj do hospital
+|ativo|boolean|✅|Se o hospital está ativo ou não
+
 
 ```js
-    {
-        "nome": "Cama, mesa e Banho",
-        "icone": "Toalha de Mesa"
+ {
+        "id": 1,
+        "nome": "Hospital Universitário",
+        "telefone": "66554433221",
+        "cnpj": "05.388.218/0001-89",
+        "ativo": true
     }
 ```
 ### Exemplo de Resposta
 
 ```js
-{
-    "id": "2",
-    "nome": "Cama, mesa e banho",
-    "icone": "Toalha de Mesa"
-}
+ {
+        "id": 1,
+        "nome": "Hospital Universitário",
+        "telefone": "66554433221",
+        "cnpj": "05.388.218/0001-89",
+        "ativo": true
+    }
 ```
 
 ### Códigos de Resposta
 
 | Código | descrição |
 |--------|-----------|
-|200| Categorias cadastrada com sucesso
+|200| Hospital cadastrado com sucesso
 |400| Validação falhou. Verifiqye os dados enviados da requisição
-|401| Não autorizado. Realize a autenticaçãoem /login
-|404| Não existe categoria com o `id` informado
+|404| Não existe hospital com o `id` informado
 
 ---
 
-### Listar Produtos
+### Listar Paciente
 
-`GET` /categoria/produtos
+`GET` /paciente
 
-Retorna um array com todas os produtos cadastradas em determinda categoria pelo usuario atual.
-
+Retorna um array com todas os pacientes cadastrados em determindo hospital.
 ### Exemplo de Resposta
 
 ```js
     [
-        {
-            "id": "1",
-            "nome": "Escorredor de Bambu",
-            "icone": "Escorredor de Bambu"
-        }
+         {
+        "id": 1,
+        "nome": "Maria Oliveira",
+        "cpf": "699.172.060-78",
+        "telefone": "99887766551",
+        "idade": 25,
+        "genero": "FEMININO"
+    }
     ]
 ```
 
@@ -219,43 +228,49 @@ Retorna um array com todas os produtos cadastradas em determinda categoria pelo 
 
 | Código | descrição |
 |--------|-----------|
-|200| Categorias retornadas com sucesso
-|401| Não autorizado. Realize a autenticaçãoem /login
+|200| Pacientes retornados com sucesso
 
 ---
 
-### Cadastrar Produto
+### Cadastrar Paciente
 
-`POST` /produto
+`POST` /paciente
 
-Cadastra um produto em uma categoria criada pelo usuario atual de acordo com os dados enviados no corpo da requisição.
+Cadastra um paciente em um hospital de acordo com os dados enviados no corpo da requisição.
 
 ### Corpo de Requisição
 
 |campo|tipo|obrigatório|descrição|
 |-----|----|:-----------:|---------|
-|nome|string|✅| um nome curto para indentificar o produto|
-|icone|string|✅ |O nome do icone conforme biblioteca Material Icons
-|categoria|ObjectId|✅| Id de uma categoria, caso o Id não exista, irá ser criado uma  nova categoria com esse Id.
-|descrição|string|❌| Uma breve descrição do que é esse produto|
+|nome|string|✅| Nome do paciente|
+|cpf|string|✅|cpf do paciente|
+|telefone|string|✅|telefone paciente|
+|idade|int|✅|idade do paciente|
+|genero|string|✅|MASCULINO ou FEMININO
+
+
 
 ```js
-    {
-        "nome": "Escorredor de Bambu",
-        "icone": "Escorredor de Bambu",
-        "categoriaId": "1",
-        "descricao": "descrição do produto"
+      {
+        "nome": "Maria Oliveira",
+        "cpf": "699.172.060-78",
+        "telefone": "99887766551",
+        "idade": 25,
+        "genero": "FEMININO"
     }
 ```
 ### Exemplo de Resposta
 
 ```js
 {
-    "id": "1",
-    "nome": "Escorredor de Bambu",
-    "icone": "Escorredor de Bambu",
-    "descricao": "descricao do produto",
-    "categoriaId": "1"
+     {
+        "id": 1,
+        "nome": "Maria Oliveira",
+        "cpf": "699.172.060-78",
+        "telefone": "99887766551",
+        "idade": 25,
+        "genero": "FEMININO"
+    }
 }
 ```
 
@@ -263,112 +278,118 @@ Cadastra um produto em uma categoria criada pelo usuario atual de acordo com os 
 
 | Código | descrição |
 |--------|-----------|
-|201| Produto cadastrado com sucesso
+|201| Paciente cadastrado com sucesso
 |400| Validação falhou. Verifique os dados enviados da requisição
-|401| Não autorizado. Realize a autenticaçãoem /login
+
 ---
 
-### Apagar Produto
+### Apagar Paciente
 
-`DELETE` /produto/`{id}`
+`DELETE` /paciente/`{id}`
 
-Apaga o produto com o `id` informado no parametro do path
+Apaga o paciente com o `id` informado no parametro do path
 
 ### Códigos de Resposta
 
 | Código | descrição |
 |--------|-----------|
-|204| Produto apagado com sucesso
-|401| Não autorizado. Realize a autenticaçãoem /login
-|404| O produto não foi encontrada, Verifique o `id` informado	
+|204| Paciente apagado com sucesso
+|404| O paciente não foi encontrado, Verifique o `id` informado	
 ---
 
-### Detalhar Produto
+### Detalhar Paciente
 
-`GET` /produto/`{id}`
+`GET` /paciente/`{id}`
 
-Retorna os dados do produto com o `id` informado no parametro do path
+Retorna os dados do paciente com o `id` informado no parametro do path
 
 ### Exemplo de Resposta
 
 ```js
 
-{
-    "id": "1",
-    "nome": "Escorredor de Bambu",
-    "icone": "Escorredor de Bambu",
-    "descricao": "descricao do produto",
-    "categoria": "Utensílios de Cozinha"
-}
+  {
+        "id": 1,
+        "nome": "Maria Oliveira",
+        "cpf": "699.172.060-78",
+        "telefone": "99887766551",
+        "idade": 25,
+        "genero": "FEMININO"
+    }
 ```
 
 ### Códigos de Resposta
 
 | Código | descrição |
 |--------|-----------|
-|204| Produto retornado com sucesso
-|401| Não autorizado. Realize a autenticaçãoem /login
-|404| Não existe produto com o `id` informado
+|204| Paciente retornado com sucesso
+|404| Não existe paciente com o `id` informado
 ---
 
-### Atualizar Produto
+### Atualizar Paciente
 
-`PUT` /produto/`{id}`
+`PUT` /paciente/`{id}`
 
-Atualiza os dados do produto com o `id` informado no path
+Atualiza os dados do paciente com o `id` informado no path
 
 ### Corpo de Requisição
 
 |campo|tipo|obrigatório|descrição|
 |-----|----|:-----------:|---------|
-|nome|string|✅| um nome curto para indentificar o produto|
-|icone|string|✅ |O nome do icone conforme biblioteca Material Icons
-|categoria|ObjectId|✅| Id de uma categoria, caso o Id não exista, irá ser criado uma  nova categoria com esse Id.
-|descrição|string|❌| Uma breve descrição do que é esse produto|
+|nome|string|✅| Nome do paciente|
+|cpf|string|✅|cpf do paciente|
+|telefone|string|✅|telefone paciente|
+|idade|int|✅|idade do paciente|
+|genero|string|✅|MASCULINO ou FEMININO
+
 
 ```js
     {
-        "nome": "Escorredor de Bambu",
-        "icone": "Escorredor de Bambu",
-        "categoriaId": "1",
-        "descricao": "descrição do produto"
+        "id": 1,
+        "nome": "Maria Oliveira",
+        "cpf": "699.172.060-78",
+        "telefone": "99887766551",
+        "idade": 25,
+        "genero": "FEMININO"
     }
 ```
 ### Exemplo de Resposta
 
 ```js
-{
-    "id": "1",
-    "nome": "Escorredor de Bambu",
-    "icone": "Escorredor de Bambu",
-    "descricao": "descricao do produto",
-    "categoriaId": "1"
-}
+ {
+        "id": 1,
+        "nome": "Maria Oliveira",
+        "cpf": "699.172.060-78",
+        "telefone": "99887766551",
+        "idade": 25,
+        "genero": "FEMININO"
+    }
 ```
 ### Códigos de Resposta
 
 | Código | descrição |
 |--------|-----------|
-|200| Produto cadastrado com sucesso
+|200| Paciente cadastrado com sucesso
 |400| Validação falhou. Verifique os dados enviados da requisição
-|401| Não autorizado. Realize a autenticaçãoem /login
-|404| Não existe produto com o `id` informado
+|404| Não existe paciente com o `id` informado
 ---
 
-### Listar Usuarios
+### Listar Anamnesia
 
 `GET` /usuarios
 
-Retorna um array com todos os usuarios cadastrados no seu sistema.
+Retorna um array com todo historico medico do paciente
 
 ### Exemplo de Resposta
 
 ```js
     [
-        {
-            "id": "1",
-            "nome": "Usuario 1",
-        }
+         {
+        "id": 1,
+        "lesoes": "Erupção cutânea na região dos braços e pernas",
+        "genetica": "Histórico familiar de diabetes",
+        "cronicas": "Hipertensão",
+        "alergias": "Alergia à penicilina"
+    }
     ]
 ```
 
@@ -376,39 +397,44 @@ Retorna um array com todos os usuarios cadastrados no seu sistema.
 
 | Código | descrição |
 |--------|-----------|
-|200| Usuarios retornadas com sucesso
+|200| Anamnesia retornadas com sucesso
 ---
 
-### Cadastrar Produto
+### Cadastrar Anamnesia
 
-`POST` /usuario
+`POST` /anamnesia
 
-Cadastra um usuario com os dados enviados no corpo da requisição.
+Cadastra uma anamnesia com os dados enviados no corpo da requisição.
 
 ### Corpo de Requisição
 
 |campo|tipo|obrigatório|descrição|
 |-----|----|:-----------:|---------|
-|nome|string|✅| nome  do usuario |
-|senha|string|✅| senha |   
-|e-mail|string|✅| e-mail do usuario |
+|lesoes|string|✅|Lesões que o paciente já teve ou tem
+|genetica|string|✅|Doenças geneticas do paciente
+|cronicas|string|✅|Doenças cronicas do paciente
+|alergia|string|✅|Alergia do paciente
 
 ```js
-    {
-       "id": "1",
-       "nome":"User Example",
-       "senha":"123456",
-       "email":"user@example.com"
+ {
+        
+        "lesoes": "Erupção cutânea na região dos braços e pernas",
+        "genetica": "Histórico familiar de diabetes",
+        "cronicas": "Hipertensão",
+        "alergias": "Alergia à penicilina"
     }
 ```
 ### Exemplo de Resposta
 
 ```js
 {
-       "id" : "1",
-       "nome":"User Example",
-       "senha":"123456",
-       "email":"user@example.com"
+      {
+        "id": 1,
+        "lesoes": "Erupção cutânea na região dos braços e pernas",
+        "genetica": "Histórico familiar de diabetes",
+        "cronicas": "Hipertensão",
+        "alergias": "Alergia à penicilina"
+    }
 }
 ```
 
@@ -416,40 +442,41 @@ Cadastra um usuario com os dados enviados no corpo da requisição.
 
 | Código | descrição |
 |--------|-----------|
-|201| Usuario cadastrado com sucesso
+|201| Anamnesia cadastrada com sucesso
 |400| Validação falhou. Verifique os dados enviados da requisição
 
 ---
 
-### Apagar Usuario
+### Apagar Anamnesia
 
-`DELETE` /usuario/`{id}`
+`DELETE` /anamnesia/`{id}`
 
-Apaga o usuario com o `id` informado no parametro do path
+Apaga a anamnesia com o `id` informado no parametro do path
 
 ### Códigos de Resposta
 
 | Código | descrição |
 |--------|-----------|
-|204| Usuario apagado com sucesso
-|401| Não autorizado. Realize a autenticaçãoem /login
-|404| O Usuario não foi encontrada, Verifique o `id` informado	
+|204| Anamnesia apagado com sucesso
+|404| A anamnesia não foi encontrada, Verifique o `id` informado	
 ---
 
-### Detalhar Usuario
+### Detalhar Anamnesia
 
-`GET` /usuario/`{id}`
+`GET` /anamnesia/`{id}`
 
-Retorna os dados do Usuario com o `id` informado no parametro do path
+Retorna os dados da Anamnesia com o `id` informado no parametro do path
 
 ### Exemplo de Resposta
 
 ```js
 
 {
-    "id": "1",
-    "nome": "Exemplo",
-    "email": "ex@ex.com",
+    "id": 1,
+    "lesoes": "Sem lesões significativas",
+    "genetica": "Nenhuma doença genética    conhecida na família",
+    "cronicas": "Sinusite",
+    "alergias": "Nenhuma"
 }
 ```
 
@@ -457,65 +484,71 @@ Retorna os dados do Usuario com o `id` informado no parametro do path
 
 | Código | descrição |
 |--------|-----------|
-|204| Usuario retornado com sucesso
-|404| Não existe usuario com o `id` informado
+|204| Anamnesia retornado com sucesso
+|404| Não existe anamnesia com o `id` informado
 ---
-### Atualizar Usuario
+### Atualizar Anamnesia
 
-`PUT` /usuario/`{id}`
+`PUT` /anamnesia/`{id}`
 
-Atualiza os dados do usuario com o `id` informado no path
+Atualiza os dados da anamnesia com o `id` informado no path
 
 ### Corpo de Requisição
 
 |campo|tipo|obrigatório|descrição|
 |-----|----|:-----------:|---------|
-|nome|string|✅| nome  do usuario |
-|senha|string|✅| senha |   
-|e-mail|string|✅| e-mail do usuario |
-
+|lesoes|string|✅|Lesões que o paciente já teve ou tem
+|genetica|string|✅|Doenças geneticas do paciente
+|cronicas|string|✅|Doenças cronicas do paciente
+|alergia|string|✅|Alergia do paciente
 ```js
-    {
-       "id": "1",
-       "nome":"User Example",
-       "senha":"123456",
-       "email":"user@example.com"
-    }
+   {
+    "id": 1,
+    "lesoes": "Sem lesões significativas",
+    "genetica": "Nenhuma doença genética    conhecida na família",
+    "cronicas": "Sinusite",
+    "alergias": "Nenhuma"
+}
 ```
 ### Exemplo de Resposta
 
 ```js
 {
-       "id" : "1",
-       "nome":"User Example",
-       "senha":"123456",
-       "email":"user@example.com"
+    {
+    "id": 1,
+    "lesoes": "Sem lesões significativas",
+    "genetica": "Nenhuma doença genética    conhecida na família",
+    "cronicas": "Sinusite",
+    "alergias": "Nenhuma"
+}
 }
 ```
 ### Códigos de Resposta
 
 | Código | descrição |
 |--------|-----------|
-|200| Usuario atualizado com sucesso
+|200| Anamnesia atualizado com sucesso
 |400| Validação falhou. Verifique os dados enviados da requisição
-|401| Não autorizado. Realize a autenticaçãoem /login
-|404| Não existe usuario com o `id` informado
+|404| Não existe Anamnesia com o `id` informado
 ---
 
-### Listar Estoque
+### Listar Convenio
 
-`GET` /produto/estoque
+`GET` /convenio
 
-Retorna um int  com a quantidade total de produtos no estoque
+Retorna uma lista de convenios
 
 ### Exemplo de Resposta
 
 ```js
     [
-        {
-            "id":"1",
-            "estoque": "quantidade"
-        }
+    {
+        "id": 1,
+        "nome": "Convenio A",
+        "cnpj": "37.050.194/0001-40",
+        "telefone": "1111111-1111",
+        "ativo": true
+    }
     ]
 ```
 
@@ -523,35 +556,45 @@ Retorna um int  com a quantidade total de produtos no estoque
 
 | Código | descrição |
 |--------|-----------|
-|200| Estoque retornadas com sucesso
+|200| Convenios retornados com sucesso
 |401| Não autorizado. Realize a autenticaçãoem /login
 
 ---
 
-### Lançar Estoque
+### Lançar Convenio
 
-`POST` /produto/estoque
+`POST` convenio
 
-Lança a quantidade de um produto
+Cria um convenio
 
 ### Corpo de Requisição
 
 |campo|tipo|obrigatório|descrição|
 |-----|----|:-----------:|---------|
-|Quantidade|int|✅|A quantidade do produto em estoque, que sera lançado.
+|nome|string|✅|Nome do convenio
+|cnpj|string|✅|cnpj valido
+|telefone|string|✅|telefone do convenio
+|ativo|boolean|✅|se o convenio é valido
 
 ```js
-    {
-        "id": "1",
-        "Quantidade": "5"
-    }
+   {
+ 
+    "nome": "Convenio A",
+    "cnpj": "37.050.194/0001-40",
+    "telefone": "1111111-1111",
+    "ativo": true
+}
 ```
 ### Exemplo de Resposta
 
 ```js
-{
-        "id": "1",
-        "Quantidade": "5"
+
+    {
+    "id": 1,
+    "nome": "Convenio A",
+    "cnpj": "37.050.194/0001-40",
+    "telefone": "1111111-1111",
+    "ativo": true
 }
 ```
 
@@ -559,36 +602,48 @@ Lança a quantidade de um produto
 
 | Código | descrição |
 |--------|-----------|
-|201| Estoque lançado com sucesso
+|201| Convenio lançado com sucesso
 |400| Validação falhou. Verifique os dados enviados da requisição
-|401| Não autorizado. Realize a autenticaçãoem /login
+
 
 ---
 
-### Atualizar Estoque
+### Atualizar Convenio
 
-`PUT` /produto/estoque/`{id}`
+`PUT` /convenio`{id}`
 
-Atualiza o estoque do produto com o `id` informado no parametro do path
+Atualiza o convenio do produto com o `id` informado no parametro do path
 
 ### Corpo de Requisição
 
+
 |campo|tipo|obrigatório|descrição|
 |-----|----|:-----------:|---------|
-|Quantidade|int|✅|A quantidade do produto em estoque,  que será atualizado do estoque atual. 
+|nome|string|✅|Nome do convenio
+|cnpj|string|✅|cnpj valido
+|telefone|string|✅|telefone do convenio
+|ativo|boolean|✅|se o convenio é valido
 
 ```js
+    
     {
-        "id": "1",
-        "Quantidade": "5"
-    }
+    "id": 1,
+    "nome": "Convenio A",
+    "cnpj": "37.050.194/0001-40",
+    "telefone": "1111111-1111",
+    "ativo": true
+}
 ```
 ### Exemplo de Resposta
 
 ```js
-{
-        "id": "1",
-        "Quantidade": "5"
+
+    {
+    "id": 1,
+    "nome": "Convenio A",
+    "cnpj": "37.050.194/0001-40",
+    "telefone": "1111111-1111",
+    "ativo": true
 }
 ```
 
@@ -596,41 +651,43 @@ Atualiza o estoque do produto com o `id` informado no parametro do path
 
 | Código | descrição |
 |--------|-----------|
-|204| Estoque apago com sucesso
-|401| Não autorizado. Realize a autenticação em /login
+|204| Convenio apago com sucesso
 |400| Validação falhou. Verifique os dados enviados da requisição
-|404| O produto não foi encontrada, Verifique o `id` informado	
+|404| O convenio não foi encontrada, Verifique o `id` informado	
 ---
 
-### Deletar Estoque
+### Deletar Convenio
 
-`DELETE` /produto/estoque/`{id}`
+`DELETE` convenio`{id}`
 
-Apaga o estoque do produto com o `id` informado no parametro do path
+Apaga o convenio do produto com o `id` informado no parametro do path
 
 
 ### Códigos de Resposta
 
 | Código | descrição |
 |--------|-----------|
-|204| Estoque apago com sucesso
-|401| Não autorizado. Realize a autenticação em /login
-|404| O produto não foi encontrada, Verifique o `id` informado	
+|204| Convenio apagado com sucesso
+|404| O convenio não foi encontrada, Verifique o `id` informado	
 ---
 
 ### Detalhar Estoque
 
-`GET` /produto/estoque/`{id}`
+`GET` /convenio`{id}`
 
-Retorna os dados do estoque com o `id` informado no parametro do path
+Retorna os dados do convenio com o `id` informado no parametro do path
 
 ### Exemplo de Resposta
 
 ```js
 
-{
-    "id": "1",
-    "quantidade":"5"
+
+    {
+    "id": 1,
+    "nome": "Convenio A",
+    "cnpj": "37.050.194/0001-40",
+    "telefone": "1111111-1111",
+    "ativo": true
 }
 ```
 
@@ -638,6 +695,6 @@ Retorna os dados do estoque com o `id` informado no parametro do path
 
 | Código | descrição |
 |--------|-----------|
-|204| Estoque retornado com sucesso
+|204| Convenio retornado com sucesso
 |404| Não existe estoque com o `id` informado
 ---
