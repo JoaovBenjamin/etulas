@@ -39,11 +39,12 @@ https://trello.com/b/kqlZiZMV/plusoft
 - [Apagar  Anamnesia](#apagar-anamnesia)
 - [Detalhar  Anamnesia](#detalhar-anamnesia)
 - [Atualizar  Anamnesia](#atualizar-anamnesia)
-- [Listar Convenio](#listar-Convenio)
-- [Lançar Convenio](#lancar-Convenio)
-- [Atualizar Convenio](#atualizar-Convenio)
-- [Deletar Convenio](#deletar-Convenio)
-- [Detalhar Convenio](#detalhar-Convenio)
+- [Listar Convenio](#listar-convenio)
+- [Lançar Convenio](#lancar-convenio)
+- [Atualizar Convenio](#atualizar-convenio)
+- [Deletar Convenio](#deletar-convenio)
+- [Detalhar Convenio](#detalhar-convenio)
+- [Listar Ficha Atendimento](#listar-ficha-atendimento)
 
 ### Listar Hospital
 
@@ -671,7 +672,7 @@ Apaga o convenio do produto com o `id` informado no parametro do path
 |404| O convenio não foi encontrada, Verifique o `id` informado	
 ---
 
-### Detalhar Estoque
+### Detalhar Convenio
 
 `GET` /convenio`{id}`
 
@@ -697,4 +698,37 @@ Retorna os dados do convenio com o `id` informado no parametro do path
 |--------|-----------|
 |204| Convenio retornado com sucesso
 |404| Não existe estoque com o `id` informado
+---
+
+### Listar Ficha Atendimento
+
+`GET` /fichadeatendimento
+
+Retorna uma lista com as fichas de atendimento
+
+### Exemplo de Resposta
+
+```js
+    [
+      {
+        "id": 1,
+        "peso": 70.5,
+        "pressao": "120/80",
+        "altura": 1.75,
+        "temperatura": 37.2,
+        "dores": "Dores leves nas costas",
+        "entradaPaciente": "2024-04-16",
+        "saidaPaciente": "2024-04-17",
+        "ativo": true
+    }
+    ]
+```
+
+### Códigos de Resposta
+
+| Código | descrição |
+|--------|-----------|
+|200| Ficha de atendimento retornados com sucesso
+|401| Não autorizado. Realize a autenticaçãoem /login
+
 ---
