@@ -732,3 +732,50 @@ Retorna uma lista com as fichas de atendimento
 |401| Não autorizado. Realize a autenticaçãoem /login
 
 ---
+
+### Lançar Ficha de Atendimento
+
+`POST` convenio
+
+Cria um convenio
+
+### Corpo de Requisição
+
+|campo|tipo|obrigatório|descrição|
+|-----|----|:-----------:|---------|
+|nome|string|✅|Nome do convenio
+|cnpj|string|✅|cnpj valido
+|telefone|string|✅|telefone do convenio
+|ativo|boolean|✅|se o convenio é valido
+
+```js
+   {
+ 
+    "nome": "Convenio A",
+    "cnpj": "37.050.194/0001-40",
+    "telefone": "1111111-1111",
+    "ativo": true
+}
+```
+### Exemplo de Resposta
+
+```js
+
+    {
+    "id": 1,
+    "nome": "Convenio A",
+    "cnpj": "37.050.194/0001-40",
+    "telefone": "1111111-1111",
+    "ativo": true
+}
+```
+
+### Códigos de Resposta
+
+| Código | descrição |
+|--------|-----------|
+|201| Convenio lançado com sucesso
+|400| Validação falhou. Verifique os dados enviados da requisição
+
+
+---

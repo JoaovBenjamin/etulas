@@ -498,7 +498,8 @@
 							},
 							"response": []
 						}
-					]
+					],
+					"description": "Teste do projeto Etulas no CRUD HOSPITAL"
 				},
 				{
 					"name": "Paciente API",
@@ -640,7 +641,8 @@
 							},
 							"response": []
 						}
-					]
+					],
+					"description": "Teste do projeto ETULAS no CRUD de paciente"
 				},
 				{
 					"name": "Endereco API",
@@ -761,10 +763,318 @@
 							},
 							"response": []
 						}
+					],
+					"description": "Teste do projeto ETULAS do CRUD endereço"
+				},
+				{
+					"name": "Convenio",
+					"item": [
+						{
+							"name": "POST Convenio",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// {\r\n//   \"nome\": \"Convenio A\",\r\n//   \"cnpj\": \"37.050.194/0001-40\",\r\n//   \"telefone\": \"1111111-1111\",\r\n//   \"ativo\": true\r\n// }\r\n\r\n// {\r\n//   \"nome\": \"Convenio B\",\r\n//   \"cnpj\": \"46.437.686/0001-83\",\r\n//   \"telefone\": \"1111111-1111\",\r\n//   \"ativo\": true\r\n// }\r\n\r\n// {\r\n//   \"nome\": \"Convenio A\",\r\n//   \"cnpj\": \"16.057.491/0001-47\",\r\n//   \"telefone\": \"1111111-1111\",\r\n//   \"ativo\": false\r\n// }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/convenio",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"convenio"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET convenio",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/convenio",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"convenio"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Convenio",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"id\": 2,\r\n        \"nome\": \"Convenio D\",\r\n        \"cnpj\": \"16.057.491/0001-47\",\r\n        \"telefone\": \"1111111-1111\",\r\n        \"ativo\": true\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/convenio/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"convenio",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Convenio by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/convenio/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"convenio",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Convenio",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/convenio/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"convenio",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Teste do projeto etulas no CRUD convenio"
+				},
+				{
+					"name": "Anamnesia",
+					"item": [
+						{
+							"name": "Anamnesia",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/anamnesia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"anamnesia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Anamnesia",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// {\r\n//   \"lesoes\": \"Erupção cutânea na região dos braços e pernas\",\r\n//   \"genetica\": \"Histórico familiar de diabetes\",\r\n//   \"cronicas\": \"Hipertensão\",\r\n//   \"alergias\": \"Alergia à penicilina\"\r\n// }\r\n\r\n// {\r\n//   \"lesoes\": \"Sem lesões significativas\",\r\n//   \"genetica\": \"Nenhuma doença genética conhecida na família\",\r\n//   \"cronicas\": \"Nenhuma\",\r\n//   \"alergias\": \"Nenhuma\"\r\n// }\r\n// {\r\n//   \"lesoes\": \"Eczema nas mãos\",\r\n//   \"genetica\": \"Histórico familiar de doença cardíaca\",\r\n//   \"cronicas\": \"Asma\",\r\n//   \"alergias\": \"Alergia a amendoim\"\r\n// }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/anamnesia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"anamnesia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Anamnesia",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/anamnesia/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"anamnesia",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Anamnesia",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n        \"id\": 1,\r\n        \"lesoes\": \"Sem lesões significativas\",\r\n        \"genetica\": \"Nenhuma doença genética conhecida na família\",\r\n        \"cronicas\": \"Sinusite\",\r\n        \"alergias\": \"Nenhuma\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/anamnesia/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"anamnesia",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET By Id Anamnesia",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/anamnesia/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"anamnesia",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ficha de Atendimento",
+					"item": [
+						{
+							"name": "Get Ficha de Atendimento",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/fichadeatendimento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fichadeatendimento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Ficha de Atendimento",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// {\r\n//   \"peso\": 70.5,\r\n//   \"pressao\": \"120/80\",\r\n//   \"altura\": 1.75,\r\n//   \"temperatura\": 37.2,\r\n//   \"dores\": \"Dores leves nas costas\",\r\n//   \"entradaPaciente\": \"2024-04-16\",\r\n//   \"saidaPaciente\": \"2024-04-17\",\r\n//   \"ativo\": true\r\n// }\r\n\r\n// {\r\n//   \"peso\": 65.2,\r\n//   \"pressao\": \"110/70\",\r\n//   \"altura\": 1.68,\r\n//   \"temperatura\": 36.8,\r\n//   \"dores\": \"Sem dores\",\r\n//   \"entradaPaciente\": \"2024-04-18\",\r\n//   \"saidaPaciente\": \"2024-04-19\",\r\n//   \"ativo\": true\r\n// }\r\n// {\r\n//   \"peso\": 80.0,\r\n//   \"pressao\": \"130/90\",\r\n//   \"altura\": 1.80,\r\n//   \"temperatura\": 37.5,\r\n//   \"dores\": \"Dores intensas no abdômen\",\r\n//   \"entradaPaciente\": \"2024-04-13\",\r\n//   \"saidaPaciente\": \"2024-04-14\",\r\n//   \"ativo\": false\r\n// }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/fichadeatendimento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fichadeatendimento"
+									]
+								}
+							},
+							"response": []
+						}
 					]
 				}
 			],
-			"description": "This folder contains examples of testing a single HTTP API request.\n\nIn the Postman app, under the \"Tests\" tab for each request, notice the test(s) written to validate specific assertions. Some of these tests are available as a \"Snippet\" on the right sidebar.\n\nSend each request to see the results under the \"Test Results\" tab in the response viewer.",
+			"description": "Teste de API do projeto Etulas.",
 			"event": [
 				{
 					"listen": "prerequest",
