@@ -1,12 +1,20 @@
-https://www.youtube.com/watch?v=ULhxvNu56h0&feature=youtu.be
 
 # Projeto Etulas
 
 API Rest do projeto Etulas- Vizualização de lotação de Hospital
 
 ## Divisão das resposabilidades e conograma
+ --Eduardo Bezerra - RM: 98890 - QA
+--Jefferson Mendes de Farias Lima - RM: 552052 -IA
+--Joao Vitor Vicente Benjamin - RM: 98938  -Java e Banco
+--Luiz Felipe Biazzola Cavalcante - RM: 99250 - Kotlin
+--Silas Henrique da Silva Oliveira - RM: 98965 - Devops
 
 https://trello.com/b/kqlZiZMV/plusoft
+
+## Video do Projeto
+https://www.youtube.com/watch?v=ULhxvNu56h0&feature=youtu.be
+
 
 ## Requisitos
 
@@ -47,9 +55,8 @@ https://trello.com/b/kqlZiZMV/plusoft
 - [Listar Ficha Atendimento](#listar-ficha-atendimento)
 - [Lançar Ficha Atendimento](#lançar-ficha-de-atendimento)
 - [Atualizar Ficha Atendimento](#atualizar-ficha-de-atendimento)
-
 - [Deletar Ficha Atendimento](#deletar-ficha-atendimento)
-- [Detalhar Ficha de Atendimento](#)
+- [Detalhar Ficha de Atendimento](#detalhar-ficha-atendimento)
 ### Listar Hospital
 
 `GET` /hospital
@@ -868,7 +875,7 @@ Apaga a ficha de atendimento do paciente com o `id` informado no parametro do pa
 |404| O convenio não foi encontrada, Verifique o `id` informado	
 ---
 
-### Detalhar Hospital
+### Detalhar Ficha Atendimento
 
 `GET` /fichadeatendimento/`{id}`
 
