@@ -45,7 +45,11 @@ https://trello.com/b/kqlZiZMV/plusoft
 - [Deletar Convenio](#deletar-convenio)
 - [Detalhar Convenio](#detalhar-convenio)
 - [Listar Ficha Atendimento](#listar-ficha-atendimento)
+- [Lançar Ficha Atendimento](#lançar-ficha-de-atendimento)
+- [Atualizar Ficha Atendimento](#atualizar-ficha-de-atendimento)
 
+- [Deletar Ficha Atendimento](#deletar-ficha-atendimento)
+- [Detalhar Ficha de Atendimento](#)
 ### Listar Hospital
 
 `GET` /hospital
@@ -652,7 +656,7 @@ Atualiza o convenio do produto com o `id` informado no parametro do path
 
 | Código | descrição |
 |--------|-----------|
-|204| Convenio apago com sucesso
+|204| Convenio alterado com sucesso
 |400| Validação falhou. Verifique os dados enviados da requisição
 |404| O convenio não foi encontrada, Verifique o `id` informado	
 ---
@@ -735,38 +739,48 @@ Retorna uma lista com as fichas de atendimento
 
 ### Lançar Ficha de Atendimento
 
-`POST` convenio
+`POST` Ficha de atendimento
 
-Cria um convenio
+Cria uma ficha de atendimento do paciente
 
 ### Corpo de Requisição
 
 |campo|tipo|obrigatório|descrição|
 |-----|----|:-----------:|---------|
-|nome|string|✅|Nome do convenio
-|cnpj|string|✅|cnpj valido
-|telefone|string|✅|telefone do convenio
-|ativo|boolean|✅|se o convenio é valido
+|peso|float|✔|Peso do paciente
+|pressao|string|✔|Pressão do paciente
+|altura|float|✔|Altura   do paciente
+|dores|string|✔|Descrição das dores sentidas do paciente
+|entradaPaciente|LocalDate|✔|Horario de entrada do paciente
+|saidaPaciente|LocalDate|✔| Horario de saida do paciente
+|ativo|Boolean|✔|Se o paciente ainda está ativo ou não
 
 ```js
-   {
- 
-    "nome": "Convenio A",
-    "cnpj": "37.050.194/0001-40",
-    "telefone": "1111111-1111",
-    "ativo": true
+{
+  "peso": 70.5,
+  "pressao": "120/80",
+  "altura": 1.75,
+  "temperatura": 37.2,
+  "dores": "Dores leves nas costas",
+  "entradaPaciente": "2024-04-16",
+  "saidaPaciente": "2024-04-17",
+  "ativo": true
 }
 ```
 ### Exemplo de Resposta
 
 ```js
 
-    {
-    "id": 1,
-    "nome": "Convenio A",
-    "cnpj": "37.050.194/0001-40",
-    "telefone": "1111111-1111",
-    "ativo": true
+ {
+  "id":1,
+  "peso": 70.5,
+  "pressao": "120/80",
+  "altura": 1.75,
+  "temperatura": 37.2,
+  "dores": "Dores leves nas costas",
+  "entradaPaciente": "2024-04-16",
+  "saidaPaciente": "2024-04-17",
+  "ativo": true
 }
 ```
 
@@ -774,8 +788,113 @@ Cria um convenio
 
 | Código | descrição |
 |--------|-----------|
-|201| Convenio lançado com sucesso
+|201| Ficha de atendimento lançado com sucesso
 |400| Validação falhou. Verifique os dados enviados da requisição
 
 
+---
+
+### Atualizar Ficha de Atendimento
+
+`PUT` /fichadeatendimento`{id}`
+
+Atualiza a ficha de atendimento do paciente com o `id` informado no parametro do path
+
+### Corpo de Requisição
+
+
+|campo|tipo|obrigatório|descrição|
+|-----|----|:-----------:|---------|
+|peso|float|✔|Peso do paciente
+|pressao|string|✔|Pressão do paciente
+|altura|float|✔|Altura   do paciente
+|dores|string|✔|Descrição das dores sentidas do paciente
+|entradaPaciente|LocalDate|✔|Horario de entrada do paciente
+|saidaPaciente|LocalDate|✔| Horario de saida do paciente
+|ativo|Boolean|✔|Se o paciente ainda está ativo ou não
+
+```js
+    
+  {
+  "id":1,
+  "peso": 70.5,
+  "pressao": "120/80",
+  "altura": 1.75,
+  "temperatura": 37.2,
+  "dores": "Dores leves nas costas",
+  "entradaPaciente": "2024-04-16",
+  "saidaPaciente": "2024-04-17",
+  "ativo": true
+}
+```
+### Exemplo de Resposta
+
+```js
+
+  {
+  "id":1,
+  "peso": 70.5,
+  "pressao": "120/80",
+  "altura": 1.75,
+  "temperatura": 37.2,
+  "dores": "Dores leves nas costas",
+  "entradaPaciente": "2024-04-16",
+  "saidaPaciente": "2024-04-17",
+  "ativo": true
+}
+```
+
+### Códigos de Resposta
+
+| Código | descrição |
+|--------|-----------|
+|204| Ficha de atendimento alterado com sucesso
+|400| Validação falhou. Verifique os dados enviados da requisição
+|404| A ficha de atendimento não foi encontrada, Verifique o `id` informado	
+---
+
+### Deletar Ficha  Atendimento
+
+`DELETE` fichadeatendimento/`{id}`
+
+Apaga a ficha de atendimento do paciente com o `id` informado no parametro do path
+
+
+### Códigos de Resposta
+
+| Código | descrição |
+|--------|-----------|
+|204| Ficha de atendimento apagado com sucesso
+|404| O convenio não foi encontrada, Verifique o `id` informado	
+---
+
+### Detalhar Hospital
+
+`GET` /fichadeatendimento/`{id}`
+
+Retorna os dados da ficha de atendimento com o `id` informado no parametro do path
+
+### Exemplo de Resposta
+
+```js
+
+{
+  "id":1,
+  "peso": 70.5,
+  "pressao": "120/80",
+  "altura": 1.75,
+  "temperatura": 37.2,
+  "dores": "Dores leves nas costas",
+  "entradaPaciente": "2024-04-16",
+  "saidaPaciente": "2024-04-17",
+  "ativo": true
+}
+```
+
+### Códigos de Resposta
+
+| Código | descrição |
+|--------|-----------|
+|204| Ficha de atendimento retornado com sucesso
+|404| Não existe ficha de atendimento com o `id` informado
 ---

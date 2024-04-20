@@ -1070,6 +1070,438 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "POST Ficha atendimento",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1,\r\n  \"peso\": 66.8,\r\n  \"pressao\": \"120/80\",\r\n  \"altura\": 1.75,\r\n  \"temperatura\": 37.2,\r\n  \"dores\": \"Dores leves nas costas\",\r\n  \"entradaPaciente\": \"2024-04-16\",\r\n  \"saidaPaciente\": \"2024-04-17\",\r\n  \"ativo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/fichadeatendimento/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fichadeatendimento",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE ficha de atendimento",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/fichadeatendimento/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fichadeatendimento",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET By Id ",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/fichadeatendimento/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fichadeatendimento",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "especialidades",
+					"item": [
+						{
+							"name": "POST especialidaes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// {\r\n//   \"nomeEspecialidade\": \"CARDIOLOGIA\",\r\n//   \"descricaoEspecialidade\": \"Especialidade médica que se dedica ao diagnóstico e tratamento de doenças do coração e do sistema cardiovascular.\",\r\n//   \"descricaoProcedimento\": \"Realização de consultas, exames de imagem, eletrocardiograma, ecocardiograma, entre outros.\",\r\n//   \"ativo\": true\r\n// }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/especialidades",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"especialidades"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET especialidades",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/especialidades",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"especialidades"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "especialides get by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/especialidades/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"especialidades",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT especialidades",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nomeEspecialidade\": \"CARDIOLOGIA\",\r\n  \"descricaoEspecialidade\": \"Especialidade médica que se dedica ao diagnóstico e tratamento de doenças do coração e do sistema cardiovascular.\",\r\n  \"descricaoProcedimento\": \"Realização de consultas, exames de imagem, eletrocardiograma, ecocardiograma, entre outros.\",\r\n  \"ativo\": false\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/especialidades/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"especialidades",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE especialidades",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/especialidades/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"especialidades",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Equipamentos API",
+					"item": [
+						{
+							"name": "POST Equipamentos",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Ressonância Magnética\",\r\n  \"procedimento\": \"Realização de exames de imagem detalhados para diagnóstico de diversas condições médicas.\",\r\n  \"sala\": 3,\r\n  \"ativo\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/equipamentos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"equipamentos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET equipamentos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/equipamentos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"equipamentos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/equipamentos/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"equipamentos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT equipamentos",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Ressonância Magnética\",\r\n  \"procedimento\": \"Realização de exames de imagem detalhados para diagnóstico de diversas condições médicas.\",\r\n  \"sala\": 6,\r\n  \"ativo\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/equipamentos/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"equipamentos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE equipamentos",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/equipamentos/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"equipamentos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sala API",
+					"item": [
+						{
+							"name": "POST sala",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"numeroDaSala\": \"Sala 101\",\r\n  \"uti\": \"Sim\",\r\n  \"descricao\": \"Sala de internação geral com 10 leitos.\",\r\n  \"ativo\": true\r\n}\r\n\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/sala",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sala"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET SALA",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/sala",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sala"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/sala/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sala",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT sala",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"numeroDaSala\": \"Sala 101\",\r\n  \"uti\": \"Sim\",\r\n  \"descricao\": \"Sala de internação geral com 10 leitos.\",\r\n  \"ativo\": false\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/sala/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sala",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE sala",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/sala/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sala",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
