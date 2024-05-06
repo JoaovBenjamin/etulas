@@ -8,13 +8,18 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.especialidades.EspecialidadesEnum;
+import com.example.etulas.model.sala.Sala;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
+import com.example.etulas.repository.sala.SalaRepository;
 
 @Configuration
 public class DatabaseSeeder implements CommandLineRunner {
     
     @Autowired
     EspecialidadeRepository especialidadeRepository;
+
+    @Autowired
+    SalaRepository salaRepository;
 
     @Override
     public void run(String... args) throws Exception{
@@ -30,5 +35,20 @@ public class DatabaseSeeder implements CommandLineRunner {
                              .build()
             )
         );
+
+        salaRepository.saveAll(
+            List.of(
+                Sala
+                    .builder()
+                    .id(1L)
+                    .numeroDaSala("12")
+                    .descricao("Sala de UTI com 10 leitos")
+                    .uti("Sim")
+                    .ativo(true)
+                    .build()
+                    
+            )
+        );
+        
     }
 }
