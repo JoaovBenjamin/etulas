@@ -12,18 +12,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Table(name = "T_ETU_ESPECIALIDADES")
 public class Especialidades {
     @Column(name = "id_especialidade")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    // TODO: CRIAR UM VALIDATOR PARA ESPECIALIDADES
     @Column(name = "nm_especialidade")
     @Enumerated(EnumType.STRING)
     private EspecialidadesEnum nomeEspecialidade;

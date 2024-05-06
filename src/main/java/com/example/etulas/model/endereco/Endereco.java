@@ -21,8 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "T_ETU_ENDERECO")
 public class Endereco {
     @Column(name = "id_endereco")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nr_edificio")
     @NotBlank(message = "{endereco.numeroEdificio.notblank}")
@@ -39,7 +38,6 @@ public class Endereco {
     @NotBlank(message = "{endereco.cidade.notblank}")
     @Size(min = 4, max = 60, message = "{endereco.cidade.size}")
     private String cidade;
-    // TODO FAZER O VALIDATOR DO UF
     @Column(name = "nm_uf")
     @Enumerated(EnumType.STRING)
     private EnderecoEnum enderecoEnum;
