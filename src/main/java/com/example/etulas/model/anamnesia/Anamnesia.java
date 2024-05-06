@@ -10,12 +10,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
 @Table(name = "T_ETU_ANAMNESIA")
 public class Anamnesia {
     @Column(name = "id_anamnesia")

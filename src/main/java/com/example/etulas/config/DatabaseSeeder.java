@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.etulas.model.anamnesia.Anamnesia;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.especialidades.EspecialidadesEnum;
 import com.example.etulas.model.sala.Sala;
+import com.example.etulas.repository.anamnesia.AnamnesiaRepository;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 import com.example.etulas.repository.sala.SalaRepository;
 
@@ -20,6 +22,9 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Autowired
     SalaRepository salaRepository;
+
+    @Autowired
+    AnamnesiaRepository anamnesiaRepository;
 
     @Override
     public void run(String... args) throws Exception{
@@ -49,6 +54,18 @@ public class DatabaseSeeder implements CommandLineRunner {
                     
             )
         );
-        
+
+        anamnesiaRepository.saveAll(
+            List.of(
+                Anamnesia
+                         .builder()
+                         .alergias( "Alergia à penicilina")
+                         .lesoes("Erupção cutânea na região dos braços e pernas")
+                         .genetica("Histórico familiar de diabetes")
+                         .cronicas("Hipertensão")
+                         .build()
+            )
+        );        
+
     }
 }
