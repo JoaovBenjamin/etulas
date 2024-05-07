@@ -1,5 +1,6 @@
 package com.example.etulas.config;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,14 @@ import com.example.etulas.model.endereco.EnderecoEnum;
 import com.example.etulas.model.equipamentosMedicos.Equipamentos;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.especialidades.EspecialidadesEnum;
+import com.example.etulas.model.fichaAtendimento.FichaDeAtendimento;
 import com.example.etulas.model.sala.Sala;
 import com.example.etulas.repository.anamnesia.AnamnesiaRepository;
 import com.example.etulas.repository.convenio.ConvenioRepository;
 import com.example.etulas.repository.endereco.EnderecoRepository;
 import com.example.etulas.repository.equipamentos.EquipamentosRepository;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
+import com.example.etulas.repository.fichaAtendimento.FichaAtendimentoRepository;
 import com.example.etulas.repository.sala.SalaRepository;
 
 @Configuration
@@ -41,6 +44,9 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Autowired
     EquipamentosRepository equipamentosRepository;
+
+    @Autowired
+    FichaAtendimentoRepository fichaAtendimentoRepository;
 
     @Override
     public void run(String... args) throws Exception{
@@ -122,6 +128,23 @@ public class DatabaseSeeder implements CommandLineRunner {
                 .procedimento("Realização de exames de imagem detalhados para diagnóstico de diversas condições médicas.")
                 .sala(7)
                 .ativo(true)
+                .build()
+            )
+        );
+
+        fichaAtendimentoRepository.saveAll(
+            List.of(
+                FichaDeAtendimento
+                .builder()
+                .id(1L)
+                .altura(67.9)
+                .pressao("120/80")
+                .temperatura(35.0)
+                .ativo(true)
+                .saidaPaciente(LocalDate.now().minusDays(1))
+                .peso(78.80)
+                .entradaPaciente(LocalDate.now())
+                .dores("Dores leves nas costas")
                 .build()
             )
         );

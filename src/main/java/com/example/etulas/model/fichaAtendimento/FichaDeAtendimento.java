@@ -14,12 +14,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
 @Table(name = "T_ETU_FICHA_ATENDIMENTO")
 public class FichaDeAtendimento {
     @Column(name = "id_atendimento")
@@ -27,16 +31,16 @@ public class FichaDeAtendimento {
     private Long id;
     @Column(name = "nr_peso")
     @NotNull(message = "{fichadeatendimento.peso.notnull}")
-    private Float peso;
+    private Double peso;
     @Column(name = "nr_pressao")
     @NotBlank(message = "{fichadeatendimento.pressao.notnull}")
     private String pressao;
     @Column(name = "nr_altura")
     @NotNull(message = "{fichadeatendimento.altura.notnull}")
-    private Float altura;
+    private Double altura;
     @Column(name = "nr_temperatura")
     @NotNull(message = "{fichadeatendimento.temperatura.notnull}")
-    private Float temperatura;
+    private Double temperatura;
     @Column(name = "ds_dores")
     @Size(min = 20, max = 200, message = "{fichadeatendimento.dores.size}")
     @NotBlank(message = "{convenio.dores.notblank}")

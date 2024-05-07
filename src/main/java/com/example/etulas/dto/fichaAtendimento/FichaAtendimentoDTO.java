@@ -2,6 +2,6 @@ package com.example.etulas.dto.fichaAtendimento;
 
 import java.time.LocalDate;
 
-public record FichaAtendimentoDTO(float peso, String pressao, float  altura, float temperatura, String dores, LocalDate entradaPaciente, LocalDate saidaPaciente, Boolean ativo) {
+public record FichaAtendimentoDTO(Double peso, String pressao, Double  altura, Double temperatura, String dores, LocalDate entradaPaciente, LocalDate saidaPaciente, Boolean ativo) {
     
 }
