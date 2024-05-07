@@ -8,11 +8,14 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.etulas.model.anamnesia.Anamnesia;
 import com.example.etulas.model.convenio.Convenio;
+import com.example.etulas.model.endereco.Endereco;
+import com.example.etulas.model.endereco.EnderecoEnum;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.especialidades.EspecialidadesEnum;
 import com.example.etulas.model.sala.Sala;
 import com.example.etulas.repository.anamnesia.AnamnesiaRepository;
 import com.example.etulas.repository.convenio.ConvenioRepository;
+import com.example.etulas.repository.endereco.EnderecoRepository;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 import com.example.etulas.repository.sala.SalaRepository;
 
@@ -30,6 +33,9 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Autowired
     ConvenioRepository convenioRepository;
+
+    @Autowired
+    EnderecoRepository enderecoRepository;
 
     @Override
     public void run(String... args) throws Exception{
@@ -85,6 +91,21 @@ public class DatabaseSeeder implements CommandLineRunner {
             )
       
         );
+
+        enderecoRepository.saveAll(
+            List.of(
+                Endereco
+                .builder()
+                .cidade("Santo André")
+                .bairro("Vila Luzita")
+                .logadouro("Rua dos Cocais")
+                .numeroEdificio("789")
+                .enderecoEnum(EnderecoEnum.PA)
+                .build()
+            )
+        );
+
+        
 
     }
 }
