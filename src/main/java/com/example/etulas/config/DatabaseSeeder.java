@@ -7,10 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.etulas.model.anamnesia.Anamnesia;
+import com.example.etulas.model.convenio.Convenio;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.especialidades.EspecialidadesEnum;
 import com.example.etulas.model.sala.Sala;
 import com.example.etulas.repository.anamnesia.AnamnesiaRepository;
+import com.example.etulas.repository.convenio.ConvenioRepository;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 import com.example.etulas.repository.sala.SalaRepository;
 
@@ -25,6 +27,9 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Autowired
     AnamnesiaRepository anamnesiaRepository;
+
+    @Autowired
+    ConvenioRepository convenioRepository;
 
     @Override
     public void run(String... args) throws Exception{
@@ -66,6 +71,20 @@ public class DatabaseSeeder implements CommandLineRunner {
                          .build()
             )
         );        
+
+        convenioRepository.saveAll(
+
+            List.of(
+                Convenio
+                .builder()
+                .nome("Convenio A")
+                .cnpj("37.050.194/0001-40")
+                .telefone("11982004913")
+                .ativo(true)
+                .build()
+            )
+      
+        );
 
     }
 }
