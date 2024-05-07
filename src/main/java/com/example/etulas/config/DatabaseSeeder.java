@@ -10,12 +10,14 @@ import com.example.etulas.model.anamnesia.Anamnesia;
 import com.example.etulas.model.convenio.Convenio;
 import com.example.etulas.model.endereco.Endereco;
 import com.example.etulas.model.endereco.EnderecoEnum;
+import com.example.etulas.model.equipamentosMedicos.Equipamentos;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.especialidades.EspecialidadesEnum;
 import com.example.etulas.model.sala.Sala;
 import com.example.etulas.repository.anamnesia.AnamnesiaRepository;
 import com.example.etulas.repository.convenio.ConvenioRepository;
 import com.example.etulas.repository.endereco.EnderecoRepository;
+import com.example.etulas.repository.equipamentos.EquipamentosRepository;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 import com.example.etulas.repository.sala.SalaRepository;
 
@@ -36,6 +38,9 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Autowired
     EnderecoRepository enderecoRepository;
+
+    @Autowired
+    EquipamentosRepository equipamentosRepository;
 
     @Override
     public void run(String... args) throws Exception{
@@ -70,6 +75,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             List.of(
                 Anamnesia
                          .builder()
+                         .id(1L)
                          .alergias( "Alergia à penicilina")
                          .lesoes("Erupção cutânea na região dos braços e pernas")
                          .genetica("Histórico familiar de diabetes")
@@ -83,6 +89,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             List.of(
                 Convenio
                 .builder()
+                .id(1L)
                 .nome("Convenio A")
                 .cnpj("37.050.194/0001-40")
                 .telefone("11982004913")
@@ -96,6 +103,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             List.of(
                 Endereco
                 .builder()
+                .id(1L)
                 .cidade("Santo André")
                 .bairro("Vila Luzita")
                 .logadouro("Rua dos Cocais")
@@ -105,7 +113,18 @@ public class DatabaseSeeder implements CommandLineRunner {
             )
         );
 
-        
+        equipamentosRepository.saveAll(
+            List.of(
+                Equipamentos
+                .builder()
+                .id(1L)
+                .nome("Ressonância Magnética")
+                .procedimento("Realização de exames de imagem detalhados para diagnóstico de diversas condições médicas.")
+                .sala(7)
+                .ativo(true)
+                .build()
+            )
+        );
 
     }
 }
