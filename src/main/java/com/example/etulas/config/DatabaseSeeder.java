@@ -15,6 +15,8 @@ import com.example.etulas.model.equipamentosMedicos.Equipamentos;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.especialidades.EspecialidadesEnum;
 import com.example.etulas.model.fichaAtendimento.FichaDeAtendimento;
+import com.example.etulas.model.hospital.Hospital;
+import com.example.etulas.model.paciente.Paciente;
 import com.example.etulas.model.sala.Sala;
 import com.example.etulas.repository.anamnesia.AnamnesiaRepository;
 import com.example.etulas.repository.convenio.ConvenioRepository;
@@ -22,6 +24,8 @@ import com.example.etulas.repository.endereco.EnderecoRepository;
 import com.example.etulas.repository.equipamentos.EquipamentosRepository;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 import com.example.etulas.repository.fichaAtendimento.FichaAtendimentoRepository;
+import com.example.etulas.repository.hospital.HospitalRepository;
+import com.example.etulas.repository.paciente.PacienteRepository;
 import com.example.etulas.repository.sala.SalaRepository;
 
 @Configuration
@@ -47,6 +51,12 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Autowired
     FichaAtendimentoRepository fichaAtendimentoRepository;
+
+    @Autowired
+    HospitalRepository hospitalRepository;
+
+    @Autowired
+    PacienteRepository pacienteRepository;
 
     @Override
     public void run(String... args) throws Exception{
@@ -149,5 +159,32 @@ public class DatabaseSeeder implements CommandLineRunner {
             )
         );
 
+        hospitalRepository.saveAll(
+            List.of(
+                Hospital
+                .builder()
+                .ativo(true)
+                .id(1L)
+                .cnpj("05.388.218/0001-89")
+                .nome("Hospital A")
+                .telefone("11982004999")
+                .build()
+            )
+        );
+
+
+        pacienteRepository.saveAll(
+            List.of(
+                Paciente
+                .builder()
+                .id(1L)
+                .nome("Joana")
+                .cpf("14554884023")
+                .telefone("11977779999")
+                .idade(25)
+                .genero("FEMININO")
+                .build()
+            )
+        );
     }
 }

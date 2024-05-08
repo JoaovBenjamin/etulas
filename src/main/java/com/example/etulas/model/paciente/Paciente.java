@@ -14,11 +14,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Data
 @Table(name = "T_ETU_PACIENTE")
 public class Paciente {
@@ -28,7 +32,7 @@ public class Paciente {
     private Long id;
     @Column(name = "nm_paciente", unique = true)
     @NotBlank(message = "{paciente.nome.notblank}")
-    @Size(min = 10, max = 60, message = "{paciente.nome.size}")
+    @Size(min = 5, max = 60, message = "{paciente.nome.size}")
     private String nome;
     @Column(name = "tx_cpf", unique = true)
     @CPF(message = "{paciente.cpf.CPF}")
@@ -38,7 +42,6 @@ public class Paciente {
     @NotBlank(message = "{paciente.telefone.notblank}")
     @Size(min = 11, max = 11, message = "{paciente.telefone.size}")
     private String telefone;
-    // TODO CRIAR UM VALIDATOR PARA A IDADE
     @Column(name = "nr_idade")
     @NotNull(message = "{paciente.idade.notnull}")
     private int idade;
