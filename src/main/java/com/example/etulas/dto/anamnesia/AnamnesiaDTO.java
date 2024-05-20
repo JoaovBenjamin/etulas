@@ -1,5 +1,13 @@
 package com.example.etulas.dto.anamnesia;
 
-public record AnamnesiaDTO(String lesoes, String genetica, String cronicas, String alergias) {
+import com.example.etulas.model.paciente.Paciente;
+
+public record AnamnesiaDTO(
+    String lesoes, 
+    String genetica, 
+    String cronicas, 
+    String alergias,
+    Paciente paciente
+    ) {
     
 }

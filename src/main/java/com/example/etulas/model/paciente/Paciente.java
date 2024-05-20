@@ -3,32 +3,37 @@ package com.example.etulas.model.paciente;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.example.etulas.dto.paciente.PacienteDTO;
+import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
 @Table(name = "T_ETU_PACIENTE")
 public class Paciente {
-    @Column(name = "id_paciente")
-    @Id
+    @Column(name = "id_paciente")  @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nm_paciente", unique = true)
     @NotBlank(message = "{paciente.nome.notblank}")
-    @Size(min = 10, max = 60, message = "{paciente.nome.size}")
+    @Size(min = 5, max = 60, message = "{paciente.nome.size}")
     private String nome;
     @Column(name = "tx_cpf", unique = true)
     @CPF(message = "{paciente.cpf.CPF}")
@@ -36,7 +41,7 @@ public class Paciente {
     private String cpf;
     @Column(name = "tx_telefone", unique = true)
     @NotBlank(message = "{paciente.telefone.notblank}")
-    @Size(min = 11, max = 11, message = "{paciente.telefone.size}")
+    @Size(min = 11, max = 13, message = "{paciente.telefone.size}")
     private String telefone;
     // TODO CRIAR UM VALIDATOR PARA A IDADE
     @Column(name = "nr_idade")
@@ -45,6 +50,9 @@ public class Paciente {
     @Column(name = "ds_genero")
     @Pattern(regexp = "^(MASCULINO|FEMININO)$", message = "{paciente.genero.pattern}")
     private String genero;
+    @NotNull(message = "paciente.hospital.notnull")
+    @ManyToOne()
+    private Hospital hospital;
 
     public Paciente(PacienteDTO dados) {
         this.nome = dados.nome();
@@ -52,5 +60,6 @@ public class Paciente {
         this.telefone = dados.telefone();
         this.idade = dados.idade();
         this.genero = dados.genero();
+        this.hospital = dados.hospital();
     }
 }

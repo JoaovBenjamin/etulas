@@ -1,12 +1,14 @@
 package com.example.etulas.model.equipamentosMedicos;
 
 import com.example.etulas.dto.equipamentos.EquipamentosDTO;
+import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,11 +41,15 @@ public class Equipamentos {
     private int sala;
     @Column(name = "st_ativo")
     private Boolean ativo;
+    @NotNull(message = "{equipamento.hospital.notnull}")
+    @ManyToOne()
+    private Hospital hospital;
 
     public Equipamentos(EquipamentosDTO dados){
         this.nome = dados.nome();
         this.procedimento = dados.procedimento();
         this.sala = dados.sala();
         this.ativo = dados.ativo();
+        this.hospital = dados.hospital();
     }
 }

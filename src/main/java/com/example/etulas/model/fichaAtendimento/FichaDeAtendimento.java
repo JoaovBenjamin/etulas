@@ -3,12 +3,16 @@ package com.example.etulas.model.fichaAtendimento;
 import java.time.LocalDate;
 
 import com.example.etulas.dto.fichaAtendimento.FichaAtendimentoDTO;
+import com.example.etulas.model.especialidades.Especialidades;
+import com.example.etulas.model.hospital.Hospital;
+import com.example.etulas.model.paciente.Paciente;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -53,6 +57,15 @@ public class FichaDeAtendimento {
     private LocalDate saidaPaciente;
     @Column(name = "st_ativo")
     private Boolean ativo;
+    @NotNull(message = "fichaatendimento.especialidade.notnull")
+    @ManyToOne()
+    private Especialidades especialidades;
+    @NotNull(message = "fichaatendimento.hospital.notnull")
+    @ManyToOne()
+    private Hospital hospital;
+    @NotNull(message = "fichaatendimento.paciente.notnull")
+    @ManyToOne()
+    private Paciente paciente;
 
     public FichaDeAtendimento(FichaAtendimentoDTO dados){
         this.altura = dados.altura();
@@ -63,5 +76,8 @@ public class FichaDeAtendimento {
         this.peso = dados.peso();
         this.pressao = dados.pressao();
         this.temperatura = dados.temperatura();
+        this.hospital = dados.hospital();
+        this.especialidades = dados.especialidades();
+        this.especialidades = dados.especialidades();
     }
 }

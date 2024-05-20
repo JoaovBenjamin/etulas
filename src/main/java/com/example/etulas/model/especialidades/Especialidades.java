@@ -1,6 +1,7 @@
 package com.example.etulas.model.especialidades;
 
 import com.example.etulas.dto.especialidades.EspecialidadesDTO;
+import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,8 +10,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,12 +44,15 @@ public class Especialidades {
     private String descricaoProcedimento;
     @Column(name = "st_ativo")
     private Boolean ativo;
-
+    @NotNull(message = "{especialidades.hospital.notnull}")
+    @ManyToOne()
+    private Hospital hospital;
 
     public Especialidades(EspecialidadesDTO dados){
         this.ativo = dados.ativo();
         this.descricaoEspecialidade = dados.descricaoEspecialidade();
         this.descricaoProcedimento = dados.descricaoProcedimento();
         this.nomeEspecialidade = dados.nomeEspecialidade();
+        this.hospital = dados.hospital();
     }
 }

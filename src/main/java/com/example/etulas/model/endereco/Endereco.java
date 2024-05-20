@@ -1,6 +1,8 @@
 package com.example.etulas.model.endereco;
 
 import com.example.etulas.dto.endereco.EnderecoDTO;
+import com.example.etulas.model.hospital.Hospital;
+import com.example.etulas.model.paciente.Paciente;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,8 +11,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,12 +49,20 @@ public class Endereco {
     @Column(name = "nm_uf")
     @Enumerated(EnumType.STRING)
     private EnderecoEnum enderecoEnum;
-
+    @NotNull(message = "endereco.hospital.notnull")
+    @OneToOne()
+    private Hospital hospital;
+    @NotNull(message = "endereco.hospital.notnull")
+    @OneToOne()
+    private Paciente paciente;
+    
     public Endereco(EnderecoDTO dados) {
         this.numeroEdificio = dados.numeroEdificio();
         this.bairro = dados.bairro();
         this.cidade = dados.cidade();
         this.enderecoEnum = dados.enderecoEnum();
         this.logadouro = dados.logadouro();
+        this.paciente = dados.paciente();
+        this.hospital = dados.hospital();
     }
 }

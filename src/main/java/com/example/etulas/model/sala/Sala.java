@@ -1,14 +1,17 @@
 package com.example.etulas.model.sala;
 
 import com.example.etulas.dto.sala.SalaDTO;
+import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,12 +41,16 @@ public class Sala {
     private String descricao;
     @Column(name = "st_ativo")
     private Boolean ativo;
+    @NotNull(message = "sala.hospital.notnull")
+    @ManyToOne()
+    private Hospital hospital;
 
     public Sala(SalaDTO dados){
         this.ativo=dados.ativo();
         this.descricao = dados.descricao();
         this.numeroDaSala = dados.numeroDaSala();
         this.uti = dados.uti();
+        this.hospital = dados.hospital();
     }
 }
 
