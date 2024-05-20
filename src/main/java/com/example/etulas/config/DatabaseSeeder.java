@@ -52,12 +52,6 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Autowired
     FichaAtendimentoRepository fichaAtendimentoRepository;
 
-    @Autowired
-    HospitalRepository hospitalRepository;
-
-    @Autowired 
-    PacienteRepository pacienteRepository;
-
     @Override
     public void run(String... args) throws Exception{
 
@@ -201,5 +195,32 @@ public class DatabaseSeeder implements CommandLineRunner {
             )
         );
 
+        hospitalRepository.saveAll(
+            List.of(
+                Hospital
+                .builder()
+                .ativo(true)
+                .id(1L)
+                .cnpj("05.388.218/0001-89")
+                .nome("Hospital A")
+                .telefone("11982004999")
+                .build()
+            )
+        );
+
+
+        pacienteRepository.saveAll(
+            List.of(
+                Paciente
+                .builder()
+                .id(1L)
+                .nome("Joana")
+                .cpf("14554884023")
+                .telefone("11977779999")
+                .idade(25)
+                .genero("FEMININO")
+                .build()
+            )
+        );
     }
 }

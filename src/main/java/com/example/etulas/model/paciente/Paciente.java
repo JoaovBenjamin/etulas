@@ -23,6 +23,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Data
 @Builder
 @AllArgsConstructor
@@ -43,7 +45,6 @@ public class Paciente {
     @NotBlank(message = "{paciente.telefone.notblank}")
     @Size(min = 11, max = 13, message = "{paciente.telefone.size}")
     private String telefone;
-    // TODO CRIAR UM VALIDATOR PARA A IDADE
     @Column(name = "nr_idade")
     @NotNull(message = "{paciente.idade.notnull}")
     private int idade;
