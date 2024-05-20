@@ -52,6 +52,12 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Autowired
     FichaAtendimentoRepository fichaAtendimentoRepository;
 
+    @Autowired
+    HospitalRepository hospitalRepository;
+
+    @Autowired
+    PacienteRepository pacienteRepository;
+
     @Override
     public void run(String... args) throws Exception{
 

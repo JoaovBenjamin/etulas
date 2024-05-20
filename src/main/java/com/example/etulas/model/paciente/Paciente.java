@@ -26,8 +26,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @Data
-@Builder
-@AllArgsConstructor
 @Table(name = "T_ETU_PACIENTE")
 public class Paciente {
     @Column(name = "id_paciente")  @Id
@@ -51,7 +49,6 @@ public class Paciente {
     @Column(name = "ds_genero")
     @Pattern(regexp = "^(MASCULINO|FEMININO)$", message = "{paciente.genero.pattern}")
     private String genero;
-    @NotNull(message = "paciente.hospital.notnull")
     @ManyToOne()
     private Hospital hospital;
 
