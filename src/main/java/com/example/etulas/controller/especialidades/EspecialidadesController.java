@@ -59,13 +59,21 @@ public class EspecialidadesController {
     @GetMapping("page")
     public Page<Especialidades> index(
         @RequestParam(required = false) String especialidade,
+        @RequestParam(required = false) String hospital,
         @PageableDefault(size = 5, direction = Direction.DESC) Pageable pageable
     ){
 
-        if(especialidade !=null){
+        if(especialidade !=null && hospital !=null){
+            return repository.findByNomeAndHospital(especialidade,hospital,pageable);
+        }
+
+        if(especialidade != null){
             return repository.findByNome(especialidade, pageable);
         }
-    
+        
+        if (hospital != null) {
+            return repository.findByHospital(hospital, pageable);
+        }
         return repository.findAll(pageable);
     }
 
