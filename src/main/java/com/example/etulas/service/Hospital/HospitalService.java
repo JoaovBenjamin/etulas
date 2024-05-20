@@ -25,6 +25,7 @@ public class HospitalService {
         Hospital novoHospital = new Hospital(dados);
         return repository.save(novoHospital);
     }
+    
 
     public List<Hospital> buscarHospital() {
         return repository.findAll();

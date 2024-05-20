@@ -8,5 +8,5 @@ import com.example.etulas.model.hospital.Hospital;
 
 public interface HospitalRepository extends JpaRepository<Hospital,Long> {
     
-    // Page<Hospital> findByHospitalNome(String nome, Pageable pageable);
+    Page<Hospital> findByNome(String hospital, Pageable pageable);
 }

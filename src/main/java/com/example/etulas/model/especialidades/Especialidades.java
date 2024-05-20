@@ -33,7 +33,7 @@ public class Especialidades {
     private Long id;
     @Column(name = "nm_especialidade")
     @Enumerated(EnumType.STRING)
-    private EspecialidadesEnum nomeEspecialidade;
+    private EspecialidadesEnum nome;
     @Column(name = "ds_especialidade")
     @NotBlank(message = "{especialidades.descricaoespecialidade.notblank}")
     @Size(min = 50, max = 200, message = "{especialidades.descricaoespecialidade.size}")
@@ -52,7 +52,7 @@ public class Especialidades {
         this.ativo = dados.ativo();
         this.descricaoEspecialidade = dados.descricaoEspecialidade();
         this.descricaoProcedimento = dados.descricaoProcedimento();
-        this.nomeEspecialidade = dados.nomeEspecialidade();
+        this.nome = dados.nomeEspecialidade();
         this.hospital = dados.hospital();
     }
 }

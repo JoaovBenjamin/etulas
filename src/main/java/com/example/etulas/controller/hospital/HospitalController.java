@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,11 +23,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.etulas.dto.hospital.HospitalDTO;
 import com.example.etulas.model.hospital.Hospital;
+import com.example.etulas.repository.hospital.HospitalRepository;
 import com.example.etulas.service.Hospital.HospitalService;
 
 import jakarta.validation.Valid;
@@ -37,6 +43,9 @@ import lombok.extern.slf4j.Slf4j;
 public class HospitalController {
     @Autowired
     HospitalService service;
+
+    @Autowired
+    HospitalRepository repository;
 
 
     @Cacheable
@@ -52,6 +61,19 @@ public class HospitalController {
     public ResponseEntity<Hospital> buscarHospitalPorId(@PathVariable Long id) {
         log.info("Buscando Hospitais com o id {}", id);
         return service.buscarHospitalPorId(id);
+    }
+
+    @GetMapping("page")
+    public Page<Hospital> index(
+        @RequestParam(required = false) String hospital,
+        @PageableDefault(size = 5, direction = Direction.DESC) Pageable pageable
+    ){
+
+        if (hospital !=null){
+            return repository.findByNome(hospital, pageable);
+        }
+    
+        return repository.findAll(pageable);
     }
 
     @CacheEvict(allEntries = true)
