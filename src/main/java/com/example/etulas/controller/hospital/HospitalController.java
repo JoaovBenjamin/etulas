@@ -47,6 +47,7 @@ public class HospitalController {
     @Autowired
     HospitalRepository repository;
 
+    
 
     @Cacheable
     @GetMapping
@@ -55,6 +56,8 @@ public class HospitalController {
         log.info("Buscando hopitais");
         return service.buscarHospital();
     }
+
+
 
 
     @GetMapping("{id}")

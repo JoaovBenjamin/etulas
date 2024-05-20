@@ -1,5 +1,6 @@
 package com.example.etulas.service.Hospital;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
