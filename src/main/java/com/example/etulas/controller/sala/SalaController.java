@@ -7,6 +7,9 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +29,7 @@ import com.example.etulas.service.Sala.SalaService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
+@CacheConfig(cacheNames = "sala")
 @Controller
 @RestController
 @RequestMapping("sala")
@@ -34,6 +38,7 @@ public class SalaController {
     @Autowired
     SalaService service;
 
+    @Cacheable
     @GetMapping
     @ResponseStatus(OK)
     public List<Sala> buscarSala() {
@@ -47,6 +52,7 @@ public class SalaController {
         return service.buscarSalaPorId(id);
     }
 
+    @CacheEvict(allEntries = true)
     @PostMapping
     @ResponseStatus(CREATED)
     public ResponseEntity<Sala> criarSala(@Valid @RequestBody SalaDTO dados) {
@@ -55,12 +61,14 @@ public class SalaController {
         return new ResponseEntity<>(novaSala, CREATED);
     }
 
+    @CacheEvict(allEntries = true)
     @PutMapping("{id}")
     public Sala atualizarSala(@PathVariable Long id, @RequestBody SalaDTO dados) {
         log.info("Atualizando sala com o id {}", id);
         return service.atualizarSala(id, dados);
     }
 
+    @CacheEvict(allEntries = true)
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
     public void deletarSala(@PathVariable Long id) {

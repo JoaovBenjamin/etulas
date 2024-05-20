@@ -7,6 +7,9 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +30,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@CacheConfig(cacheNames = "equipamentos")
 @RestController
 @RequestMapping("equipamentos")
 @Slf4j
@@ -34,6 +38,7 @@ public class EquipamentosController {
     @Autowired
     EquipamentosService service;
 
+    @Cacheable
     @GetMapping
     @ResponseStatus(OK)
     public List<Equipamentos> buscarEquipamentos() {
@@ -47,6 +52,7 @@ public class EquipamentosController {
         return service.buscarEquipamentosPorId(id);
     }
 
+    @CacheEvict(allEntries = true)
     @PostMapping
     @ResponseStatus(CREATED)
     public ResponseEntity<Equipamentos> criarEquipamento(@Valid @RequestBody EquipamentosDTO dados) {
@@ -55,12 +61,15 @@ public class EquipamentosController {
         return new ResponseEntity<>(novoEquipamento, CREATED);
     }
 
+
+    @CacheEvict(allEntries = true)
     @PutMapping("{id}")
     public Equipamentos atualizarEquipamento(@PathVariable Long id, @RequestBody EquipamentosDTO dados) {
         log.info("Atualizando equipamento com o id {}", id);
         return service.atualizarEquipamentos(id, dados);
     }
 
+    @CacheEvict(allEntries = true)
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
     public void deletarEquipamento(@PathVariable Long id) {

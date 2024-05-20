@@ -7,6 +7,9 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,12 +31,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RestController
+@CacheConfig(cacheNames = "hospital")
 @RequestMapping("hospital")
 @Slf4j
 public class HospitalController {
     @Autowired
     HospitalService service;
 
+
+    @Cacheable
     @GetMapping
     @ResponseStatus(OK)
     public List<Hospital> buscarHospital() {
@@ -41,12 +47,14 @@ public class HospitalController {
         return service.buscarHospital();
     }
 
+
     @GetMapping("{id}")
     public ResponseEntity<Hospital> buscarHospitalPorId(@PathVariable Long id) {
         log.info("Buscando Hospitais com o id {}", id);
         return service.buscarHospitalPorId(id);
     }
 
+    @CacheEvict(allEntries = true)
     @PostMapping
     @ResponseStatus(CREATED)
     public ResponseEntity<Hospital> criarHospital(@Valid @RequestBody HospitalDTO dados) {
@@ -55,12 +63,14 @@ public class HospitalController {
         return new ResponseEntity<>(hospital, CREATED);
     }
 
+    @CacheEvict(allEntries = true)
     @PutMapping("{id}")
     public Hospital atualizarHospital(@PathVariable Long id, @RequestBody HospitalDTO dados) {
         log.info("Atualizando hospital com o id {}", id);
         return service.atualizarHospital(id, dados);
     }
 
+    @CacheEvict(allEntries = true)
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
     public void deletarHospital(@PathVariable Long id) {
