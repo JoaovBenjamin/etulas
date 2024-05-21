@@ -33,6 +33,7 @@ import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 import com.example.etulas.service.especialidades.EspecialidadesService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("especialidades")
 @Slf4j
+@Tag(name = "Especialidades")
 public class EspecialidadesController {
     @Autowired
     EspecialidadesService service;
@@ -51,6 +53,7 @@ public class EspecialidadesController {
     @Cacheable
     @GetMapping
     @ResponseStatus(OK)
+    
     public List<Especialidades> buscarEspecialidades() {
         log.info("Buscando Especialidades");
         return service.buscarEspecialidades();

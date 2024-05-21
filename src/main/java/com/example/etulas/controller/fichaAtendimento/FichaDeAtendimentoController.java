@@ -23,6 +23,10 @@ import com.example.etulas.dto.fichaAtendimento.FichaAtendimentoDTO;
 import com.example.etulas.model.fichaAtendimento.FichaDeAtendimento;
 import com.example.etulas.service.fichaDeAtendimento.FichaDeAtendimentoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,18 +34,39 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("fichadeatendimento")
 @Slf4j
+@Tag(name = "Ficha de atendimento")
 public class FichaDeAtendimentoController {
     @Autowired
     FichaDeAtendimentoService service;
 
     @GetMapping
     @ResponseStatus(OK)
+     @Operation(
+        summary = "Listar Ficha de Atendimento",
+        description = "Retorna um array com todas as fichas cadastrados."         
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Ficha retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     public List<FichaDeAtendimento> buscarFichasDeAtendimento() {
         log.info("Buscando Fichas de Atendimento");
         return service.buscarFichasDeAtendimento();
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Ficha de Atendimento por Id",
+        description = "Retorna uma ficha por id"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Ficha retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )   
     public ResponseEntity<FichaDeAtendimento> buscarFichaDeAtendimentoPorId(@PathVariable Long id) {
         log.info("Buscando ficha de atendimento com o id {}", id);
         return service.buscarFichaDeAtendimentoPorId(id);
@@ -49,6 +74,14 @@ public class FichaDeAtendimentoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
+    @Operation(
+        summary = "Criar Ficha de Atendimetno",
+        description = "Cria uma ficha com os dados do corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Ficha criada com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public ResponseEntity<FichaDeAtendimento> criarFichaDeAtendimento(@Valid @RequestBody FichaAtendimentoDTO dados) {
         log.info("Criando ficha de atendimento");
         FichaDeAtendimento novaFicha = service.criarFichaDeAtendimento(dados);
@@ -56,12 +89,28 @@ public class FichaDeAtendimentoController {
     }
 
     @PutMapping("{id}")
+    @Operation(
+        summary = "Atualizar Ficha de Atendimento",
+        description = "Atualiza ficha de acordo com os dados no corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Ficha atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public FichaDeAtendimento atualizarFichaDeAtendimento(@PathVariable Long id, FichaAtendimentoDTO dados) {
         log.info("Atualizando ficha de atendimento com o id {}", id);
         return service.atualizarFichaDeAtendimento(id, dados);
     }
 
     @DeleteMapping("{id}")
+    @Operation(
+        summary = "Deletar Ficha de Atendimeto",
+        description = "Deletar ficha com id passado no path"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Ficha deletado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
     @ResponseStatus(NOT_FOUND)
     public void deletarFichaDeAtendimento(@PathVariable Long id) {
         service.apagarFichaDeAtendimento(id);
