@@ -29,10 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.etulas.dto.equipamentos.EquipamentosDTO;
 import com.example.etulas.model.equipamentosMedicos.Equipamentos;
-import com.example.etulas.model.paciente.Paciente;
 import com.example.etulas.repository.equipamentos.EquipamentosRepository;
 import com.example.etulas.service.equipamentos.EquipamentosService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("equipamentos")
 @Slf4j
+@Tag(name = "Equipamentos")
 public class EquipamentosController {
     @Autowired
     EquipamentosService service;
@@ -51,12 +55,32 @@ public class EquipamentosController {
     @Cacheable
     @GetMapping
     @ResponseStatus(OK)
+     @Operation(
+        summary = "Listar Equipamentos",
+        description = "Retorna um array com todos equipamentos cadastrados."         
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Equipamentos retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     public List<Equipamentos> buscarEquipamentos() {
         log.info("Buscando Equipamentos");
         return service.buscarEquipamentos();
     }
 
-            @GetMapping("page")
+    @GetMapping("page")
+    @Operation(
+        summary = "Listar paginação de Equipamento",
+        description = "Retorna uma paginação de equipamento"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Equipamento retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     public Page<Equipamentos> index(
         @RequestParam(required = false) String equipamento,
         @RequestParam(required = false) String  hospital,
@@ -79,6 +103,16 @@ public class EquipamentosController {
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Equipamento por Id",
+        description = "Retorna um equipamento por id"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Equipamento retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )   
     public ResponseEntity<Equipamentos> buscarEquipamentosPorId(@PathVariable Long id) {
         log.info("Buscando equipamento com o id {}", id);
         return service.buscarEquipamentosPorId(id);
@@ -86,6 +120,14 @@ public class EquipamentosController {
 
     @CacheEvict(allEntries = true)
     @PostMapping
+    @Operation(
+        summary = "Criar Equipamento",
+        description = "Cria um equipamento com os dados do corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Equipamento criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     @ResponseStatus(CREATED)
     public ResponseEntity<Equipamentos> criarEquipamento(@Valid @RequestBody EquipamentosDTO dados) {
         log.info("Criando equipamento");
@@ -96,6 +138,14 @@ public class EquipamentosController {
 
     @CacheEvict(allEntries = true)
     @PutMapping("{id}")
+    @Operation(
+        summary = "Atualizar Equipamento",
+        description = "Atualiza equipamento de acordo com os dados no corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Equipamento atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public Equipamentos atualizarEquipamento(@PathVariable Long id, @RequestBody EquipamentosDTO dados) {
         log.info("Atualizando equipamento com o id {}", id);
         return service.atualizarEquipamentos(id, dados);
@@ -103,6 +153,14 @@ public class EquipamentosController {
 
     @CacheEvict(allEntries = true)
     @DeleteMapping("{id}")
+    @Operation(
+        summary = "Deletar Equipamento",
+        description = "Deletar equipametno com id passado no path"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Hospital deletado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
     @ResponseStatus(NOT_FOUND)
     public void deletarEquipamento(@PathVariable Long id) {
         service.apagarEquipamentos(id);

@@ -33,6 +33,9 @@ import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 import com.example.etulas.service.especialidades.EspecialidadesService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -53,12 +56,31 @@ public class EspecialidadesController {
     @Cacheable
     @GetMapping
     @ResponseStatus(OK)
-    
+    @Operation(
+        summary = "Listar Especialidade",
+        description = "Retorna um array com todas especialidades cadastrados."         
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Especialidades retornada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     public List<Especialidades> buscarEspecialidades() {
         log.info("Buscando Especialidades");
         return service.buscarEspecialidades();
     }
 
+    @Operation(
+        summary = "Listar paginação de especialidades",
+        description = "Retorna uma paginação de especialidades"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Especialidades retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     @GetMapping("page")
     public Page<Especialidades> index(
         @RequestParam(required = false) String especialidade,
@@ -81,6 +103,16 @@ public class EspecialidadesController {
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Especialidades por Id",
+        description = "Retorna um especialidades por id"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "especialiadess retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )  
     public ResponseEntity<Especialidades> buscarEspecialidadePorId(@Valid @PathVariable Long id) {
         log.info("Buscando especialidade com o id {}", id);
         return service.buscarEspecialidadePorId(id);
@@ -88,6 +120,14 @@ public class EspecialidadesController {
 
     @CacheEvict(allEntries = true)
     @PostMapping
+    @Operation(
+        summary = "Criar Especialidades",
+        description = "Cria uma especialidades com os dados do corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Especialidades criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     @ResponseStatus(CREATED)
     public ResponseEntity<Especialidades> criarEspecialidade(@RequestBody EspecialidadesDTO dados) {
         log.info("Criando especialidade");
@@ -97,6 +137,14 @@ public class EspecialidadesController {
 
     @CacheEvict(allEntries = true)
     @PutMapping("{id}")
+    @Operation(
+        summary = "Atualizar Especialidades",
+        description = "Atualiza especialidades de acordo com os dados no corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Especialidades atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public Especialidades atualizarEspecialidade(@PathVariable Long id, @RequestBody EspecialidadesDTO dados) {
         log.info("Atualizando especialidade com o id {}", id);
         return service.atualizarEspecialidade(id, dados);
@@ -104,8 +152,17 @@ public class EspecialidadesController {
 
     @CacheEvict(allEntries = true)
     @DeleteMapping("{id}")
+    @Operation(
+        summary = "Deletar Especialidades",
+        description = "Deletar especialidades com id passado no path"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Especialidades deletado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
     @ResponseStatus(NOT_FOUND)
     public void deletarEspecialidade(@PathVariable Long id) {
         service.apagarEspecialidade(id);
     }
 }
+    
