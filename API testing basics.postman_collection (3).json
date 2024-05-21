@@ -497,6 +497,26 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "GET PAGE HOSPITAL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/hospital/page",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"hospital",
+										"page"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"description": "Teste do projeto Etulas no CRUD HOSPITAL"
@@ -636,6 +656,32 @@
 									"path": [
 										"paciente",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET PAGE PACIENTE",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/paciente/page?=699.172.060-78",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"paciente",
+										"page"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "699.172.060-78"
+										}
 									]
 								}
 							},
@@ -1260,6 +1306,26 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "GET PAGE ESPECIALIDADES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/especialidades/page",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"especialidades",
+										"page"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -1377,6 +1443,32 @@
 									"path": [
 										"equipamentos",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET EQUIPAMENTOS PAGE",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/equipamentos/page?=RessonanciaMagnetica?=HospitalUniversitario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"equipamentos",
+										"page"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "RessonanciaMagnetica?=HospitalUniversitario"
+										}
 									]
 								}
 							},
@@ -1500,6 +1592,19 @@
 										"1"
 									]
 								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Prova",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": []
 							},
 							"response": []
 						}
