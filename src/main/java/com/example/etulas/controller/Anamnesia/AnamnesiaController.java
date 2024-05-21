@@ -23,6 +23,10 @@ import com.example.etulas.dto.anamnesia.AnamnesiaDTO;
 import com.example.etulas.model.anamnesia.Anamnesia;
 import com.example.etulas.service.anamnesia.AnamnesiaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,18 +34,39 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("anamnesia")
 @Slf4j
+@Tag(name = "Anamnesia")
 public class AnamnesiaController {
     @Autowired
     AnamnesiaService service;
 
     @GetMapping
     @ResponseStatus(OK)
+      @Operation(
+        summary = "Listar Anamnesia",
+        description = "Retorna um array com todas anamnesias cadastrados."         
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Anamnesia retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     public List<Anamnesia> buscarAnamnesia() {
         log.info("Buscando Anamnesias");
         return service.buscarAnamnesia();
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Anamnesia por Id",
+        description = "Retorna um anamnesia por id"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Anamnesia retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )   
     public ResponseEntity<Anamnesia> buscarAnamnesiaPorId(@PathVariable Long id) {
         log.info("Buscando anamnesia com o id {}", id);
         return service.buscarAnamnesiaPorId(id);
@@ -49,6 +74,14 @@ public class AnamnesiaController {
 
     @PostMapping
     @ResponseStatus(CREATED)
+    @Operation(
+        summary = "Criar Anamnesia",
+        description = "Cria uma anamnesia com os dados do corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Anamnesia criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public ResponseEntity<Anamnesia> criarAnamnesia(@Valid @RequestBody AnamnesiaDTO dados) {
         log.info("Criando anamnesia");
         Anamnesia novaAnamnesia = service.criarAnamnesia(dados);
@@ -56,6 +89,14 @@ public class AnamnesiaController {
     }
 
     @PutMapping("{id}")
+    @Operation(
+        summary = "Atualizar Anamnesia",
+        description = "Atualiza anamnesia de acordo com os dados no corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Anamnesia atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public Anamnesia atualizarAnamnesia(@PathVariable Long id, @RequestBody AnamnesiaDTO dados) {
         log.info("Atualizando anamnesia com o id {}", id);
         return service.atualizarAnamnesia(id, dados);
@@ -63,6 +104,14 @@ public class AnamnesiaController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
+    @Operation(
+        summary = "Deletar Anamnesia",
+        description = "Deletar anamnesia com id passado no path"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Anamnesia deletado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
     public void deletarAnamnesia(@PathVariable Long id) {
         service.apagarAnamnesia(id);
     }

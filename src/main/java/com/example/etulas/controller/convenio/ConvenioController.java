@@ -23,6 +23,10 @@ import com.example.etulas.dto.convenio.ConvenioDTO;
 import com.example.etulas.model.convenio.Convenio;
 import com.example.etulas.service.convenio.ConvenioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,18 +34,39 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("convenio")
 @Slf4j
+@Tag(name = "Convenio")
 public class ConvenioController {
     @Autowired
     ConvenioService service;
 
     @GetMapping
     @ResponseStatus(OK)
+      @Operation(
+        summary = "Listar Convenio",
+        description = "Retorna um array com todos convenios cadastrados."         
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Convenios retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     public List<Convenio> buscarConvenio() {
         log.info("Buscando Convenios");
         return service.buscarConvenio();
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Convenio por Id",
+        description = "Retorna um convenio por id"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Convenio retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )   
     public ResponseEntity<Convenio> buscarConvenioPorId(@PathVariable Long id) {
         log.info("Buscando endereco com o id {}", id);
         return service.buscarConvenioPorId(id);
@@ -49,12 +74,28 @@ public class ConvenioController {
 
     @PostMapping
     @ResponseStatus(CREATED)
+    @Operation(
+        summary = "Criar Convenio",
+        description = "Cria um convenio com os dados do corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Convenio criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public ResponseEntity<Convenio> criarConvenio(@Valid @RequestBody ConvenioDTO dados) {
         log.info("Criando convenio");
         Convenio novoConvenio = service.criarConvenio(dados);
         return new ResponseEntity<>(novoConvenio, CREATED);
     }
 
+    @Operation(
+        summary = "Atualizar Convenio",
+        description = "Atualiza convenio de acordo com os dados no corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Convenio atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     @PutMapping("{id}")
     public Convenio atualizarEndereco(@PathVariable Long id, @RequestBody ConvenioDTO dados) {
         log.info("Atualizando endereco com o id {}", id);
@@ -63,6 +104,14 @@ public class ConvenioController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
+    @Operation(
+        summary = "Deletar Convenio",
+        description = "Deletar convenio com id passado no path"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Convenio deletado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
     public void deletarEndereco(@PathVariable Long id) {
         service.apagarConvenio(id);
     }
