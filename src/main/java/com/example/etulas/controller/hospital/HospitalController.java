@@ -32,6 +32,10 @@ import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.repository.hospital.HospitalRepository;
 import com.example.etulas.service.Hospital.HospitalService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @CacheConfig(cacheNames = "hospital")
 @RequestMapping("hospital")
 @Slf4j
+@Tag(name = "Hospital")
 public class HospitalController {
     @Autowired
     HospitalService service;
@@ -52,6 +57,16 @@ public class HospitalController {
     @Cacheable
     @GetMapping
     @ResponseStatus(OK)
+    @Operation(
+        summary = "Listar Hospital",
+        description = "Retorna um array com todos Hospitais cadastrados."         
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Hospital retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     public List<Hospital> buscarHospital() {
         log.info("Buscando hopitais");
         return service.buscarHospital();
@@ -59,13 +74,32 @@ public class HospitalController {
 
 
 
-
+    @Operation(
+        summary = "Listar Hospital por Id",
+        description = "Retorna um hospital por id"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Hospital retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )   
     @GetMapping("{id}")
     public ResponseEntity<Hospital> buscarHospitalPorId(@PathVariable Long id) {
         log.info("Buscando Hospitais com o id {}", id);
         return service.buscarHospitalPorId(id);
     }
 
+    @Operation(
+        summary = "Listar paginação de hospital",
+        description = "Retorna uma paginação de hospital"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Hospital retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     @GetMapping("page")
     public Page<Hospital> index(
         @RequestParam(required = false) String hospital,
@@ -82,12 +116,28 @@ public class HospitalController {
     @CacheEvict(allEntries = true)
     @PostMapping
     @ResponseStatus(CREATED)
+    @Operation(
+        summary = "Criar Hospital",
+        description = "Cria um hospital com os dados do corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Hospital criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public ResponseEntity<Hospital> criarHospital(@Valid @RequestBody HospitalDTO dados) {
         log.info("Criando hospital");
         Hospital hospital = service.criarHospital(dados);
         return new ResponseEntity<>(hospital, CREATED);
     }
 
+    @Operation(
+        summary = "Atualizar Hospital",
+        description = "Atualiza hospital de acordo com os dados no corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Hospital atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     @CacheEvict(allEntries = true)
     @PutMapping("{id}")
     public Hospital atualizarHospital(@PathVariable Long id, @RequestBody HospitalDTO dados) {
@@ -95,6 +145,15 @@ public class HospitalController {
         return service.atualizarHospital(id, dados);
     }
 
+
+    @Operation(
+        summary = "Deletar Hospital",
+        description = "Deletar hospital com id passado no path"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Hospital deletado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
     @CacheEvict(allEntries = true)
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
