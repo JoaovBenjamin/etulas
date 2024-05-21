@@ -23,6 +23,10 @@ import com.example.etulas.dto.endereco.EnderecoDTO;
 import com.example.etulas.model.endereco.Endereco;
 import com.example.etulas.service.endereco.EnderecoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,18 +34,39 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("endereco")
 @Slf4j
+@Tag(name = "Endereço")
 public class EnderecoController {
     @Autowired
     EnderecoService service;
 
     @GetMapping
     @ResponseStatus(OK)
+     @Operation(
+        summary = "Listar Endereço",
+        description = "Retorna um array com todos endereços cadastrados."         
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Endereços retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )
     public List<Endereco> buscarEndereco() {
         log.info("Buscando Endereços");
         return service.buscarEndereco();
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Endereço por Id",
+        description = "Retorna um endereço por id"
+    )
+    @ApiResponses(
+        {
+            @ApiResponse(responseCode = "200", description = "Endereço retornado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+        }
+    )   
     public ResponseEntity<Endereco> buscarEnderecoPorId(@PathVariable Long id) {
         log.info("Buscando endereco com o id {}", id);
         return service.buscarEnderecoPorId(id);
@@ -49,6 +74,14 @@ public class EnderecoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
+    @Operation(
+        summary = "Criar Endereço",
+        description = "Cria um endereço com os dados do corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Endereço criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public ResponseEntity<Endereco> criarHospital(@Valid @RequestBody EnderecoDTO dados) {
         log.info("Criando endereco");
         Endereco novEndereco = new Endereco(dados);
@@ -56,11 +89,27 @@ public class EnderecoController {
     }
 
     @PutMapping("{id}")
+    @Operation(
+        summary = "Atualizar Endereço",
+        description = "Atualiza endereço de acordo com os dados no corpo da requisição"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+    })
     public Endereco atualizarEndereco(@PathVariable Long id, @RequestBody EnderecoDTO dados) {
         log.info("Atualizando endereco com o id {}", id);
         return service.atualizarEndereco(id,dados);
     }
 
+    @Operation(
+        summary = "Deletar Endereço",
+        description = "Deletar endereço com id passado no path"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Endereço deletado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
     public void deletarEndereco(Long id) {
