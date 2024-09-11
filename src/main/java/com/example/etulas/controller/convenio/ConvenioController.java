@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.etulas.dto.convenio.ConvenioDTO;
 import com.example.etulas.model.convenio.Convenio;
 import com.example.etulas.service.convenio.ConvenioService;
 
@@ -82,7 +81,7 @@ public class ConvenioController {
         @ApiResponse(responseCode = "201", description = "Convenio criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Convenio> criarConvenio(@Valid @RequestBody ConvenioDTO dados) {
+    public ResponseEntity<Convenio> criarConvenio(@Valid @RequestBody Convenio dados) {
         log.info("Criando convenio");
         Convenio novoConvenio = service.criarConvenio(dados);
         return new ResponseEntity<>(novoConvenio, CREATED);
@@ -97,7 +96,7 @@ public class ConvenioController {
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
     @PutMapping("{id}")
-    public Convenio atualizarEndereco(@PathVariable Long id, @RequestBody ConvenioDTO dados) {
+    public Convenio atualizarEndereco(@PathVariable Long id, @RequestBody Convenio dados) {
         log.info("Atualizando endereco com o id {}", id);
         return service.atualizarConvenio(id,dados);
     }

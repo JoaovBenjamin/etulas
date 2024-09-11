@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.hospital.HospitalDTO;
 import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.repository.hospital.HospitalRepository;
 
@@ -22,8 +21,8 @@ public class HospitalService {
     @Autowired
     HospitalRepository repository;
 
-    public Hospital salvarHospital(HospitalDTO dados) {
-        Hospital novoHospital = new Hospital(dados);
+    public Hospital salvarHospital(Hospital dados) {
+        Hospital novoHospital = dados;
         return repository.save(novoHospital);
     }
     
@@ -40,13 +39,13 @@ public class HospitalService {
 
     }
 
-    public Hospital criarHospital(HospitalDTO dados) {
-        Hospital novoHospital = new Hospital(dados);
+    public Hospital criarHospital(Hospital dados) {
+        Hospital novoHospital = dados;
         return repository.save(novoHospital);
 
     }
 
-    public Hospital atualizarHospital(Long id, HospitalDTO dados) {
+    public Hospital atualizarHospital(Long id, Hospital dados) {
         Hospital hospital = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
         BeanUtils.copyProperties(dados, hospital, "id");

@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.etulas.dto.hospital.HospitalDTO;
 import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.repository.hospital.HospitalRepository;
 import com.example.etulas.service.Hospital.HospitalService;
@@ -124,7 +123,7 @@ public class HospitalController {
         @ApiResponse(responseCode = "201", description = "Hospital criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Hospital> criarHospital(@Valid @RequestBody HospitalDTO dados) {
+    public ResponseEntity<Hospital> criarHospital(@Valid @RequestBody Hospital dados) {
         log.info("Criando hospital");
         Hospital hospital = service.criarHospital(dados);
         return new ResponseEntity<>(hospital, CREATED);
@@ -140,7 +139,7 @@ public class HospitalController {
     })
     @CacheEvict(allEntries = true)
     @PutMapping("{id}")
-    public Hospital atualizarHospital(@PathVariable Long id, @RequestBody HospitalDTO dados) {
+    public Hospital atualizarHospital(@PathVariable Long id, @RequestBody Hospital dados) {
         log.info("Atualizando hospital com o id {}", id);
         return service.atualizarHospital(id, dados);
     }

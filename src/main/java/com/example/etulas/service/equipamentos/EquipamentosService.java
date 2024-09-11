@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.equipamentos.EquipamentosDTO;
 import com.example.etulas.model.equipamentosMedicos.Equipamentos;
 import com.example.etulas.repository.equipamentos.EquipamentosRepository;
 
@@ -21,8 +20,8 @@ public class EquipamentosService {
     @Autowired
     EquipamentosRepository repository;
 
-    public Equipamentos salvarEquipamentos(EquipamentosDTO dados) {
-        Equipamentos novoEquipamentos = new Equipamentos(dados);
+    public Equipamentos salvarEquipamentos(Equipamentos dados) {
+        Equipamentos novoEquipamentos = dados;
         return repository.save(novoEquipamentos);
     }
 
@@ -38,12 +37,12 @@ public class EquipamentosService {
 
     }
 
-    public Equipamentos criarEquipamentos(EquipamentosDTO dados) {
-        Equipamentos novoEquipamentos = new Equipamentos(dados);
+    public Equipamentos criarEquipamentos(Equipamentos dados) {
+        Equipamentos novoEquipamentos = dados;
         return repository.save(novoEquipamentos);
     }
 
-    public Equipamentos atualizarEquipamentos(Long id, EquipamentosDTO dados) {
+    public Equipamentos atualizarEquipamentos(Long id, Equipamentos dados) {
         verificarSeExiste(id);
         Equipamentos atualizadoEquipamentos = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado"));

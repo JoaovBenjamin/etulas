@@ -1,6 +1,5 @@
 package com.example.etulas.model.especialidades;
 
-import com.example.etulas.dto.especialidades.EspecialidadesDTO;
 import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
@@ -48,11 +47,5 @@ public class Especialidades {
     @ManyToOne()
     private Hospital hospital;
 
-    public Especialidades(EspecialidadesDTO dados){
-        this.ativo = dados.ativo();
-        this.descricaoEspecialidade = dados.descricaoEspecialidade();
-        this.descricaoProcedimento = dados.descricaoProcedimento();
-        this.nome = dados.nomeEspecialidade();
-        this.hospital = dados.hospital();
-    }
+   
 }

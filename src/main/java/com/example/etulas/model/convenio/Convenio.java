@@ -2,7 +2,6 @@ package com.example.etulas.model.convenio;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 
-import com.example.etulas.dto.convenio.ConvenioDTO;
 import com.example.etulas.model.paciente.Paciente;
 
 import jakarta.persistence.Column;
@@ -48,13 +47,6 @@ public class Convenio {
     @OneToOne()
     private Paciente paciente;
 
-    public Convenio(ConvenioDTO dados) {
-        this.id = dados.Id();
-        this.nome = dados.nome();
-        this.telefone = dados.telefone();
-        this.cnpj = dados.cnpj();
-        this.ativo = dados.ativo();
-        this.paciente = dados.paciente();
-    }
+ 
 }
     

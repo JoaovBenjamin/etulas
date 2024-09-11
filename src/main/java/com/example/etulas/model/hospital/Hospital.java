@@ -2,7 +2,6 @@ package com.example.etulas.model.hospital;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 
-import com.example.etulas.dto.hospital.HospitalDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,11 +40,6 @@ public class Hospital {
     @Column(name = "st_ativo")
     private Boolean ativo;
 
-    public Hospital(HospitalDTO dados) {
-        this.nome = dados.nome();
-        this.cnpj = dados.cnpj();
-        this.telefone = dados.telefone();
-        this.ativo = dados.ativo();
-    }
+   
 
 }

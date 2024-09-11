@@ -2,7 +2,6 @@ package com.example.etulas.model.paciente;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.example.etulas.dto.paciente.PacienteDTO;
 import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
@@ -52,12 +51,5 @@ public class Paciente {
     @ManyToOne()
     private Hospital hospital;
 
-    public Paciente(PacienteDTO dados) {
-        this.nome = dados.nome();
-        this.cpf = dados.cpf();
-        this.telefone = dados.telefone();
-        this.idade = dados.idade();
-        this.genero = dados.genero();
-        this.hospital = dados.hospital();
-    }
+   
 }

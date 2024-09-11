@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.convenio.ConvenioDTO;
 import com.example.etulas.model.convenio.Convenio;
 import com.example.etulas.repository.convenio.ConvenioRepository;
 
@@ -22,8 +21,8 @@ public class ConvenioService {
     @Autowired
     ConvenioRepository repository;
 
-    public Convenio salvarConvenio(ConvenioDTO dados) {
-        Convenio novoConvenio = new Convenio(dados);
+    public Convenio salvarConvenio(Convenio dados) {
+        Convenio novoConvenio = dados;
         return repository.save(novoConvenio);
     }
 
@@ -39,12 +38,12 @@ public class ConvenioService {
 
     }
 
-    public Convenio criarConvenio(ConvenioDTO dados) {
-        Convenio novoConvenio = new Convenio(dados);
+    public Convenio criarConvenio(Convenio dados) {
+        Convenio novoConvenio = dados;
         return repository.save(novoConvenio);
     }
 
-    public Convenio atualizarConvenio(@PathVariable Long id, @RequestBody ConvenioDTO dados) {
+    public Convenio atualizarConvenio(@PathVariable Long id, @RequestBody Convenio dados) {
         Convenio convenio = repository.findById(id)
                                              .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
         BeanUtils.copyProperties(dados, convenio, "id");

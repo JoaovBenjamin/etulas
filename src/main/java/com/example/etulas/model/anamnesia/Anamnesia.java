@@ -1,6 +1,5 @@
 package com.example.etulas.model.anamnesia;
 
-import com.example.etulas.dto.anamnesia.AnamnesiaDTO;
 import com.example.etulas.model.paciente.Paciente;
 
 import jakarta.persistence.Column;
@@ -48,11 +47,4 @@ public class Anamnesia {
     @OneToOne()
     private Paciente paciente;
 
-    public Anamnesia(AnamnesiaDTO dados){
-        this.alergias = dados.alergias();
-        this.cronicas = dados.cronicas();
-        this.genetica = dados.genetica();
-        this.lesoes = dados.lesoes();
-        this.paciente = dados.paciente();
-    }
 }

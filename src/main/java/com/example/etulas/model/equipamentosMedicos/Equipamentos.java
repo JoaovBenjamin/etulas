@@ -1,6 +1,5 @@
 package com.example.etulas.model.equipamentosMedicos;
 
-import com.example.etulas.dto.equipamentos.EquipamentosDTO;
 import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
@@ -45,11 +44,5 @@ public class Equipamentos {
     @ManyToOne()
     private Hospital hospital;
 
-    public Equipamentos(EquipamentosDTO dados){
-        this.nome = dados.nome();
-        this.procedimento = dados.procedimento();
-        this.sala = dados.sala();
-        this.ativo = dados.ativo();
-        this.hospital = dados.hospital();
-    }
+   
 }

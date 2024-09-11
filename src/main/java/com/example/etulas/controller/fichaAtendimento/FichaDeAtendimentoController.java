@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.etulas.dto.fichaAtendimento.FichaAtendimentoDTO;
 import com.example.etulas.model.fichaAtendimento.FichaDeAtendimento;
 import com.example.etulas.service.fichaDeAtendimento.FichaDeAtendimentoService;
 
@@ -82,7 +81,7 @@ public class FichaDeAtendimentoController {
         @ApiResponse(responseCode = "201", description = "Ficha criada com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<FichaDeAtendimento> criarFichaDeAtendimento(@Valid @RequestBody FichaAtendimentoDTO dados) {
+    public ResponseEntity<FichaDeAtendimento> criarFichaDeAtendimento(@Valid @RequestBody FichaDeAtendimento dados) {
         log.info("Criando ficha de atendimento");
         FichaDeAtendimento novaFicha = service.criarFichaDeAtendimento(dados);
         return new ResponseEntity<>(novaFicha, CREATED);
@@ -97,7 +96,7 @@ public class FichaDeAtendimentoController {
         @ApiResponse(responseCode = "200", description = "Ficha atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public FichaDeAtendimento atualizarFichaDeAtendimento(@PathVariable Long id, FichaAtendimentoDTO dados) {
+    public FichaDeAtendimento atualizarFichaDeAtendimento(@PathVariable Long id, FichaDeAtendimento dados) {
         log.info("Atualizando ficha de atendimento com o id {}", id);
         return service.atualizarFichaDeAtendimento(id, dados);
     }

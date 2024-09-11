@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.fichaAtendimento.FichaAtendimentoDTO;
 import com.example.etulas.model.fichaAtendimento.FichaDeAtendimento;
 import com.example.etulas.repository.fichaAtendimento.FichaAtendimentoRepository;
 
@@ -20,8 +19,8 @@ public class FichaDeAtendimentoService {
     @Autowired
     FichaAtendimentoRepository repository;
 
-    public FichaDeAtendimento salvarFichaDeAtendimento(FichaAtendimentoDTO dados) {
-        FichaDeAtendimento novaFicha = new FichaDeAtendimento(dados);
+    public FichaDeAtendimento salvarFichaDeAtendimento(FichaDeAtendimento dados) {
+        FichaDeAtendimento novaFicha = dados;
         return repository.save(novaFicha);
     }
 
@@ -37,12 +36,12 @@ public class FichaDeAtendimentoService {
 
     }
 
-    public FichaDeAtendimento criarFichaDeAtendimento(FichaAtendimentoDTO dados) {
-        FichaDeAtendimento novaFicha = new FichaDeAtendimento(dados);
+    public FichaDeAtendimento criarFichaDeAtendimento(FichaDeAtendimento dados) {
+        FichaDeAtendimento novaFicha = dados;
         return repository.save(novaFicha);
     }
 
-    public FichaDeAtendimento atualizarFichaDeAtendimento(Long id, FichaAtendimentoDTO dados) {
+    public FichaDeAtendimento atualizarFichaDeAtendimento(Long id, FichaDeAtendimento dados) {
         verificarSeExiste(id);
         FichaDeAtendimento atualizadaFicha = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ficha de atendimento não encontrada"));

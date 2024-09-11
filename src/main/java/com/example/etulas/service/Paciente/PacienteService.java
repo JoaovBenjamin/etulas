@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.paciente.PacienteDTO;
 import com.example.etulas.model.paciente.Paciente;
 import com.example.etulas.repository.paciente.PacienteRepository;
 
@@ -21,8 +20,8 @@ public class PacienteService {
     @Autowired
     PacienteRepository repository;
 
-    public Paciente salvarPaciente(PacienteDTO dados) {
-        Paciente novoPaciente = new Paciente(dados);
+    public Paciente salvarPaciente(Paciente dados) {
+        Paciente novoPaciente = dados;
         return repository.save(novoPaciente);
     }
 
@@ -42,13 +41,13 @@ public class PacienteService {
         return repository.findByCpf(cpf);
     }
 
-    public Paciente criarPaciente(PacienteDTO dados) {
-        Paciente novoPaciente = new Paciente(dados);
+    public Paciente criarPaciente(Paciente dados) {
+        Paciente novoPaciente = dados;
         return repository.save(novoPaciente);
 
     }
 
-    public Paciente atualizarPaciente(Long id, PacienteDTO dados) {
+    public Paciente atualizarPaciente(Long id, Paciente dados) {
         verificarSeExiste(id);
         Paciente paciente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));

@@ -2,7 +2,6 @@ package com.example.etulas.model.fichaAtendimento;
 
 import java.time.LocalDate;
 
-import com.example.etulas.dto.fichaAtendimento.FichaAtendimentoDTO;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.model.paciente.Paciente;
@@ -67,17 +66,5 @@ public class FichaDeAtendimento {
     @ManyToOne()
     private Paciente paciente;
 
-    public FichaDeAtendimento(FichaAtendimentoDTO dados){
-        this.altura = dados.altura();
-        this.ativo = dados.ativo();
-        this.dores = dados.dores();
-        this.entradaPaciente = dados.entradaPaciente();
-        this.saidaPaciente = dados.saidaPaciente();
-        this.peso = dados.peso();
-        this.pressao = dados.pressao();
-        this.temperatura = dados.temperatura();
-        this.hospital = dados.hospital();
-        this.especialidades = dados.especialidades();
-        this.especialidades = dados.especialidades();
-    }
+   
 }

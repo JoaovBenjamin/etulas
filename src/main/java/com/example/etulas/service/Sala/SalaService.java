@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.sala.SalaDTO;
 import com.example.etulas.model.sala.Sala;
 import com.example.etulas.repository.sala.SalaRepository;
 
@@ -21,8 +20,8 @@ public class SalaService {
     @Autowired
     SalaRepository repository;
 
-    public Sala salvarSala(SalaDTO dados) {
-        Sala novaSala = new Sala(dados);
+    public Sala salvarSala(Sala dados) {
+        Sala novaSala = dados;
         return repository.save(novaSala);
     }
 
@@ -38,12 +37,12 @@ public class SalaService {
 
     }
 
-    public Sala criarSala(SalaDTO dados) {
-        Sala novaSala = new Sala(dados);
+    public Sala criarSala(Sala dados) {
+        Sala novaSala = dados;
         return repository.save(novaSala);
     }
 
-    public Sala atualizarSala(Long id, SalaDTO dados) {
+    public Sala atualizarSala(Long id, Sala dados) {
         verificarSeExiste(id);
         Sala atualizadaSala = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sala não encontrada"));

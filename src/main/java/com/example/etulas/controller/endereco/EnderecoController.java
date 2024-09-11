@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.etulas.dto.endereco.EnderecoDTO;
 import com.example.etulas.model.endereco.Endereco;
 import com.example.etulas.service.endereco.EnderecoService;
 
@@ -82,9 +81,9 @@ public class EnderecoController {
         @ApiResponse(responseCode = "201", description = "Endereço criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Endereco> criarHospital(@Valid @RequestBody EnderecoDTO dados) {
+    public ResponseEntity<Endereco> criarHospital(@Valid @RequestBody Endereco dados) {
         log.info("Criando endereco");
-        Endereco novEndereco = new Endereco(dados);
+        Endereco novEndereco = (dados);
         return new ResponseEntity<>(novEndereco, CREATED);
     }
 
@@ -97,7 +96,7 @@ public class EnderecoController {
         @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Endereco atualizarEndereco(@PathVariable Long id, @RequestBody EnderecoDTO dados) {
+    public Endereco atualizarEndereco(@PathVariable Long id, @RequestBody Endereco dados) {
         log.info("Atualizando endereco com o id {}", id);
         return service.atualizarEndereco(id,dados);
     }

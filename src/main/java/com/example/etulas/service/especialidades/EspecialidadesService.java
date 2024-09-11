@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.especialidades.EspecialidadesDTO;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 
@@ -19,8 +18,8 @@ public class EspecialidadesService {
     @Autowired
 EspecialidadeRepository repository;
 
-public Especialidades salvarEspecialidade(EspecialidadesDTO dados) {
-    Especialidades novaEspecialidade = new Especialidades(dados);
+public Especialidades salvarEspecialidade(Especialidades dados) {
+    Especialidades novaEspecialidade = dados;
     return repository.save(novaEspecialidade);
 }
 
@@ -35,12 +34,12 @@ public ResponseEntity<Especialidades> buscarEspecialidadePorId(@PathVariable Lon
             .orElse(ResponseEntity.notFound().build());
 }
 
-public Especialidades criarEspecialidade(EspecialidadesDTO dados) {
-    Especialidades novaEspecialidade = new Especialidades(dados);
+public Especialidades criarEspecialidade(Especialidades dados) {
+    Especialidades novaEspecialidade = dados;
     return repository.save(novaEspecialidade);
 }
 
-public Especialidades atualizarEspecialidade(Long id, EspecialidadesDTO dados) {
+public Especialidades atualizarEspecialidade(Long id, Especialidades dados) {
     verificarSeExiste(id);
     Especialidades especialidadeAtualizada = repository.findById(id)
             .orElseThrow(() -> new RuntimeException("Especialidade não encontrada"));

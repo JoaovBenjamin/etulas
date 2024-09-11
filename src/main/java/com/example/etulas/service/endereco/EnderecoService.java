@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.endereco.EnderecoDTO;
 import com.example.etulas.model.endereco.Endereco;
 import com.example.etulas.repository.endereco.EnderecoRepository;
 
@@ -21,8 +20,8 @@ public class EnderecoService {
     @Autowired
     EnderecoRepository repository;
 
-    public Endereco salvarEndereco(EnderecoDTO dados) {
-        Endereco novoEndereco = new Endereco(dados);
+    public Endereco salvarEndereco(Endereco dados) {
+        Endereco novoEndereco = dados;
         return repository.save(novoEndereco);
     }
 
@@ -38,13 +37,13 @@ public class EnderecoService {
 
     }
 
-    public Endereco criarEndereco(EnderecoDTO dados) {
-        Endereco novoEndereco = new Endereco(dados);
+    public Endereco criarEndereco(Endereco dados) {
+        Endereco novoEndereco = dados;
         return repository.save(novoEndereco);
 
     }
 
-    public Endereco atualizarEndereco(Long id, EnderecoDTO dados) {
+    public Endereco atualizarEndereco(Long id, Endereco dados) {
         verificarSeExiste(id);
         Endereco atualizadoEndereco = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));

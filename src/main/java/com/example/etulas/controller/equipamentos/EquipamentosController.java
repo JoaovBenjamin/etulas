@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.etulas.dto.equipamentos.EquipamentosDTO;
 import com.example.etulas.model.equipamentosMedicos.Equipamentos;
 import com.example.etulas.repository.equipamentos.EquipamentosRepository;
 import com.example.etulas.service.equipamentos.EquipamentosService;
@@ -129,7 +128,7 @@ public class EquipamentosController {
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
     @ResponseStatus(CREATED)
-    public ResponseEntity<Equipamentos> criarEquipamento(@Valid @RequestBody EquipamentosDTO dados) {
+    public ResponseEntity<Equipamentos> criarEquipamento(@Valid @RequestBody Equipamentos dados) {
         log.info("Criando equipamento");
         Equipamentos novoEquipamento = service.criarEquipamentos(dados);
         return new ResponseEntity<>(novoEquipamento, CREATED);
@@ -146,7 +145,7 @@ public class EquipamentosController {
         @ApiResponse(responseCode = "200", description = "Equipamento atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Equipamentos atualizarEquipamento(@PathVariable Long id, @RequestBody EquipamentosDTO dados) {
+    public Equipamentos atualizarEquipamento(@PathVariable Long id, @RequestBody Equipamentos dados) {
         log.info("Atualizando equipamento com o id {}", id);
         return service.atualizarEquipamentos(id, dados);
     }

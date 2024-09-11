@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.etulas.dto.sala.SalaDTO;
 import com.example.etulas.model.sala.Sala;
 import com.example.etulas.service.Sala.SalaService;
 
@@ -88,7 +87,7 @@ public class SalaController {
         @ApiResponse(responseCode = "201", description = "Sala criada com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Sala> criarSala(@Valid @RequestBody SalaDTO dados) {
+    public ResponseEntity<Sala> criarSala(@Valid @RequestBody Sala dados) {
         log.info("Criando sala");
         Sala novaSala = service.criarSala(dados);
         return new ResponseEntity<>(novaSala, CREATED);
@@ -104,7 +103,7 @@ public class SalaController {
         @ApiResponse(responseCode = "200", description = "Saça atualizada com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Sala atualizarSala(@PathVariable Long id, @RequestBody SalaDTO dados) {
+    public Sala atualizarSala(@PathVariable Long id, @RequestBody Sala dados) {
         log.info("Atualizando sala com o id {}", id);
         return service.atualizarSala(id, dados);
     }

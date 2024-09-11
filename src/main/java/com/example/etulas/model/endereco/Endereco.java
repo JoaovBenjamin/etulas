@@ -1,6 +1,5 @@
 package com.example.etulas.model.endereco;
 
-import com.example.etulas.dto.endereco.EnderecoDTO;
 import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.model.paciente.Paciente;
 
@@ -56,13 +55,4 @@ public class Endereco {
     @OneToOne()
     private Paciente paciente;
     
-    public Endereco(EnderecoDTO dados) {
-        this.numeroEdificio = dados.numeroEdificio();
-        this.bairro = dados.bairro();
-        this.cidade = dados.cidade();
-        this.enderecoEnum = dados.enderecoEnum();
-        this.logadouro = dados.logadouro();
-        this.paciente = dados.paciente();
-        this.hospital = dados.hospital();
-    }
 }

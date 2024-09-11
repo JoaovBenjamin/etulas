@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.etulas.dto.anamnesia.AnamnesiaDTO;
 import com.example.etulas.model.anamnesia.Anamnesia;
 import com.example.etulas.service.anamnesia.AnamnesiaService;
 
@@ -82,7 +81,7 @@ public class AnamnesiaController {
         @ApiResponse(responseCode = "201", description = "Anamnesia criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Anamnesia> criarAnamnesia(@Valid @RequestBody AnamnesiaDTO dados) {
+    public ResponseEntity<Anamnesia> criarAnamnesia(@Valid @RequestBody Anamnesia dados) {
         log.info("Criando anamnesia");
         Anamnesia novaAnamnesia = service.criarAnamnesia(dados);
         return new ResponseEntity<>(novaAnamnesia, CREATED);
@@ -97,7 +96,7 @@ public class AnamnesiaController {
         @ApiResponse(responseCode = "200", description = "Anamnesia atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Anamnesia atualizarAnamnesia(@PathVariable Long id, @RequestBody AnamnesiaDTO dados) {
+    public Anamnesia atualizarAnamnesia(@PathVariable Long id, @RequestBody Anamnesia dados) {
         log.info("Atualizando anamnesia com o id {}", id);
         return service.atualizarAnamnesia(id, dados);
     }

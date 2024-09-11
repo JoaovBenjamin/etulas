@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.etulas.dto.anamnesia.AnamnesiaDTO;
 import com.example.etulas.model.anamnesia.Anamnesia;
 import com.example.etulas.repository.anamnesia.AnamnesiaRepository;
 
@@ -21,8 +20,8 @@ public class AnamnesiaService {
     @Autowired
     AnamnesiaRepository repository;
 
-    public Anamnesia salvarAnamnesia(AnamnesiaDTO dados) {
-        Anamnesia novaAnamnesia = new Anamnesia(dados);
+    public Anamnesia salvarAnamnesia(Anamnesia dados) {
+        Anamnesia novaAnamnesia = dados;
         return repository.save(novaAnamnesia);
     }
 
@@ -38,12 +37,12 @@ public class AnamnesiaService {
 
     }
 
-    public Anamnesia criarAnamnesia(AnamnesiaDTO dados) {
-        Anamnesia novaAnamnesia = new Anamnesia(dados);
+    public Anamnesia criarAnamnesia(Anamnesia dados) {
+        Anamnesia novaAnamnesia = dados;
         return repository.save(novaAnamnesia);
     }
 
-    public Anamnesia atualizarAnamnesia(Long id, AnamnesiaDTO dados) {
+    public Anamnesia atualizarAnamnesia(Long id, Anamnesia dados) {
         verificarSeExiste(id);
         Anamnesia atualizadaAnamnesia = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Anamnésia não encontrada"));

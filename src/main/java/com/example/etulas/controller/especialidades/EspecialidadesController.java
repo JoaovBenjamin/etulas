@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.etulas.dto.especialidades.EspecialidadesDTO;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
@@ -129,7 +128,7 @@ public class EspecialidadesController {
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
     @ResponseStatus(CREATED)
-    public ResponseEntity<Especialidades> criarEspecialidade(@RequestBody EspecialidadesDTO dados) {
+    public ResponseEntity<Especialidades> criarEspecialidade(@RequestBody Especialidades dados) {
         log.info("Criando especialidade");
         Especialidades novaEspecialidade = service.criarEspecialidade(dados);
         return new ResponseEntity<>(novaEspecialidade, CREATED);
@@ -145,7 +144,7 @@ public class EspecialidadesController {
         @ApiResponse(responseCode = "200", description = "Especialidades atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Especialidades atualizarEspecialidade(@PathVariable Long id, @RequestBody EspecialidadesDTO dados) {
+    public Especialidades atualizarEspecialidade(@PathVariable Long id, @RequestBody Especialidades dados) {
         log.info("Atualizando especialidade com o id {}", id);
         return service.atualizarEspecialidade(id, dados);
     }

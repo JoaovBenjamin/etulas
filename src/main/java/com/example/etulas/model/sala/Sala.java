@@ -1,6 +1,5 @@
 package com.example.etulas.model.sala;
 
-import com.example.etulas.dto.sala.SalaDTO;
 import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
@@ -45,13 +44,6 @@ public class Sala {
     @ManyToOne()
     private Hospital hospital;
 
-    public Sala(SalaDTO dados){
-        this.ativo=dados.ativo();
-        this.descricao = dados.descricao();
-        this.numeroDaSala = dados.numeroDaSala();
-        this.uti = dados.uti();
-        this.hospital = dados.hospital();
-    }
 }
 
 
