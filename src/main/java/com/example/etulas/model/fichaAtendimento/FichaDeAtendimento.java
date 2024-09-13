@@ -59,9 +59,6 @@ public class FichaDeAtendimento {
     @NotNull(message = "fichaatendimento.especialidade.notnull")
     @ManyToOne()
     private Especialidades especialidades;
-    @NotNull(message = "fichaatendimento.hospital.notnull")
-    @ManyToOne()
-    private Hospital hospital;
     @NotNull(message = "fichaatendimento.paciente.notnull")
     @ManyToOne()
     private Paciente paciente;

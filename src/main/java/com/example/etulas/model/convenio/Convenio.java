@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -44,7 +44,7 @@ public class Convenio {
     @Column(name = "st_ativo")
     private Boolean ativo;
     @NotNull(message = "convenio.paciente.notnull")
-    @OneToOne()
+    @ManyToOne()
     private Paciente paciente;
 
  

@@ -48,8 +48,7 @@ public class Paciente {
     @Column(name = "ds_genero")
     @Pattern(regexp = "^(MASCULINO|FEMININO)$", message = "{paciente.genero.pattern}")
     private String genero;
-    @ManyToOne()
-    private Hospital hospital;
+   
 
    
 }

@@ -26,12 +26,10 @@ import lombok.NoArgsConstructor;
 public class Sala {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //TODO: Alterar numeroDaSala para String no Banco de dados;
-    @Column(name = "nr_salas")
+    @Column(name = "tx_salas")
     @NotBlank(message = "{sala.numerodasala.notblank}")
     private String numeroDaSala;
     @Column(name = "qtd_leitos_uti")
-    //TODO alterar no banco de dados uti para 
     @NotBlank(message = "{sala.uti.notblank}")
     private String uti;
     @Column(name = "ds_salas")
