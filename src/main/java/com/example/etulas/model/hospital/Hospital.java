@@ -2,6 +2,7 @@ package com.example.etulas.model.hospital;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 
+import com.example.etulas.model.fichaAtendimento.FichaDeAtendimento;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +25,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "T_ETU_HOSPITAL")
 public class Hospital {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nm_nome")
     @NotBlank(message = "{hospital.nome.notblank}")
@@ -42,6 +43,6 @@ public class Hospital {
     @Column(name = "st_ativo")
     private Boolean ativo;
     @ManyToOne()
-    private Hospital hospital;
+    private FichaDeAtendimento fichaDeAtendimento;
 
 }
