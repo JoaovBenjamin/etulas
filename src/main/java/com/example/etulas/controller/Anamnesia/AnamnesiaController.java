@@ -54,7 +54,7 @@ public class AnamnesiaController {
     @Operation(summary = "Listar Anamnesia por Id", description = "Retorna um anamnesia por id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Anamnesia retornado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Não encontrado")
+            @ApiResponse(responseCode = "404", description = "Não encontrado aaa")
     })
     public ResponseEntity<Anamnesia> buscarAnamnesiaPorId(@PathVariable Long id) {
         log.info("Buscando anamnesia com o id {}", id);
