@@ -40,32 +40,22 @@ public class AnamnesiaController {
 
     @GetMapping
     @ResponseStatus(OK)
-      @Operation(
-        summary = "Listar Anamnesia",
-        description = "Retorna um array com todas anamnesias cadastrados."         
-    )
-    @ApiResponses(
-        {
+    @Operation(summary = "Listar Anamnesia", description = "Retorna um array com todas anamnesias cadastrados.")
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Anamnesia retornado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Não encontrado")
-        }
-    )
+            @ApiResponse(responseCode = "404", description = "Não encontrado anamnesia")
+    })
     public List<Anamnesia> buscarAnamnesia() {
         log.info("Buscando Anamnesias");
         return service.buscarAnamnesia();
     }
 
     @GetMapping("{id}")
-    @Operation(
-        summary = "Listar Anamnesia por Id",
-        description = "Retorna um anamnesia por id"
-    )
-    @ApiResponses(
-        {
+    @Operation(summary = "Listar Anamnesia por Id", description = "Retorna um anamnesia por id")
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Anamnesia retornado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Não encontrado")
-        }
-    )   
+    })
     public ResponseEntity<Anamnesia> buscarAnamnesiaPorId(@PathVariable Long id) {
         log.info("Buscando anamnesia com o id {}", id);
         return service.buscarAnamnesiaPorId(id);
@@ -73,13 +63,10 @@ public class AnamnesiaController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    @Operation(
-        summary = "Criar Anamnesia",
-        description = "Cria uma anamnesia com os dados do corpo da requisição"
-    )
+    @Operation(summary = "Criar Anamnesia", description = "Cria uma anamnesia com os dados do corpo da requisição")
     @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Anamnesia criado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+            @ApiResponse(responseCode = "201", description = "Anamnesia criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
     public ResponseEntity<Anamnesia> criarAnamnesia(@Valid @RequestBody Anamnesia dados) {
         log.info("Criando anamnesia");
@@ -88,13 +75,10 @@ public class AnamnesiaController {
     }
 
     @PutMapping("{id}")
-    @Operation(
-        summary = "Atualizar Anamnesia",
-        description = "Atualiza anamnesia de acordo com os dados no corpo da requisição"
-    )
+    @Operation(summary = "Atualizar Anamnesia", description = "Atualiza anamnesia de acordo com os dados no corpo da requisição")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Anamnesia atualizado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
+            @ApiResponse(responseCode = "200", description = "Anamnesia atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
     public Anamnesia atualizarAnamnesia(@PathVariable Long id, @RequestBody Anamnesia dados) {
         log.info("Atualizando anamnesia com o id {}", id);
@@ -103,13 +87,10 @@ public class AnamnesiaController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
-    @Operation(
-        summary = "Deletar Anamnesia",
-        description = "Deletar anamnesia com id passado no path"
-    )
+    @Operation(summary = "Deletar Anamnesia", description = "Deletar anamnesia com id passado no path")
     @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "Anamnesia deletado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Not found")
+            @ApiResponse(responseCode = "204", description = "Anamnesia deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Not found")
     })
     public void deletarAnamnesia(@PathVariable Long id) {
         service.apagarAnamnesia(id);
