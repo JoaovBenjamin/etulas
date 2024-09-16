@@ -62,6 +62,7 @@ public class FichaDeAtendimento {
     @NotNull(message = "fichaatendimento.paciente.notnull")
     @ManyToOne()
     private Paciente paciente;
-
+    @ManyToOne()
+    private Hospital hospital;
    
 }

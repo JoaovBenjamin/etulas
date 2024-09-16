@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.etulas.model.especialidades.Especialidades;
-import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.repository.especialidade.EspecialidadeRepository;
 import com.example.etulas.service.especialidades.EspecialidadesService;
 

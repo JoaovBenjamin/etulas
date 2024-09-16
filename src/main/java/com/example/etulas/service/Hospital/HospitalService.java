@@ -7,12 +7,21 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.etulas.model.hospital.Hospital;
+import com.example.etulas.model.paciente.Paciente;
 import com.example.etulas.repository.hospital.HospitalRepository;
 
 @Service
@@ -20,6 +29,9 @@ public class HospitalService {
 
     @Autowired
     HospitalRepository repository;
+
+    @Autowired
+    PagedResourcesAssembler<Hospital> pageAssembler;
 
     public Hospital salvarHospital(Hospital dados) {
         Hospital novoHospital = dados;
@@ -31,32 +43,56 @@ public class HospitalService {
         return repository.findAll();
     }
 
-    public ResponseEntity<Hospital> buscarHospitalPorId(@PathVariable Long id) {
-        return repository
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+     public PagedModel<EntityModel<Hospital>> index(
+        @RequestParam(required = false) String hospital,
+        @PageableDefault(size = 5, direction = Direction.DESC) Pageable pageable
+    ){
+        Page<Hospital> page = null;
 
+        if (hospital !=null){
+            page = repository.findByNome(hospital, pageable);
+        }
+    
+
+        if(page == null){
+            page = repository.findAll(pageable);
+        }
+
+       return pageAssembler.toModel(page,Hospital::toEntityModel);
+    
     }
 
-    public Hospital criarHospital(Hospital dados) {
+    public EntityModel<Hospital> buscarHospitalPorId(@PathVariable Long id) {
+        var hospital = repository.findById(id)
+                                  .orElseThrow(() -> new IllegalArgumentException("Hospital não encontrado"));
+
+        return hospital.toEntityModel();
+    }
+
+    public ResponseEntity<EntityModel<Hospital>> criarHospital(Hospital dados) {
         Hospital novoHospital = dados;
-        return repository.save(novoHospital);
+        repository.save(novoHospital);
 
+        return ResponseEntity
+                            .created(novoHospital.toEntityModel().getRequiredLink("self").toUri())
+                            .body(novoHospital.toEntityModel());
     }
 
-    public Hospital atualizarHospital(Long id, Hospital dados) {
+    public ResponseEntity<EntityModel<Hospital>> atualizarHospital(Long id, Hospital dados) {
         Hospital hospital = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
         BeanUtils.copyProperties(dados, hospital, "id");
-        return repository.save(hospital);
+        repository.save(hospital);
+
+        return ResponseEntity.ok(hospital.toEntityModel());
     }
       
 
 
-    public void deletarHospital(Long id) {
+    public ResponseEntity<Void> deletarHospital(Long id) {
         verificarSeExiste(id);
         repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     public void verificarSeExiste(Long id) {

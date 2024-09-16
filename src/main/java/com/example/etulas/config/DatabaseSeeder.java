@@ -69,7 +69,6 @@ public class DatabaseSeeder implements CommandLineRunner {
                                 .cnpj("05.388.218/0001-89")
                                 .telefone("66554433221")
                                 .nome("Hospital Universitario")
-                                .fichaDeAtendimento(fichaAtendimentoRepository.findById(1L).get())
                                 .build()));
 
         pacienteRepository.saveAll(
@@ -182,6 +181,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                                 .entradaPaciente(LocalDate.now())
                                 .dores("Dores leves nas costas")
                                 .especialidades(especialidadeRepository.findById(1L).get())
+                                .hospital(hospitalRepository.findById(1L).get())
                                 .paciente(pacienteRepository.findById(1L).get())
                                 .build()));
 

@@ -7,10 +7,12 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -77,25 +79,12 @@ public class PacienteController {
             @ApiResponse(responseCode = "404", description = "Não encontrado")
         }
     )
-    public Page<Paciente> index(
+    public PagedModel<EntityModel<Paciente>> index(
         @RequestParam(required = false) String paciente,
         @RequestParam(required = false) String cpf,
         @PageableDefault(size = 5, direction = Direction.DESC) Pageable pageable
     ){
-
-        if(paciente !=null && cpf !=null){
-            return repository.findByNomeAndCpf(paciente,cpf, pageable);
-        }
-
-        if(paciente !=null){
-            return repository.findByNome(paciente, pageable);
-        }
-
-        if (cpf != null) {
-            return repository.findByCpf(cpf, pageable);
-        }
-    
-        return repository.findAll(pageable);
+          return service.index(paciente, cpf, pageable);
     }
 
 
@@ -110,7 +99,7 @@ public class PacienteController {
             @ApiResponse(responseCode = "404", description = "Não encontrado")
         }
     )  
-    public ResponseEntity<Paciente> buscarHospitalPorId(@PathVariable Long id) {
+    public EntityModel<Paciente> buscarPacientePorId(@PathVariable Long id) {
         log.info("Buscando paciente com o id {}", id);
         return service.buscarPacientePorId(id);
     }
@@ -126,7 +115,7 @@ public class PacienteController {
             @ApiResponse(responseCode = "404", description = "Não encontrado")
         }
     )  
-    public List<Paciente> buscarPacientePorCpf(@PathVariable String cpf) {
+    public ResponseEntity<EntityModel<Paciente>> buscarPacientePorCpf(@PathVariable String cpf) {
         log.info("Buscando paciente com cpf {}", cpf);
         return service.buscarPacientePorCpf(cpf);
     }
@@ -141,10 +130,9 @@ public class PacienteController {
         @ApiResponse(responseCode = "201", description = "Paciente criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Paciente> criarPaciente(@Valid @RequestBody Paciente dados) {
+    public ResponseEntity<EntityModel<Paciente>> criarPaciente(@Valid @RequestBody Paciente dados) {
         log.info("Criando hospital");
-        Paciente novoPaciente = service.criarPaciente(dados);
-        return new ResponseEntity<>(novoPaciente, CREATED);
+        return service.criarPaciente(dados);
     }
 
     @PutMapping("{id}")
@@ -156,7 +144,7 @@ public class PacienteController {
         @ApiResponse(responseCode = "200", description = "Paciente atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Paciente atualizarPaciente(@PathVariable Long id, Paciente dados) {
+    public ResponseEntity<EntityModel<Paciente>> atualizarPaciente(@PathVariable Long id, Paciente dados) {
         log.info("Atualizando paciente com o id {}", id);
         return service.atualizarPaciente(id, dados);
     }
@@ -171,9 +159,9 @@ public class PacienteController {
         @ApiResponse(responseCode = "204", description = "Paciente deletado com sucesso"),
         @ApiResponse(responseCode = "404", description = "Not found")
     })
-    public void deletarHospital(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarPaciente(@PathVariable Long id) {
         log.info("Deletando paciente com o id", id);
-        service.deletarPaciente(id);
+        return service.deletarPaciente(id);
     }
 
 }

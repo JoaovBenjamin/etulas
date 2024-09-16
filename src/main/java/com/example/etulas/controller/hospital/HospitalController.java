@@ -6,6 +6,8 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
 
+import javax.swing.text.html.parser.Entity;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -14,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,7 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 @CacheConfig(cacheNames = "hospital")
 @RequestMapping("hospital")
 @Slf4j
-@Tag(name = "Hospital")
+@Tag(name = "hospital")
 public class HospitalController {
     @Autowired
     HospitalService service;
@@ -84,7 +88,7 @@ public class HospitalController {
         }
     )   
     @GetMapping("{id}")
-    public ResponseEntity<Hospital> buscarHospitalPorId(@PathVariable Long id) {
+    public EntityModel<Hospital> buscarHospitalPorId(@PathVariable Long id) {
         log.info("Buscando Hospitais com o id {}", id);
         return service.buscarHospitalPorId(id);
     }
@@ -100,16 +104,11 @@ public class HospitalController {
         }
     )
     @GetMapping("page")
-    public Page<Hospital> index(
+    public PagedModel<EntityModel<Hospital>> index(
         @RequestParam(required = false) String hospital,
         @PageableDefault(size = 5, direction = Direction.DESC) Pageable pageable
     ){
-
-        if (hospital !=null){
-            return repository.findByNome(hospital, pageable);
-        }
-    
-        return repository.findAll(pageable);
+                 return service.index(hospital, pageable);
     }
 
     @CacheEvict(allEntries = true)
@@ -123,10 +122,10 @@ public class HospitalController {
         @ApiResponse(responseCode = "201", description = "Hospital criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Hospital> criarHospital(@Valid @RequestBody Hospital dados) {
+    public ResponseEntity<EntityModel<Hospital>> criarHospital(@Valid @RequestBody Hospital dados) {
         log.info("Criando hospital");
-        Hospital hospital = service.criarHospital(dados);
-        return new ResponseEntity<>(hospital, CREATED);
+        return service.criarHospital(dados);
+    
     }
 
     @Operation(
@@ -139,7 +138,7 @@ public class HospitalController {
     })
     @CacheEvict(allEntries = true)
     @PutMapping("{id}")
-    public Hospital atualizarHospital(@PathVariable Long id, @RequestBody Hospital dados) {
+    public ResponseEntity<EntityModel<Hospital>> atualizarHospital(@PathVariable Long id, @RequestBody Hospital dados) {
         log.info("Atualizando hospital com o id {}", id);
         return service.atualizarHospital(id, dados);
     }
@@ -156,8 +155,8 @@ public class HospitalController {
     @CacheEvict(allEntries = true)
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
-    public void deletarHospital(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarHospital(@PathVariable Long id) {
         log.info("Deletando hospital com o id", id);
-        service.deletarHospital(id);
+        return service.deletarHospital(id);
     }
 }

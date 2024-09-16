@@ -1,7 +1,13 @@
 package com.example.etulas.model.paciente;
 
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.hateoas.EntityModel;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+
+
+import com.example.etulas.controller.paciente.PacienteController;
 import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
@@ -49,6 +55,15 @@ public class Paciente {
     @Pattern(regexp = "^(MASCULINO|FEMININO)$", message = "{paciente.genero.pattern}")
     private String genero;
    
+    public EntityModel<Paciente> toEntityModel(){
+        return EntityModel.of(
+            this,
+            linkTo(methodOn(PacienteController.class).buscarPacientePorId(id)).withSelfRel(),
+            linkTo(methodOn(PacienteController.class).buscarPacientePorCpf(cpf)).withRel(cpf),
+            linkTo(methodOn(PacienteController.class).index(null, null, null)).withRel("contents"),
+            linkTo(methodOn(PacienteController.class).deletarPaciente(id)).withRel("delete")
+        );
+    }
 
    
 }

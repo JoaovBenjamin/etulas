@@ -1,15 +1,18 @@
 package com.example.etulas.model.hospital;
 
-import org.hibernate.validator.constraints.br.CNPJ;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import com.example.etulas.model.fichaAtendimento.FichaDeAtendimento;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.springframework.hateoas.EntityModel;
+
+import com.example.etulas.controller.hospital.HospitalController;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -42,7 +45,15 @@ public class Hospital {
     private String cnpj;
     @Column(name = "st_ativo")
     private Boolean ativo;
-    @ManyToOne()
-    private FichaDeAtendimento fichaDeAtendimento;
+   
+
+    public EntityModel<Hospital> toEntityModel(){
+        return EntityModel.of(
+            this,
+            linkTo(methodOn(HospitalController.class).buscarHospitalPorId(id)).withSelfRel(),
+            linkTo(methodOn(HospitalController.class).index(null, null)).withRel("contents"),
+            linkTo(methodOn(HospitalController.class).deletarHospital(id)).withRel("delete")
+        );
+    }
 
 }
