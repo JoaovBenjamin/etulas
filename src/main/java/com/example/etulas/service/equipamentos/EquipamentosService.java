@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,32 +30,38 @@ public class EquipamentosService {
         return repository.findAll();
     }
 
-    public ResponseEntity<Equipamentos> buscarEquipamentosPorId(@PathVariable Long id) {
-        return repository
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public EntityModel<Equipamentos> buscarEquipamentosPorId(@PathVariable Long id) {
+         var equipamentos = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Equipamento não encontrado"));
 
+         return equipamentos.toEntityModel();
     }
 
-    public Equipamentos criarEquipamentos(Equipamentos dados) {
+    public ResponseEntity<EntityModel<Equipamentos>> criarEquipamentos(Equipamentos dados) {
         Equipamentos novoEquipamentos = dados;
-        return repository.save(novoEquipamentos);
+        repository.save(novoEquipamentos);
+
+        return ResponseEntity
+                      .created(novoEquipamentos.toEntityModel().getRequiredLink("self").toUri())
+                      .body(novoEquipamentos.toEntityModel());
     }
 
-    public Equipamentos atualizarEquipamentos(Long id, Equipamentos dados) {
+    public ResponseEntity<EntityModel<Equipamentos>> atualizarEquipamentos(Long id, Equipamentos dados) {
         verificarSeExiste(id);
         Equipamentos atualizadoEquipamentos = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado"));
         BeanUtils.copyProperties(dados, atualizadoEquipamentos, "id");
-        return repository.save(atualizadoEquipamentos);
+         repository.save(atualizadoEquipamentos);
+
+         return ResponseEntity.ok(atualizadoEquipamentos.toEntityModel());
     }
 
-    public void apagarEquipamentos(Long id) {
+    public ResponseEntity<Void> apagarEquipamentos(Long id) {
         verificarSeExiste(id);
         Equipamentos apagarEquipamentos = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado"));
         apagarEquipamentos.setAtivo(false);
+
+        return ResponseEntity.noContent().build();
     }
 
     public void verificarSeExiste(Long id) {

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -112,7 +113,7 @@ public class EquipamentosController {
             @ApiResponse(responseCode = "404", description = "Não encontrado")
         }
     )   
-    public ResponseEntity<Equipamentos> buscarEquipamentosPorId(@PathVariable Long id) {
+    public EntityModel<Equipamentos> buscarEquipamentosPorId(@PathVariable Long id) {
         log.info("Buscando equipamento com o id {}", id);
         return service.buscarEquipamentosPorId(id);
     }
@@ -128,10 +129,9 @@ public class EquipamentosController {
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
     @ResponseStatus(CREATED)
-    public ResponseEntity<Equipamentos> criarEquipamento(@Valid @RequestBody Equipamentos dados) {
+    public ResponseEntity<EntityModel<Equipamentos>> criarEquipamento(@Valid @RequestBody Equipamentos dados) {
         log.info("Criando equipamento");
-        Equipamentos novoEquipamento = service.criarEquipamentos(dados);
-        return new ResponseEntity<>(novoEquipamento, CREATED);
+        return service.criarEquipamentos(dados);
     }
 
 
@@ -145,7 +145,7 @@ public class EquipamentosController {
         @ApiResponse(responseCode = "200", description = "Equipamento atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Equipamentos atualizarEquipamento(@PathVariable Long id, @RequestBody Equipamentos dados) {
+    public ResponseEntity<EntityModel<Equipamentos>> atualizarEquipamento(@PathVariable Long id, @RequestBody Equipamentos dados) {
         log.info("Atualizando equipamento com o id {}", id);
         return service.atualizarEquipamentos(id, dados);
     }
@@ -161,7 +161,7 @@ public class EquipamentosController {
         @ApiResponse(responseCode = "404", description = "Not found")
     })
     @ResponseStatus(NOT_FOUND)
-    public void deletarEquipamento(@PathVariable Long id) {
-        service.apagarEquipamentos(id);
+    public ResponseEntity<Void> deletarEquipamento(@PathVariable Long id) {
+       return service.apagarEquipamentos(id);
     }
 }

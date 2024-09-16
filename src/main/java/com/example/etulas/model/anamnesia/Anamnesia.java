@@ -1,5 +1,11 @@
 package com.example.etulas.model.anamnesia;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import org.springframework.hateoas.EntityModel;
+
+import com.example.etulas.controller.Anamnesia.AnamnesiaController;
 import com.example.etulas.model.paciente.Paciente;
 
 import jakarta.persistence.Column;
@@ -46,5 +52,13 @@ public class Anamnesia {
     @NotNull(message = "{anamnesia.paciente.notnull}")
     @OneToOne()
     private Paciente paciente;
+
+    public EntityModel<Anamnesia> toEntityModel(){
+        return EntityModel.of(
+            this,
+            linkTo(methodOn(AnamnesiaController.class).buscarAnamnesia()).withSelfRel(),
+            linkTo(methodOn(AnamnesiaController.class).deletarAnamnesia(id)).withRel("delete")
+        );
+    }
 
 }

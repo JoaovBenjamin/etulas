@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,24 +35,32 @@ public ResponseEntity<Especialidades> buscarEspecialidadePorId(@PathVariable Lon
             .orElse(ResponseEntity.notFound().build());
 }
 
-public Especialidades criarEspecialidade(Especialidades dados) {
+public ResponseEntity<EntityModel<Especialidades>> criarEspecialidade(Especialidades dados) {
     Especialidades novaEspecialidade = dados;
-    return repository.save(novaEspecialidade);
+     repository.save(novaEspecialidade);
+
+     return ResponseEntity
+            .created(novaEspecialidade.toEntityModel().getRequiredLink("self").toUri())
+            .body(novaEspecialidade.toEntityModel());
 }
 
-public Especialidades atualizarEspecialidade(Long id, Especialidades dados) {
+public ResponseEntity<EntityModel<Especialidades>> atualizarEspecialidade(Long id, Especialidades dados) {
     verificarSeExiste(id);
     Especialidades especialidadeAtualizada = repository.findById(id)
             .orElseThrow(() -> new RuntimeException("Especialidade não encontrada"));
     BeanUtils.copyProperties(dados, especialidadeAtualizada, "id");
-    return repository.save(especialidadeAtualizada);
+     repository.save(especialidadeAtualizada);
+
+     return ResponseEntity.ok(especialidadeAtualizada.toEntityModel());
 }
 
-public void apagarEspecialidade(Long id) {
+public ResponseEntity<Void> apagarEspecialidade(Long id) {
     verificarSeExiste(id);
     Especialidades especialidadeApagar = repository.findById(id)
             .orElseThrow(() -> new RuntimeException("Especialidade não encontrada"));
     especialidadeApagar.setAtivo(false);
+
+    return ResponseEntity.noContent().build();
 }
 
 public void verificarSeExiste(Long id) {

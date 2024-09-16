@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,31 +30,37 @@ public class EnderecoService {
         return repository.findAll();
     }
 
-    public ResponseEntity<Endereco> buscarEnderecoPorId(@PathVariable Long id) {
-        return repository
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public EntityModel<Endereco> buscarEnderecoPorId(@PathVariable Long id) {
+        var endereco = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("endereço errado"));
+
+        return endereco.toEntityModel();
 
     }
 
-    public Endereco criarEndereco(Endereco dados) {
+    public ResponseEntity<EntityModel<Endereco>> criarEndereco(Endereco dados) {
         Endereco novoEndereco = dados;
-        return repository.save(novoEndereco);
+        repository.save(novoEndereco);
+
+        return ResponseEntity
+            .created(novoEndereco.toEntityModel().getRequiredLink("self").toUri())
+                             .body(novoEndereco.toEntityModel());
 
     }
 
-    public Endereco atualizarEndereco(Long id, Endereco dados) {
+    public ResponseEntity<EntityModel<Endereco>> atualizarEndereco(Long id, Endereco dados) {
         verificarSeExiste(id);
         Endereco atualizadoEndereco = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
         BeanUtils.copyProperties(dados, atualizadoEndereco, "id");
-        return repository.save(atualizadoEndereco);
+        repository.save(atualizadoEndereco);
+
+        return ResponseEntity.ok(atualizadoEndereco.toEntityModel());
     }
 
-    public void deletarEndereco(Long id) {
+    public ResponseEntity<Void> deletarEndereco(Long id) {
         verificarSeExiste(id);
         repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     public void verificarSeExiste(Long id) {

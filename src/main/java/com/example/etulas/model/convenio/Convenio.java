@@ -1,7 +1,12 @@
 package com.example.etulas.model.convenio;
 
-import org.hibernate.validator.constraints.br.CNPJ;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.springframework.hateoas.EntityModel;
+
+import com.example.etulas.controller.convenio.ConvenioController;
 import com.example.etulas.model.paciente.Paciente;
 
 import jakarta.persistence.Column;
@@ -47,6 +52,14 @@ public class Convenio {
     @ManyToOne()
     private Paciente paciente;
 
+
+    public EntityModel<Convenio> toEntityModel(){
+        return EntityModel.of(
+            this,
+            linkTo(methodOn(ConvenioController.class).buscarConvenioPorId(id)).withSelfRel(),
+            linkTo(methodOn(ConvenioController.class).deletarEndereco(id)).withRel("delete")
+        );
+    }
  
 }
     

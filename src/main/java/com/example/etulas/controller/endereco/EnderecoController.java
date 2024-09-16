@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,7 +67,7 @@ public class EnderecoController {
             @ApiResponse(responseCode = "404", description = "Não encontrado")
         }
     )   
-    public ResponseEntity<Endereco> buscarEnderecoPorId(@PathVariable Long id) {
+    public EntityModel<Endereco> buscarEnderecoPorId(@PathVariable Long id) {
         log.info("Buscando endereco com o id {}", id);
         return service.buscarEnderecoPorId(id);
     }
@@ -81,10 +82,9 @@ public class EnderecoController {
         @ApiResponse(responseCode = "201", description = "Endereço criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Endereco> criarHospital(@Valid @RequestBody Endereco dados) {
+    public ResponseEntity<EntityModel<Endereco>> criarEndereco(@Valid @RequestBody Endereco dados) {
         log.info("Criando endereco");
-        Endereco novEndereco = (dados);
-        return new ResponseEntity<>(novEndereco, CREATED);
+        return service.criarEndereco(dados);
     }
 
     @PutMapping("{id}")
@@ -96,7 +96,7 @@ public class EnderecoController {
         @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Endereco atualizarEndereco(@PathVariable Long id, @RequestBody Endereco dados) {
+    public ResponseEntity<EntityModel<Endereco>> atualizarEndereco(@PathVariable Long id, @RequestBody Endereco dados) {
         log.info("Atualizando endereco com o id {}", id);
         return service.atualizarEndereco(id,dados);
     }
@@ -111,7 +111,7 @@ public class EnderecoController {
     })
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
-    public void deletarEndereco(Long id) {
-        service.deletarEndereco(id);
+    public ResponseEntity<Void> deletarEndereco(Long id) {
+        return service.deletarEndereco(id);
     }
 }

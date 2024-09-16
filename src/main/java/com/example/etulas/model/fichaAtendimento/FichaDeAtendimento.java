@@ -1,7 +1,13 @@
 package com.example.etulas.model.fichaAtendimento;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.time.LocalDate;
 
+import org.springframework.hateoas.EntityModel;
+
+import com.example.etulas.controller.fichaAtendimento.FichaDeAtendimentoController;
 import com.example.etulas.model.especialidades.Especialidades;
 import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.model.paciente.Paciente;
@@ -30,7 +36,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "T_ETU_FICHA_ATENDIMENTO")
 public class FichaDeAtendimento {
     @Column(name = "id_atendimento")
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nr_peso")
     @NotNull(message = "{fichadeatendimento.peso.notnull}")
@@ -64,5 +71,14 @@ public class FichaDeAtendimento {
     private Paciente paciente;
     @ManyToOne()
     private Hospital hospital;
-   
+
+    public EntityModel<FichaDeAtendimento> toEntityModel() {
+        return EntityModel.of(
+                this,
+                linkTo(methodOn(FichaDeAtendimentoController.class).buscarFichaDeAtendimentoPorId(id)).withSelfRel(),
+                linkTo(methodOn(FichaDeAtendimentoController.class).deletarFichaDeAtendimento(id)).withRel("delete")
+
+        );
+    }
+
 }

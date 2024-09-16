@@ -1,5 +1,11 @@
 package com.example.etulas.model.equipamentosMedicos;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import org.springframework.hateoas.EntityModel;
+
+import com.example.etulas.controller.equipamentos.EquipamentosController;
 import com.example.etulas.model.hospital.Hospital;
 
 import jakarta.persistence.Column;
@@ -44,5 +50,13 @@ public class Equipamentos {
     @ManyToOne()
     private Hospital hospital;
 
-   
+
+    
+    public EntityModel<Equipamentos> toEntityModel(){
+        return EntityModel.of(
+            this, 
+               linkTo(methodOn(EquipamentosController.class).buscarEquipamentosPorId(id)).withSelfRel(),
+               linkTo(methodOn(EquipamentosController.class).deletarEquipamento(id)).withRel("delete")
+        );    
+    }
 }

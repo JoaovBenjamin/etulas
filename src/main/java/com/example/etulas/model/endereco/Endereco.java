@@ -1,5 +1,11 @@
 package com.example.etulas.model.endereco;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import org.springframework.hateoas.EntityModel;
+
+import com.example.etulas.controller.endereco.EnderecoController;
 import com.example.etulas.model.hospital.Hospital;
 import com.example.etulas.model.paciente.Paciente;
 
@@ -36,7 +42,7 @@ public class Endereco {
     @Column(name = "nm_logadouro")
     @NotBlank(message = "{endereco.logadouro.notblank}")
     @Size(min = 4, max = 60, message = "{endereco.logadouro.size}")
-    private String logadouro;
+    private String logradouro;
     @Column(name = "nm_bairro")
     @NotBlank(message = "{endereco.bairro.notblank}")
     @Size(min = 4, max = 60, message = "{endereco.bairro.size}")
@@ -48,11 +54,19 @@ public class Endereco {
     @Column(name = "nm_uf")
     @Enumerated(EnumType.STRING)
     private EnderecoEnum enderecoEnum;
-    @NotNull(message = "endereco.hospital.notnull")
     @OneToOne()
     private Hospital hospital;
     @NotNull(message = "endereco.hospital.notnull")
     @OneToOne()
     private Paciente paciente;
+
     
+     public EntityModel<Endereco> toEntityModel(){
+        return EntityModel.of(
+            this,
+            linkTo(methodOn(EnderecoController.class).deletarEndereco(id)).withRel("delete")
+        );
+     }
+
+
 }

@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -56,7 +57,7 @@ public class AnamnesiaController {
             @ApiResponse(responseCode = "200", description = "Anamnesia retornado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Não encontrado aaa")
     })
-    public ResponseEntity<Anamnesia> buscarAnamnesiaPorId(@PathVariable Long id) {
+    public EntityModel<Anamnesia> buscarAnamnesiaPorId(@PathVariable Long id) {
         log.info("Buscando anamnesia com o id {}", id);
         return service.buscarAnamnesiaPorId(id);
     }
@@ -68,10 +69,9 @@ public class AnamnesiaController {
             @ApiResponse(responseCode = "201", description = "Anamnesia criado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Anamnesia> criarAnamnesia(@Valid @RequestBody Anamnesia dados) {
+    public ResponseEntity<EntityModel<Anamnesia>> criarAnamnesia(@Valid @RequestBody Anamnesia dados) {
         log.info("Criando anamnesia");
-        Anamnesia novaAnamnesia = service.criarAnamnesia(dados);
-        return new ResponseEntity<>(novaAnamnesia, CREATED);
+        return service.criarAnamnesia(dados);
     }
 
     @PutMapping("{id}")
@@ -80,7 +80,7 @@ public class AnamnesiaController {
             @ApiResponse(responseCode = "200", description = "Anamnesia atualizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Anamnesia atualizarAnamnesia(@PathVariable Long id, @RequestBody Anamnesia dados) {
+    public ResponseEntity<EntityModel<Anamnesia>> atualizarAnamnesia(@PathVariable Long id, @RequestBody Anamnesia dados) {
         log.info("Atualizando anamnesia com o id {}", id);
         return service.atualizarAnamnesia(id, dados);
     }
@@ -92,7 +92,7 @@ public class AnamnesiaController {
             @ApiResponse(responseCode = "204", description = "Anamnesia deletado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Not found")
     })
-    public void deletarAnamnesia(@PathVariable Long id) {
-        service.apagarAnamnesia(id);
+    public ResponseEntity<Void> deletarAnamnesia(@PathVariable Long id) {
+        return service.apagarAnamnesia(id);
     }
 }

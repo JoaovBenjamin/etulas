@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,31 +30,39 @@ public class AnamnesiaService {
         return repository.findAll();
     }
 
-    public ResponseEntity<Anamnesia> buscarAnamnesiaPorId(@PathVariable Long id) {
-        return repository
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public EntityModel<Anamnesia> buscarAnamnesiaPorId(@PathVariable Long id) {
+          var anamnesia = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Anamnesia não encontrada"));
+
+          return anamnesia.toEntityModel();
 
     }
 
-    public Anamnesia criarAnamnesia(Anamnesia dados) {
+    public ResponseEntity<EntityModel<Anamnesia>> criarAnamnesia(Anamnesia dados) {
         Anamnesia novaAnamnesia = dados;
-        return repository.save(novaAnamnesia);
+       repository.save(novaAnamnesia);
+
+       return ResponseEntity
+                         .created(novaAnamnesia.toEntityModel().getRequiredLink("self").toUri())
+                         .body(novaAnamnesia.toEntityModel());
     }
 
-    public Anamnesia atualizarAnamnesia(Long id, Anamnesia dados) {
+    public ResponseEntity<EntityModel<Anamnesia>> atualizarAnamnesia(Long id, Anamnesia dados) {
         verificarSeExiste(id);
         Anamnesia atualizadaAnamnesia = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Anamnésia não encontrada"));
         BeanUtils.copyProperties(dados, atualizadaAnamnesia, "id");
-        return repository.save(atualizadaAnamnesia);
+        repository.save(atualizadaAnamnesia);
+
+        return ResponseEntity
+                     .ok(atualizadaAnamnesia.toEntityModel());
 
     }
 
-    public void apagarAnamnesia(Long id) {
+    public ResponseEntity<Void> apagarAnamnesia(Long id) {
         verificarSeExiste(id);
         repository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
     public void verificarSeExiste(Long id) {

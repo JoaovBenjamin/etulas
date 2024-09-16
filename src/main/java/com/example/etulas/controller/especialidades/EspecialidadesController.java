@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -127,10 +128,9 @@ public class EspecialidadesController {
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
     @ResponseStatus(CREATED)
-    public ResponseEntity<Especialidades> criarEspecialidade(@RequestBody Especialidades dados) {
+    public ResponseEntity<EntityModel<Especialidades>> criarEspecialidade(@RequestBody Especialidades dados) {
         log.info("Criando especialidade");
-        Especialidades novaEspecialidade = service.criarEspecialidade(dados);
-        return new ResponseEntity<>(novaEspecialidade, CREATED);
+        return service.criarEspecialidade(dados);
     }
 
     @CacheEvict(allEntries = true)
@@ -143,7 +143,7 @@ public class EspecialidadesController {
         @ApiResponse(responseCode = "200", description = "Especialidades atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Especialidades atualizarEspecialidade(@PathVariable Long id, @RequestBody Especialidades dados) {
+    public ResponseEntity<EntityModel<Especialidades>> atualizarEspecialidade(@PathVariable Long id, @RequestBody Especialidades dados) {
         log.info("Atualizando especialidade com o id {}", id);
         return service.atualizarEspecialidade(id, dados);
     }
@@ -159,8 +159,8 @@ public class EspecialidadesController {
         @ApiResponse(responseCode = "404", description = "Not found")
     })
     @ResponseStatus(NOT_FOUND)
-    public void deletarEspecialidade(@PathVariable Long id) {
-        service.apagarEspecialidade(id);
+    public ResponseEntity<Void> deletarEspecialidade(@PathVariable Long id) {
+       return service.apagarEspecialidade(id);
     }
 }
     

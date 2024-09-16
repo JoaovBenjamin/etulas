@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,7 +67,7 @@ public class ConvenioController {
             @ApiResponse(responseCode = "404", description = "Não encontrado")
         }
     )   
-    public ResponseEntity<Convenio> buscarConvenioPorId(@PathVariable Long id) {
+    public EntityModel<Convenio> buscarConvenioPorId(@PathVariable Long id) {
         log.info("Buscando endereco com o id {}", id);
         return service.buscarConvenioPorId(id);
     }
@@ -81,10 +82,9 @@ public class ConvenioController {
         @ApiResponse(responseCode = "201", description = "Convenio criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Convenio> criarConvenio(@Valid @RequestBody Convenio dados) {
+    public ResponseEntity<EntityModel<Convenio>> criarConvenio(@Valid @RequestBody Convenio dados) {
         log.info("Criando convenio");
-        Convenio novoConvenio = service.criarConvenio(dados);
-        return new ResponseEntity<>(novoConvenio, CREATED);
+        return service.criarConvenio(dados);
     }
 
     @Operation(
@@ -96,7 +96,7 @@ public class ConvenioController {
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
     @PutMapping("{id}")
-    public Convenio atualizarEndereco(@PathVariable Long id, @RequestBody Convenio dados) {
+    public ResponseEntity<EntityModel<Convenio>> atualizarEndereco(@PathVariable Long id, @RequestBody Convenio dados) {
         log.info("Atualizando endereco com o id {}", id);
         return service.atualizarConvenio(id,dados);
     }
@@ -111,7 +111,7 @@ public class ConvenioController {
         @ApiResponse(responseCode = "204", description = "Convenio deletado com sucesso"),
         @ApiResponse(responseCode = "404", description = "Not found")
     })
-    public void deletarEndereco(@PathVariable Long id) {
-        service.apagarConvenio(id);
+    public ResponseEntity<Void> deletarEndereco(@PathVariable Long id) {
+        return service.apagarConvenio(id);
     }
 }

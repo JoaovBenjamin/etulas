@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,32 +30,38 @@ public class SalaService {
         return repository.findAll();
     }
 
-    public ResponseEntity<Sala> buscarSalaPorId(@PathVariable Long id) {
-        return repository
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public EntityModel<Sala> buscarSalaPorId(@PathVariable Long id) {
+        var sala = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Sala não encontrada"));
 
+        return sala.toEntityModel();
     }
 
-    public Sala criarSala(Sala dados) {
+    public ResponseEntity<EntityModel<Sala>> criarSala(Sala dados) {
         Sala novaSala = dados;
-        return repository.save(novaSala);
+        repository.save(novaSala);
+
+        return ResponseEntity
+                       .created(novaSala.toEntityModel().getRequiredLink("self").toUri())
+                       .body(novaSala.toEntityModel());
     }
 
-    public Sala atualizarSala(Long id, Sala dados) {
+    public ResponseEntity<EntityModel<Sala>> atualizarSala(Long id, Sala dados) {
         verificarSeExiste(id);
         Sala atualizadaSala = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
         BeanUtils.copyProperties(dados, atualizadaSala, "id");
-        return repository.save(atualizadaSala);
+        repository.save(atualizadaSala);
+
+        return ResponseEntity.ok(atualizadaSala.toEntityModel());
     }
 
-    public void apagarSala(Long id) {
+    public ResponseEntity<Void> apagarSala(Long id) {
         verificarSeExiste(id);
         Sala salaApagar = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
         salaApagar.setAtivo(false);
+
+        return ResponseEntity.noContent().build();
 
     }
 

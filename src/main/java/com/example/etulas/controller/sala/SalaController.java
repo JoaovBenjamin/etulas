@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,7 +72,7 @@ public class SalaController {
         }
     )
     @GetMapping("{id}")
-    public ResponseEntity<Sala> buscarSalaPorId(@PathVariable Long id) {
+    public EntityModel<Sala> buscarSalaPorId(@PathVariable Long id) {
         log.info("Buscando sala com o id {}", id);
         return service.buscarSalaPorId(id);
     }
@@ -87,10 +88,9 @@ public class SalaController {
         @ApiResponse(responseCode = "201", description = "Sala criada com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<Sala> criarSala(@Valid @RequestBody Sala dados) {
+    public ResponseEntity<EntityModel<Sala>> criarSala(@Valid @RequestBody Sala dados) {
         log.info("Criando sala");
-        Sala novaSala = service.criarSala(dados);
-        return new ResponseEntity<>(novaSala, CREATED);
+        return service.criarSala(dados);
     }
 
     @CacheEvict(allEntries = true)
@@ -103,7 +103,7 @@ public class SalaController {
         @ApiResponse(responseCode = "200", description = "Saça atualizada com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public Sala atualizarSala(@PathVariable Long id, @RequestBody Sala dados) {
+    public ResponseEntity<EntityModel<Sala>> atualizarSala(@PathVariable Long id, @RequestBody Sala dados) {
         log.info("Atualizando sala com o id {}", id);
         return service.atualizarSala(id, dados);
     }
@@ -119,7 +119,7 @@ public class SalaController {
     @CacheEvict(allEntries = true)
     @DeleteMapping("{id}")
     @ResponseStatus(NOT_FOUND)
-    public void deletarSala(@PathVariable Long id) {
-        service.apagarSala(id);
+    public ResponseEntity<Void> deletarSala(@PathVariable Long id) {
+        return service.apagarSala(id);
     }
 }

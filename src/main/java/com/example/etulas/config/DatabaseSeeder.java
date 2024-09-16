@@ -147,7 +147,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                                 .id(1L)
                                 .cidade("Santo André")
                                 .bairro("Vila Luzita")
-                                .logadouro("Rua dos Cocais")
+                                .logradouro("Rua dos Cocais")
                                 .numeroEdificio("789")
                                 .hospital(hospitalRepository.findById(1L).get())
                                 .enderecoEnum(EnderecoEnum.PA)

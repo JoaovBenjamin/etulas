@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,7 +67,7 @@ public class FichaDeAtendimentoController {
             @ApiResponse(responseCode = "404", description = "Não encontrado")
         }
     )   
-    public ResponseEntity<FichaDeAtendimento> buscarFichaDeAtendimentoPorId(@PathVariable Long id) {
+    public EntityModel<FichaDeAtendimento> buscarFichaDeAtendimentoPorId(@PathVariable Long id) {
         log.info("Buscando ficha de atendimento com o id {}", id);
         return service.buscarFichaDeAtendimentoPorId(id);
     }
@@ -81,10 +82,10 @@ public class FichaDeAtendimentoController {
         @ApiResponse(responseCode = "201", description = "Ficha criada com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public ResponseEntity<FichaDeAtendimento> criarFichaDeAtendimento(@Valid @RequestBody FichaDeAtendimento dados) {
+    public ResponseEntity<EntityModel<FichaDeAtendimento>> criarFichaDeAtendimento(@Valid @RequestBody FichaDeAtendimento dados) {
         log.info("Criando ficha de atendimento");
-        FichaDeAtendimento novaFicha = service.criarFichaDeAtendimento(dados);
-        return new ResponseEntity<>(novaFicha, CREATED);
+        return service.criarFichaDeAtendimento(dados);
+        
     }
 
     @PutMapping("{id}")
@@ -96,7 +97,7 @@ public class FichaDeAtendimentoController {
         @ApiResponse(responseCode = "200", description = "Ficha atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Validação falhou. Verifique os dados enviados no corpo da requisição")
     })
-    public FichaDeAtendimento atualizarFichaDeAtendimento(@PathVariable Long id, FichaDeAtendimento dados) {
+    public ResponseEntity<EntityModel<FichaDeAtendimento>> atualizarFichaDeAtendimento(@PathVariable Long id, FichaDeAtendimento dados) {
         log.info("Atualizando ficha de atendimento com o id {}", id);
         return service.atualizarFichaDeAtendimento(id, dados);
     }
@@ -111,7 +112,7 @@ public class FichaDeAtendimentoController {
         @ApiResponse(responseCode = "404", description = "Not found")
     })
     @ResponseStatus(NOT_FOUND)
-    public void deletarFichaDeAtendimento(@PathVariable Long id) {
-        service.apagarFichaDeAtendimento(id);
+    public ResponseEntity<Void> deletarFichaDeAtendimento(@PathVariable Long id) {
+        return service.apagarFichaDeAtendimento(id);
     }
 }
