@@ -27,6 +27,8 @@ import com.example.etulas.repository.fichaAtendimento.FichaAtendimentoRepository
 import com.example.etulas.repository.hospital.HospitalRepository;
 import com.example.etulas.repository.paciente.PacienteRepository;
 import com.example.etulas.repository.sala.SalaRepository;
+import com.example.etulas.user.User;
+import com.example.etulas.user.UserRepository;
 
 @Configuration
 public class DatabaseSeeder implements CommandLineRunner {
@@ -58,8 +60,17 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Autowired
     PacienteRepository pacienteRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public void run(String... args) throws Exception {
+
+        userRepository.saveAll(
+                List.of(
+                        User.builder().id(1L).name("joao").password("jv").role("PACIENTE").build()
+                )
+        );
         hospitalRepository.saveAll(
                 List.of(
                         Hospital
