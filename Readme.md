@@ -12,9 +12,8 @@ API Rest do projeto Etulas- Vizualização de lotação de Hospital
 
 https://trello.com/b/kqlZiZMV/plusoft
 
-## Video do Projeto
-https://www.youtube.com/watch?v=ULhxvNu56h0&feature=youtu.be
-
+## Video do Projeto Sprint 4
+https://youtu.be/oNn7Z4S00Gg
 
 ## Requisitos
 
