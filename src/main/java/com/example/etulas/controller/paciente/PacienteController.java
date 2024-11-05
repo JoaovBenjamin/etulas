@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 import java.util.List;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Pageable;
@@ -46,6 +47,9 @@ public class PacienteController {
 
     @Autowired
     PacienteService service;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     @Autowired
     PacienteRepository repository;
@@ -132,6 +136,9 @@ public class PacienteController {
     })
     public ResponseEntity<EntityModel<Paciente>> criarPaciente(@Valid @RequestBody Paciente dados) {
         log.info("Criando hospital");
+
+        rabbitTemplate.convertAndSend("email-queue", "Novo paciente cadastrado" );
+
         return service.criarPaciente(dados);
     }
 
